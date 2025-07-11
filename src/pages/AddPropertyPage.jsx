@@ -310,7 +310,7 @@ import React, { useState, useRef } from 'react';
                       <Label htmlFor="type" className="flex items-center mb-1"><Type className="w-4 h-4 mr-2 text-primary" />Property Type</Label>
                       <Select name="type" onValueChange={(value) => handleSelectChange('type', value)} value={formData.type}>
                         <SelectTrigger id="type"><SelectValue placeholder="Select type" /></SelectTrigger>
-                        <SelectContent>
+                        <SelectContent position="popper">
                           {propertyTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
                         </SelectContent>
                       </Select>

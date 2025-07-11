@@ -430,7 +430,7 @@ const AdminWebsiteEditor = () => {
     },
     {
       id: 'land-development-investment',
-      title: 'Land Development & Investment',
+      title: 'Development & Investment',
       icon: <TrendingUp className="w-5 h-5" />,
       description: 'Edit land development service details',
       sections: [
@@ -439,7 +439,7 @@ const AdminWebsiteEditor = () => {
           title: 'Service Details',
           icon: <FileText className="w-4 h-4" />,
           fields: [
-            { key: 'title', label: 'Service Title', type: 'text', placeholder: 'Land Development & Investment' },
+            { key: 'title', label: 'Service Title', type: 'text', placeholder: 'Development & Investment' },
             { key: 'description', label: 'Service Description', type: 'textarea', placeholder: 'Roatán offers significant opportunities for land development...' },
             { key: 'ctaText', label: 'Call to Action Text', type: 'textarea', placeholder: 'Let\'s discuss how we can assist you...' }
           ]

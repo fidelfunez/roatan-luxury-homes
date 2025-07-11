@@ -24,7 +24,7 @@ const servicesData = {
     relatedServices: ["property-sales-acquisition", "vacation-rental-management"]
   },
   "land-development-investment": {
-    title: "Land Development & Investment",
+    title: "Development & Investment",
     longDescription: "Roatán offers significant opportunities for land development and real estate investment. We assist clients in identifying prime parcels of land suitable for residential, commercial, or mixed-use development. Our team can connect you with trusted local architects, engineers, and construction companies. We also provide market analysis and investment strategy advice to help you maximize your returns and navigate the development process efficiently.",
     imageUrl: "/Photos/land-development.jpg",
     relatedServices: ["property-sales-acquisition", "legal-guidance-due-diligence"]
