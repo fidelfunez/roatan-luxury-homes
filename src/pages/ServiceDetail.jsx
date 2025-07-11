@@ -12,7 +12,7 @@ const servicesData = {
     relatedServices: ["legal-guidance-due-diligence", "relocation-assistance"]
   },
   "legal-guidance-due-diligence": {
-    title: "Legal Guidance & Due Diligence",
+            title: "Legal Guidance & Assistance",
     longDescription: "Navigating the legal landscape of Honduran real estate can be challenging. We connect you with highly reputable and experienced legal professionals specializing in property law. They will conduct thorough due diligence, including title searches, verification of property boundaries, and ensuring there are no outstanding liens or encumbrances. Our legal partners will also assist with contract review and preparation, ensuring your interests are protected throughout the transaction.",
     imageUrl: "/Photos/legal-assistance.jpg",
     relatedServices: ["property-sales-acquisition", "land-development-investment"]

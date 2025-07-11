@@ -394,7 +394,7 @@ const AdminWebsiteEditor = () => {
     },
     {
       id: 'legal-guidance-due-diligence',
-      title: 'Legal Guidance & Due Diligence',
+              title: 'Legal Guidance & Assistance',
       icon: <Shield className="w-5 h-5" />,
       description: 'Edit legal guidance service details',
       sections: [
@@ -403,7 +403,7 @@ const AdminWebsiteEditor = () => {
           title: 'Service Details',
           icon: <FileText className="w-4 h-4" />,
           fields: [
-            { key: 'title', label: 'Service Title', type: 'text', placeholder: 'Legal Guidance & Due Diligence' },
+            { key: 'title', label: 'Service Title', type: 'text', placeholder: 'Legal Guidance & Assistance' },
             { key: 'description', label: 'Service Description', type: 'textarea', placeholder: 'Navigating the legal landscape of Honduran real estate...' },
             { key: 'ctaText', label: 'Call to Action Text', type: 'textarea', placeholder: 'Let\'s discuss how we can assist you...' }
           ]
