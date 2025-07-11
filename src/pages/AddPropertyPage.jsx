@@ -5,7 +5,7 @@ import React, { useState, useRef } from 'react';
     import { Input } from '@/components/ui/input';
     import { Label } from '@/components/ui/label';
     import { Textarea } from '@/components/ui/textarea';
-    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
     import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
     import { useToast } from '@/components/ui/use-toast';
     import { addProperty } from '@/lib/propertyUtils';
@@ -198,9 +198,7 @@ import React, { useState, useRef } from 'react';
         setFormData(prev => ({ ...prev, [name]: value }));
       };
 
-      const handleSelectChange = (name, value) => {
-        setFormData(prev => ({ ...prev, [name]: value }));
-      };
+
 
       const handleFeatureChange = (e, index) => {
         const { value } = e.target;
@@ -308,12 +306,19 @@ import React, { useState, useRef } from 'react';
                     </div>
                     <div>
                       <Label htmlFor="type" className="flex items-center mb-1"><Type className="w-4 h-4 mr-2 text-primary" />Property Type</Label>
-                      <Select name="type" onValueChange={(value) => handleSelectChange('type', value)} value={formData.type}>
-                        <SelectTrigger id="type"><SelectValue placeholder="Select type" /></SelectTrigger>
-                        <SelectContent position="popper">
-                          {propertyTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
-                        </SelectContent>
-                      </Select>
+                      <select
+                        id="type"
+                        name="type"
+                        value={formData.type}
+                        onChange={handleChange}
+                        required
+                        className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                      >
+                        <option value="" disabled>Select property type</option>
+                        {propertyTypes.map(type => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
                     </div>
                      <div>
                       <Label htmlFor="area" className="flex items-center mb-1"><Maximize className="w-4 h-4 mr-2 text-primary transform rotate-45" />Area (sq ft)</Label>
