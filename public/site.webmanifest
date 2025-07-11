@@ -1,0 +1,16 @@
+{
+  "name": "Caribbean Lux Realty",
+  "short_name": "Caribbean Lux",
+  "description": "Luxury Caribbean properties and real estate investments",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#0891b2",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+} 

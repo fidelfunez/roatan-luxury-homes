@@ -1,0 +1,334 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 217 91% 60%; /* A vibrant blue */
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 91% 60%; /* Matching primary */
+    --radius: 0.75rem;
+    --chart-1: 217 91% 60%; /* Primary */
+    --chart-2: 180 65% 50%; /* Turquoise/Teal */
+    --chart-3: 40 95% 55%;  /* Gold/Orange */
+    --chart-4: 300 70% 55%; /* Purple/Magenta */
+    --chart-5: 120 60% 45%; /* Green */
+
+    /* Additional Caribbean-inspired colors */
+    --turquoise-dark: 175 70% 35%;
+    --turquoise-light: 180 60% 85%;
+    --sandy-beige: 35 50% 85%;
+    --coral-pink: 0 80% 70%;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 217 91% 70%; /* Lighter blue for dark mode */
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 217 91% 70%; /* Lighter blue for dark mode */
+    --chart-1: 217 91% 70%;
+    --chart-2: 180 60% 60%;
+    --chart-3: 40 90% 65%;
+    --chart-4: 300 65% 65%;
+    --chart-5: 120 55% 55%;
+
+    --turquoise-dark: 175 60% 45%;
+    --turquoise-light: 180 50% 75%;
+    --sandy-beige: 35 40% 75%;
+    --coral-pink: 0 70% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  /* Performance optimizations */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* Optimize for performance */
+    will-change: auto;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Performance optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Reduce repaints - TEMPORARILY DISABLED FOR STICKY HEADER TESTING */
+    /* transform: translateZ(0); */
+    /* backface-visibility: hidden; */
+    /* -webkit-backface-visibility: hidden; */
+    /* -moz-backface-visibility: hidden; */
+  }
+  
+  /* Optimize all elements for performance - TEMPORARILY DISABLED */
+  /* * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+  } */
+  
+  /* Override for fixed elements to prevent transform interference */
+  [style*="position: fixed"],
+  [class*="fixed"],
+  header[style*="position: fixed"],
+  div[style*="position: fixed"] {
+    transform: none !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+    -moz-backface-visibility: visible !important;
+  }
+  
+  /* Optimize images for performance */
+  img {
+    will-change: auto;
+    transform: translateZ(0);
+  }
+  
+  /* Optimize animations */
+  .animate-on-scroll {
+    will-change: transform, opacity;
+  }
+  
+  /* Reduce backdrop-blur usage for better performance */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  
+  .backdrop-blur-md {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  
+  /* Optimize gradients for better performance */
+  .bg-gradient-to-br,
+  .bg-gradient-to-r,
+  .bg-gradient-to-b {
+    background-attachment: scroll;
+  }
+}
+
+/* Chrome-specific performance fixes - TEMPORARILY DISABLED FOR STICKY HEADER TESTING */
+/* @supports (-webkit-appearance: none) {
+  html {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+  
+  body {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    will-change: auto;
+  }
+  
+  .overflow-y-auto,
+  .overflow-y-scroll {
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translateZ(0);
+    will-change: scroll-position;
+  }
+  
+  .bg-card,
+  .bg-white,
+  .bg-background {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    will-change: auto;
+  }
+  
+  .bg-gradient-to-br,
+  .bg-gradient-to-r,
+  .bg-gradient-to-b,
+  .bg-gradient-to-t {
+    -webkit-transform: translateZ(0);
+    background-attachment: scroll;
+    will-change: auto;
+  }
+  
+  img {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transform: translateZ(0);
+  }
+  
+  button,
+  .btn,
+  [role="button"] {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover\\:scale-105:hover,
+  .hover\\:shadow-xl:hover,
+  .hover\\:shadow-2xl:hover {
+    -webkit-transform: translateZ(0) scale(1.05);
+    -webkit-backface-visibility: hidden;
+  }
+  
+  .transition-all,
+  .transition-transform,
+  .transition-shadow {
+    -webkit-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+} */
+
+/* Custom scrollbar for a more modern look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/50;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/70;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.5) hsl(var(--background));
+}
+
+/* Ensure header stays sticky - override any conflicting transforms */
+header[class*="fixed"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  will-change: auto !important;
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
+  -moz-backface-visibility: visible !important;
+}
+
+/* General body styles */
+body {
+  @apply font-sans antialiased;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold tracking-tight;
+}
+
+h1 { @apply text-4xl sm:text-5xl lg:text-6xl; }
+h2 { @apply text-3xl sm:text-4xl; }
+h3 { @apply text-2xl sm:text-3xl; }
+
+/* Aspect ratio utilities (if not covered by a plugin) */
+.aspect-w-16 { position: relative; padding-bottom: calc(9 / 16 * 100%); }
+.aspect-h-9 > * { position: absolute; height: 100%; width: 100%; top: 0; right: 0; bottom: 0; left: 0; }
+
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+/* Performance optimizations for specific components */
+.motion-safe\:animate-on-scroll {
+  will-change: transform, opacity;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
