@@ -99,7 +99,7 @@ const Services = () => {
     {
       slug: "land-development-investment",
       icon: <TrendingUp className="w-12 h-12 text-primary" />,
-      title: getContent('land-development-investment', '', 'title') || "Land Development & Investment",
+      title: getContent('land-development-investment', '', 'title') || "Development & Investment",
       description: getContent('land-development-investment', '', 'description') || "Identifying prime land for development, connecting with architects and builders, and advising on investment strategies for maximum returns.",
       imageUrl: "/Photos/land-development-header.jpeg",
       features: ["Site Selection", "Investment Analysis", "Development Planning"],
