@@ -146,12 +146,21 @@ const ClientPropertySubmission = () => {
 
       // Save to Supabase for admin review
       const submissionData = {
-        name: processedData.contactName,
-        email: processedData.contactEmail,
-        phone: processedData.contactPhone,
-        property_type: processedData.type,
-        budget: processedData.price,
-        message: `Property: ${processedData.title}\nLocation: ${processedData.location}\nDescription: ${processedData.description}\nBedrooms: ${processedData.beds}\nBathrooms: ${processedData.baths}\nParking: ${processedData.parking}\nArea: ${processedData.area}`,
+        title: processedData.title,
+        location: processedData.location,
+        description: processedData.description,
+        price: processedData.price,
+        type: processedData.type,
+        beds: processedData.beds,
+        baths: processedData.baths,
+        parking: processedData.parking,
+        area: processedData.area,
+        contactName: processedData.contactName,
+        contactEmail: processedData.contactEmail,
+        contactPhone: processedData.contactPhone,
+        image: processedData.image,
+        images: processedData.images,
+        features: processedData.features,
         status: 'pending',
         created_at: new Date().toISOString()
       };
