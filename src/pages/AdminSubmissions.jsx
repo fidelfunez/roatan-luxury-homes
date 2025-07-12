@@ -73,13 +73,22 @@ const AdminSubmissions = () => {
   const loadSubmissions = async () => {
     try {
       console.log('Admin status:', isAdmin);
+      console.log('=== LOADING SUBMISSIONS ===');
       const submissionsData = await getClientSubmissions();
-      console.log('Loaded submissions:', submissionsData);
+      console.log('Final submissions data:', submissionsData);
       console.log('Number of submissions:', submissionsData.length);
+      console.log('Type of submissionsData:', typeof submissionsData);
+      console.log('Is array:', Array.isArray(submissionsData));
+      
       if (submissionsData.length > 0) {
         console.log('First submission structure:', submissionsData[0]);
+        console.log('First submission keys:', Object.keys(submissionsData[0]));
+        console.log('Title field:', submissionsData[0].title);
+        console.log('Contact name field:', submissionsData[0].contactName);
       }
+      
       setSubmissions(submissionsData);
+      console.log('Submissions state set with:', submissionsData.length, 'items');
     } catch (error) {
       console.error('Error loading submissions:', error);
       toast({
@@ -91,10 +100,16 @@ const AdminSubmissions = () => {
   };
 
   const filterSubmissions = () => {
+    console.log('=== FILTERING SUBMISSIONS ===');
+    console.log('Original submissions count:', submissions.length);
+    console.log('Status filter:', statusFilter);
+    console.log('Search term:', searchTerm);
+    
     let filtered = [...submissions];
 
     if (statusFilter !== 'all') {
       filtered = filtered.filter(sub => (sub.status || 'pending') === statusFilter);
+      console.log('After status filter:', filtered.length);
     }
 
     if (searchTerm) {
@@ -105,8 +120,10 @@ const AdminSubmissions = () => {
         sub.contactName?.toLowerCase().includes(term) ||
         sub.contactEmail?.toLowerCase().includes(term)
       );
+      console.log('After search filter:', filtered.length);
     }
 
+    console.log('Final filtered count:', filtered.length);
     setFilteredSubmissions(filtered);
   };
 
@@ -322,6 +339,7 @@ const AdminSubmissions = () => {
 
       {/* Submissions List */}
       <div className="space-y-4">
+        {console.log('Rendering submissions. Count:', filteredSubmissions.length)}
         {filteredSubmissions.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">
