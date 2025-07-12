@@ -109,6 +109,9 @@ export const deleteProperty = async (propertyId) => {
 // Blog functions
 export const getBlogPosts = async () => {
   try {
+    console.log('Supabase URL:', supabaseUrl);
+    console.log('Supabase Key exists:', !!supabaseAnonKey);
+    
     const { data, error } = await supabase
       .from('blog_posts')
       .select('*')
@@ -119,6 +122,7 @@ export const getBlogPosts = async () => {
       return [];
     }
 
+    console.log('Supabase response:', { data, error });
     return data || [];
   } catch (error) {
     console.error('Error in getBlogPosts:', error);

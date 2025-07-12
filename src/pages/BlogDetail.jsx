@@ -18,6 +18,7 @@ import {
   ArrowLeft,
   ArrowRight
 } from 'lucide-react';
+import { getBlogPostBySlug, getBlogPosts } from '@/lib/supabaseUtils';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -35,18 +36,20 @@ const BlogDetail = () => {
     loadBlogPost();
   }, [slug]);
 
-  const loadBlogPost = () => {
+  const loadBlogPost = async () => {
     try {
       setLoading(true);
-      const allPosts = JSON.parse(localStorage.getItem('caribbeanLuxRealty_blogPosts') || '[]');
-      const foundPost = allPosts.find(p => p.slug === slug && p.status === 'published');
+      setError(null);
       
-      if (foundPost) {
+      const foundPost = await getBlogPostBySlug(slug);
+      
+      if (foundPost && foundPost.published === true) {
         setPost(foundPost);
         
         // Get related posts (same category, excluding current post)
+        const allPosts = await getBlogPosts();
         const related = allPosts
-          .filter(p => p.category === foundPost.category && p.id !== foundPost.id && p.status === 'published')
+          .filter(p => p.category === foundPost.category && p.id !== foundPost.id && p.published === true)
           .slice(0, 3);
         setRelatedPosts(related);
       } else {

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Link } from 'react-router-dom';
 import { CalendarDays, UserCircle, ArrowRight, Search, Filter } from 'lucide-react';
+import { getBlogPosts } from '@/lib/supabaseUtils';
 
 const Blog = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -12,6 +13,7 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const categories = [
     'Investment Guide',
@@ -32,14 +34,17 @@ const Blog = () => {
     filterPosts();
   }, [blogPosts, searchTerm, categoryFilter]);
 
-  const loadBlogPosts = () => {
+  const loadBlogPosts = async () => {
     try {
-      const stored = JSON.parse(localStorage.getItem('caribbeanLuxRealty_blogPosts') || '[]');
-      // Only show published posts
-      const publishedPosts = stored.filter(post => post.status === 'published');
+      setLoading(true);
+      setError(null);
+      const posts = await getBlogPosts();
+      // Only show published posts (published is boolean true/false)
+      const publishedPosts = posts.filter(post => post.published === true);
       setBlogPosts(publishedPosts);
     } catch (error) {
       console.error('Error loading blog posts:', error);
+      setError('Failed to load blog posts. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -100,6 +105,38 @@ const Blog = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-16 md:space-y-24">
+        <section className="text-center py-16 md:py-20 bg-gradient-to-b from-primary/10 via-transparent to-transparent rounded-xl">
+          <div className="container mx-auto px-4">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-primary mb-4">Roatán Real Estate Insights</h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Stay informed with our latest articles, news, and guides on buying, selling, and living in Roatán.
+            </p>
+          </div>
+        </section>
+
+        <div className="container mx-auto px-4">
+          <div className="text-center py-16">
+            <div className="max-w-md mx-auto">
+              <div className="text-6xl mb-6">⚠️</div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Error Loading Blog Posts</h3>
+              <p className="text-muted-foreground mb-4">{error}</p>
+              <Button 
+                onClick={() => window.location.reload()} 
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+              >
+                Try Again
+              </Button>
             </div>
           </div>
         </div>
