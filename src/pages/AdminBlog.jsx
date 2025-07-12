@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { optimizeImage, validateImageFile, formatFileSize } from '@/lib/imageUtils';
+import { getBlogPosts, addBlogPost, updateBlogPost, deleteBlogPost } from '@/lib/supabaseUtils';
 import { 
   FileText, 
   PlusSquare, 
@@ -88,9 +89,18 @@ const AdminBlog = () => {
     filterPosts();
   }, [blogPosts, searchTerm, categoryFilter, statusFilter]);
 
-  const loadBlogPosts = () => {
-    const stored = JSON.parse(localStorage.getItem('caribbeanLuxRealty_blogPosts') || '[]');
-    setBlogPosts(stored);
+  const loadBlogPosts = async () => {
+    try {
+      const posts = await getBlogPosts();
+      setBlogPosts(posts);
+    } catch (error) {
+      console.error('Error loading blog posts:', error);
+      toast({
+        title: "Error loading blog posts",
+        description: "Failed to load blog posts from database.",
+        variant: "destructive",
+      });
+    }
   };
 
   const filterPosts = () => {
@@ -197,34 +207,37 @@ const AdminBlog = () => {
     setIsProcessing(true);
 
     try {
-      const newPost = {
-        ...formData,
-        id: editingPost ? editingPost.id : Date.now(),
-        createdAt: editingPost ? editingPost.createdAt : new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-        publishDate: formData.publishDate || new Date().toISOString().split('T')[0]
+      const postData = {
+        title: formData.title,
+        content: formData.content,
+        excerpt: formData.excerpt,
+        author: formData.author,
+        featured_image: formData.image,
+        published: formData.status === 'published',
+        slug: formData.slug,
+        created_at: editingPost ? editingPost.created_at : new Date().toISOString(),
+        updated_at: new Date().toISOString()
       };
 
-      let updatedPosts;
+      let result;
       if (editingPost) {
-        updatedPosts = blogPosts.map(post => 
-          post.id === editingPost.id ? newPost : post
-        );
+        result = await updateBlogPost(editingPost.id, postData);
+        toast({
+          title: "Blog Post Updated! ✏️",
+          description: "The blog post has been successfully updated.",
+          variant: "default",
+        });
       } else {
-        updatedPosts = [...blogPosts, newPost];
+        result = await addBlogPost(postData);
+        toast({
+          title: "Blog Post Created! ✨",
+          description: "Your new blog post has been created and published.",
+          variant: "default",
+        });
       }
 
-      setBlogPosts(updatedPosts);
-      localStorage.setItem('caribbeanLuxRealty_blogPosts', JSON.stringify(updatedPosts));
-
-      toast({
-        title: editingPost ? "Blog Post Updated! ✏️" : "Blog Post Created! ✨",
-        description: editingPost 
-          ? "The blog post has been successfully updated."
-          : "Your new blog post has been created and published.",
-        variant: "default",
-      });
-
+      // Reload blog posts to get the updated data
+      await loadBlogPosts();
       resetForm();
     } catch (error) {
       console.error('Error saving blog post:', error);
@@ -242,8 +255,8 @@ const AdminBlog = () => {
     const postToDelete = blogPosts.find(post => post.id === postId);
     if (!postToDelete) return;
 
-    const hasImage = postToDelete.image && postToDelete.image.trim() !== '';
-    const imageSize = hasImage ? Math.round(postToDelete.image.length * 0.75 / 1024) : 0; // Approximate size in KB
+    const hasImage = postToDelete.featured_image && postToDelete.featured_image.trim() !== '';
+    const imageSize = hasImage ? Math.round(postToDelete.featured_image.length * 0.75 / 1024) : 0; // Approximate size in KB
 
     const confirmMessage = hasImage 
       ? `Are you sure you want to delete "${postToDelete.title}"? This will also remove the associated image (~${imageSize}KB). This action cannot be undone.`
@@ -255,9 +268,10 @@ const AdminBlog = () => {
 
     setIsProcessing(true);
     try {
-      const updatedPosts = blogPosts.filter(post => post.id !== postId);
-      setBlogPosts(updatedPosts);
-      localStorage.setItem('caribbeanLuxRealty_blogPosts', JSON.stringify(updatedPosts));
+      await deleteBlogPost(postId);
+      
+      // Reload blog posts to get the updated data
+      await loadBlogPosts();
 
       // Log cleanup for transparency
       if (hasImage) {
@@ -292,12 +306,12 @@ const AdminBlog = () => {
       content: post.content || '',
       author: post.author || 'Bristean Luzey',
       category: post.category || '',
-      image: post.image || '',
-      status: post.status || 'published',
+      image: post.featured_image || '',
+      status: post.published ? 'published' : 'draft',
       tags: post.tags || [],
       publishDate: post.publishDate || new Date().toISOString().split('T')[0]
     });
-    setImagePreview(post.image || null);
+    setImagePreview(post.featured_image || null);
     setShowForm(true);
   };
 

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
+import { getClientSubmissions, updateClientSubmission, deleteClientSubmission } from '@/lib/supabaseUtils';
 import { 
   CheckCircle, 
   XCircle, 
@@ -65,9 +66,18 @@ const AdminSubmissions = () => {
     filterSubmissions();
   }, [submissions, statusFilter, searchTerm]);
 
-  const loadSubmissions = () => {
-    const stored = JSON.parse(localStorage.getItem('caribbeanLuxRealty_submissions') || '[]');
-    setSubmissions(stored);
+  const loadSubmissions = async () => {
+    try {
+      const submissionsData = await getClientSubmissions();
+      setSubmissions(submissionsData);
+    } catch (error) {
+      console.error('Error loading submissions:', error);
+      toast({
+        title: "Error loading submissions",
+        description: "Failed to load submissions from database.",
+        variant: "destructive",
+      });
+    }
   };
 
   const filterSubmissions = () => {
@@ -94,35 +104,17 @@ const AdminSubmissions = () => {
     setIsProcessing(true);
     
     try {
-      const updatedSubmissions = submissions.map(sub => {
-        if (sub.id === submissionId) {
-          return { ...sub, status: newStatus, reviewedAt: new Date().toISOString() };
-        }
-        return sub;
+      await updateClientSubmission(submissionId, { 
+        status: newStatus, 
+        reviewed_at: new Date().toISOString() 
       });
 
-      setSubmissions(updatedSubmissions);
-      localStorage.setItem('caribbeanLuxRealty_submissions', JSON.stringify(updatedSubmissions));
-
-      // If approved, add to properties
-      if (newStatus === 'approved') {
-        const submission = submissions.find(sub => sub.id === submissionId);
-        if (submission) {
-          const properties = JSON.parse(localStorage.getItem('caribbeanLuxRealty_properties') || '[]');
-          const newProperty = {
-            ...submission,
-            id: Date.now(),
-            createdAt: new Date().toISOString(),
-            isFromSubmission: true
-          };
-          properties.push(newProperty);
-          localStorage.setItem('caribbeanLuxRealty_properties', JSON.stringify(properties));
-        }
-      }
+      // Reload submissions to get the updated data
+      await loadSubmissions();
 
       toast({
         title: `Submission ${newStatus === 'approved' ? 'Approved' : 'Rejected'} ✅`,
-        description: `The property submission has been ${newStatus === 'approved' ? 'approved and added to listings' : 'rejected'}.`,
+        description: `The property submission has been ${newStatus === 'approved' ? 'approved' : 'rejected'}.`,
         variant: newStatus === 'approved' ? 'default' : 'destructive',
       });
     } catch (error) {
@@ -154,9 +146,10 @@ const AdminSubmissions = () => {
 
     setIsProcessing(true);
     try {
-      const updatedSubmissions = submissions.filter(sub => sub.id !== submissionId);
-      setSubmissions(updatedSubmissions);
-      localStorage.setItem('caribbeanLuxRealty_submissions', JSON.stringify(updatedSubmissions));
+      await deleteClientSubmission(submissionId);
+      
+      // Reload submissions to get the updated data
+      await loadSubmissions();
 
       // Log cleanup for transparency
       if (hasImages) {

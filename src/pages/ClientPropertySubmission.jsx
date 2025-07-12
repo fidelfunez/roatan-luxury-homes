@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
+import { addClientSubmission } from '@/lib/supabaseUtils';
 import { DollarSign, Type, MapPin as MapPinIcon, BedDouble, Bath, CarFront, Maximize, Info, Image as ImageIcon, ListChecks, CalendarDays, Clock, PlusCircle, Trash2, UploadCloud, Send } from 'lucide-react';
 
 const fadeIn = {
@@ -143,16 +144,19 @@ const ClientPropertySubmission = () => {
         processedData.images = ['https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60'];
       }
 
-      // Save to localStorage for admin review
-      const submissions = JSON.parse(localStorage.getItem('caribbeanLuxRealty_submissions') || '[]');
-      const newSubmission = {
-        ...processedData,
-        id: Date.now(),
+      // Save to Supabase for admin review
+      const submissionData = {
+        name: processedData.contactName,
+        email: processedData.contactEmail,
+        phone: processedData.contactPhone,
+        property_type: processedData.type,
+        budget: processedData.price,
+        message: `Property: ${processedData.title}\nLocation: ${processedData.location}\nDescription: ${processedData.description}\nBedrooms: ${processedData.beds}\nBathrooms: ${processedData.baths}\nParking: ${processedData.parking}\nArea: ${processedData.area}`,
         status: 'pending',
-        submissionDate: new Date().toISOString()
+        created_at: new Date().toISOString()
       };
-      submissions.push(newSubmission);
-      localStorage.setItem('caribbeanLuxRealty_submissions', JSON.stringify(submissions));
+      
+      await addClientSubmission(submissionData);
 
       toast({
         title: "Submission Sent! 📝",
