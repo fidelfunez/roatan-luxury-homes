@@ -352,6 +352,10 @@ const AdminSubmissions = () => {
           <div>
             <p>First submission title: {submissions[0]?.title || 'No title'}</p>
             <p>First submission contact: {submissions[0]?.contactName || 'No contact'}</p>
+            <p>Raw contactname: {submissions[0]?.contactname || 'No raw contact'}</p>
+            <p>Raw name: {submissions[0]?.name || 'No raw name'}</p>
+            <p>Raw email: {submissions[0]?.email || 'No raw email'}</p>
+            <p>Raw contactemail: {submissions[0]?.contactemail || 'No raw contactemail'}</p>
           </div>
         )}
       </div>
@@ -449,15 +453,15 @@ const AdminSubmissions = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                         <span className="flex items-center gap-1">
                           <Mail className="h-4 w-4 text-primary" />
-                          {getDisplayValue(submission, 'contactEmail', getDisplayValue(submission, 'email', 'Email not provided'))}
+                          {getDisplayValue(submission, 'contactEmail', getDisplayValue(submission, 'contactemail', getDisplayValue(submission, 'email', 'Email not provided')))}
                         </span>
                         <span className="flex items-center gap-1">
                           <Phone className="h-4 w-4 text-primary" />
-                          {getDisplayValue(submission, 'contactPhone', getDisplayValue(submission, 'phone', 'Phone not provided'))}
+                          {getDisplayValue(submission, 'contactPhone', getDisplayValue(submission, 'contactphone', getDisplayValue(submission, 'phone', 'Phone not provided')))}
                         </span>
                         <span className="flex items-center gap-1">
                           <Users className="h-4 w-4 text-primary" />
-                          {getDisplayValue(submission, 'contactName', getDisplayValue(submission, 'name', 'Contact name not provided'))}
+                          {getDisplayValue(submission, 'contactName', getDisplayValue(submission, 'contactname', getDisplayValue(submission, 'name', 'Contact name not provided')))}
                         </span>
                       </div>
 
