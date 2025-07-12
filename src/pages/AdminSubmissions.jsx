@@ -92,8 +92,8 @@ const AdminSubmissions = () => {
       filtered = filtered.filter(sub => 
         sub.title?.toLowerCase().includes(term) ||
         sub.location?.toLowerCase().includes(term) ||
-        sub.contactName?.toLowerCase().includes(term) ||
-        sub.contactEmail?.toLowerCase().includes(term)
+        sub.contactname?.toLowerCase().includes(term) ||
+        sub.contactemail?.toLowerCase().includes(term)
       );
     }
 
@@ -385,15 +385,15 @@ const AdminSubmissions = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                         <span className="flex items-center gap-1">
                           <Mail className="h-4 w-4 text-primary" />
-                          {submission.contactEmail}
+                          {submission.contactemail}
                         </span>
                         <span className="flex items-center gap-1">
                           <Phone className="h-4 w-4 text-primary" />
-                          {submission.contactPhone}
+                          {submission.contactphone}
                         </span>
                         <span className="flex items-center gap-1">
                           <Users className="h-4 w-4 text-primary" />
-                          {submission.contactName}
+                          {submission.contactname}
                         </span>
                       </div>
 
