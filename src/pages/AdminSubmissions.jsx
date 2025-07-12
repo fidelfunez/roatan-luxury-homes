@@ -67,6 +67,10 @@ const AdminSubmissions = () => {
   }, []);
 
   useEffect(() => {
+    console.log('=== FILTER EFFECT TRIGGERED ===');
+    console.log('Submissions state:', submissions);
+    console.log('Status filter:', statusFilter);
+    console.log('Search term:', searchTerm);
     filterSubmissions();
   }, [submissions, statusFilter, searchTerm]);
 
@@ -337,9 +341,25 @@ const AdminSubmissions = () => {
         </Button>
       </div>
 
+      {/* Debug Info */}
+      <div className="bg-yellow-100 p-4 rounded-lg mb-4">
+        <h3 className="font-bold text-yellow-800">Debug Info:</h3>
+        <p>Total submissions: {submissions.length}</p>
+        <p>Filtered submissions: {filteredSubmissions.length}</p>
+        <p>Status filter: {statusFilter}</p>
+        <p>Search term: {searchTerm}</p>
+        {submissions.length > 0 && (
+          <div>
+            <p>First submission title: {submissions[0]?.title || 'No title'}</p>
+            <p>First submission contact: {submissions[0]?.contactName || 'No contact'}</p>
+          </div>
+        )}
+      </div>
+
       {/* Submissions List */}
       <div className="space-y-4">
         {console.log('Rendering submissions. Count:', filteredSubmissions.length)}
+        {console.log('Filtered submissions:', filteredSubmissions)}
         {filteredSubmissions.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">
