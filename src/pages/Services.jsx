@@ -3,6 +3,7 @@ import { Briefcase, Gavel, Home, TrendingUp, Anchor, Users, ArrowRight, Star, Ch
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import OptimizedImage from '@/components/OptimizedImage';
 import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
 
 const Services = () => {
@@ -134,11 +135,12 @@ const Services = () => {
       <section className="text-center py-16 md:py-20 relative overflow-hidden rounded-xl">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img 
+          <OptimizedImage 
             src="/Photos/turtle-ocean-optimized.jpg" 
             alt="Turtle in Caribbean ocean" 
             className="w-full h-full object-cover"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/50"></div>
         </div>

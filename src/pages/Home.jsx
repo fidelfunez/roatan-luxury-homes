@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription }
 import { Link } from 'react-router-dom';
 import { MapPin, Home as HomeIconLucide, DollarSign, ArrowRight, Users, Award, MessageCircle, Star, CheckCircle, Clock, Phone, Mail, Search, Filter, BedDouble, Bath, CarFront } from 'lucide-react';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import OptimizedImage from '@/components/OptimizedImage';
 import { getProperties } from '@/lib/supabaseUtils';
 import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
 
@@ -66,11 +67,12 @@ const Home = () => {
       <section className="hero-full-bleed relative py-12 md:py-16 lg:py-20 flex items-center justify-center text-center overflow-hidden w-full lg:w-screen lg:left-1/2 lg:right-1/2 lg:-translate-x-1/2 lg:mx-0">
         {/* Desktop Background */}
         <div className="hidden lg:block absolute inset-0 w-full">
-          <img 
+          <OptimizedImage 
             alt="Tropical Caribbean beach background" 
             className="w-full h-full object-cover" 
             src="/Photos/hero-banner-optimized.jpg" 
             loading="eager" 
+            fetchpriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-turquoise-dark/80 to-primary/70"></div>
         </div>
