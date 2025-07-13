@@ -148,8 +148,8 @@ const Blog = () => {
     <div className="space-y-16 md:space-y-24">
       <section className="text-center py-16 md:py-20 bg-gradient-to-b from-primary/10 via-transparent to-transparent rounded-xl">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-primary mb-4">Roatán Real Estate Insights</h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-primary mb-4 drop-shadow-sm">Roatán Real Estate Insights</h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto drop-shadow-sm">
             Stay informed with our latest articles, news, and guides on buying, selling, and living in Roatán.
           </p>
         </div>

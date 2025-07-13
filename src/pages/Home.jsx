@@ -91,7 +91,7 @@ const Home = () => {
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
             {getContent('home', 'hero', 'title')}
           </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-10 max-w-4xl mx-auto">
+          <p className="text-lg md:text-xl lg:text-2xl text-white/95 mb-10 max-w-4xl mx-auto drop-shadow-md">
             {getContent('home', 'hero', 'subtitle')}
           </p>
           

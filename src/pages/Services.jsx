@@ -197,16 +197,16 @@ const servicesList = [
                   <CardContent className="p-4 sm:p-6 flex-grow">
                     <div className="flex items-center gap-3 mb-3">
                       {service.icon}
-                      <CardTitle className="text-xl sm:text-2xl font-semibold text-primary line-clamp-2">{service.title}</CardTitle>
+                      <CardTitle className="text-xl sm:text-2xl font-semibold text-primary line-clamp-2 drop-shadow-sm">{service.title}</CardTitle>
                     </div>
-                    <CardDescription className="text-muted-foreground flex-grow mb-4 line-clamp-3">{service.description}</CardDescription>
+                    <CardDescription className="text-muted-foreground flex-grow mb-4 line-clamp-3 drop-shadow-sm">{service.description}</CardDescription>
                     
                     {/* Service Features */}
                     <div className="space-y-2 mb-4">
                       {service.features.map((feature, idx) => (
                         <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <CheckCircle className="w-4 h-4 text-primary" />
-                          <span>{feature}</span>
+                          <CheckCircle className="w-4 h-4 text-primary drop-shadow-sm" />
+                          <span className="drop-shadow-sm">{feature}</span>
                         </div>
                       ))}
                     </div>
