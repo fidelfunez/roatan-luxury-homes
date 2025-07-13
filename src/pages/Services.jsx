@@ -66,68 +66,69 @@ const Services = () => {
     );
   }
 
-const servicesList = [
-  {
-    slug: "property-sales-acquisition",
-    icon: <Home className="w-12 h-12 text-primary" />,
-      title: getContent('property-sales-acquisition', '', 'title') || "Property Sales & Acquisition",
-      description: getContent('property-sales-acquisition', '', 'description') || "Expert assistance for buying or selling residential homes, luxury villas, condos, and commercial properties. We guide you through every step, from market analysis to closing.",
-    imageUrl: "/Photos/property-sales-acquisition-header.jpg",
-    features: ["Market Analysis", "Negotiation Support", "Closing Assistance"],
-    badge: "Most Popular",
-    badgeColor: "from-yellow-400 to-orange-500"
-  },
-  {
-    slug: "legal-guidance-due-diligence",
-    icon: <Gavel className="w-12 h-12 text-primary" />,
-      title: getContent('legal-guidance-due-diligence', '', 'title') || "Legal Guidance & Assistance",
-      description: getContent('legal-guidance-due-diligence', '', 'description') || "Navigating Honduran property law can be complex. We connect you with trusted legal professionals for due diligence, title searches, and contract reviews.",
-    imageUrl: "/Photos/legal-assistance-header.jpg",
-    features: ["Title Searches", "Contract Review", "Legal Compliance"],
-    badge: "Essential",
-    badgeColor: "from-blue-400 to-blue-600"
-  },
-  {
-    slug: "relocation-assistance",
-    icon: <Users className="w-12 h-12 text-primary" />,
-      title: getContent('relocation-assistance', '', 'title') || "Relocation Assistance",
-      description: getContent('relocation-assistance', '', 'description') || "Moving to Roatán? We offer comprehensive relocation support, including advice on residency, banking, schools, and settling into island life.",
-    imageUrl: "/Photos/relocation-assistance-header.jpg",
-    features: ["Residency Guidance", "School Information", "Local Integration"],
-    badge: "New Service",
-    badgeColor: "from-green-400 to-green-600"
-  },
-  {
-    slug: "land-development-investment",
-    icon: <TrendingUp className="w-12 h-12 text-primary" />,
-      title: getContent('land-development-investment', '', 'title') || "Development & Investment",
-      description: getContent('land-development-investment', '', 'description') || "Identifying prime land for development, connecting with architects and builders, and advising on investment strategies for maximum returns.",
-    imageUrl: "/Photos/land-development-header.jpeg",
-    features: ["Site Selection", "Investment Analysis", "Development Planning"],
-    badge: "Premium",
-    badgeColor: "from-purple-400 to-purple-600"
-  },
-  {
-    slug: "vacation-rental-management",
-    icon: <Anchor className="w-12 h-12 text-primary" />,
-      title: getContent('vacation-rental-management', '', 'title') || "Vacation Rental Management",
-      description: getContent('vacation-rental-management', '', 'description') || "Turn your Roatán property into a profitable investment with our professional vacation rental management services, handling bookings, maintenance, and guest services.",
-    imageUrl: "/Photos/vacation-rental-h.jpeg",
-    features: ["Booking Management", "Property Maintenance", "Guest Services"],
-    badge: "High Demand",
-    badgeColor: "from-pink-400 to-pink-600"
-  },
-  {
-    slug: "commercial-real-estate",
-    icon: <Briefcase className="w-12 h-12 text-primary" />,
-      title: getContent('commercial-real-estate', '', 'title') || "Commercial Real Estate",
-      description: getContent('commercial-real-estate', '', 'description') || "Specialized services for businesses looking to establish or expand in Roatán, including office spaces, retail locations, and hospitality ventures.",
-    imageUrl: "/Photos/commercial-real-estate-header.jpg",
-    features: ["Business Location", "Market Research", "Investment Strategy"],
-    badge: "Specialized",
-    badgeColor: "from-indigo-400 to-indigo-600"
-  }
-];
+  // Services list with static data - content will be loaded dynamically
+  const servicesList = [
+    {
+      slug: "property-sales-acquisition",
+      icon: <Home className="w-12 h-12 text-primary" />,
+      title: "Property Sales & Acquisition",
+      description: "Expert assistance for buying or selling residential homes, luxury villas, condos, and commercial properties. We guide you through every step, from market analysis to closing.",
+      imageUrl: "/Photos/property-sales-acquisition-header.jpg",
+      features: ["Market Analysis", "Negotiation Support", "Closing Assistance"],
+      badge: "Most Popular",
+      badgeColor: "from-yellow-400 to-orange-500"
+    },
+    {
+      slug: "legal-guidance-due-diligence",
+      icon: <Gavel className="w-12 h-12 text-primary" />,
+      title: "Legal Guidance & Assistance",
+      description: "Navigating Honduran property law can be complex. We connect you with trusted legal professionals for due diligence, title searches, and contract reviews.",
+      imageUrl: "/Photos/legal-assistance-header.jpg",
+      features: ["Title Searches", "Contract Review", "Legal Compliance"],
+      badge: "Essential",
+      badgeColor: "from-blue-400 to-blue-600"
+    },
+    {
+      slug: "relocation-assistance",
+      icon: <Users className="w-12 h-12 text-primary" />,
+      title: "Relocation Assistance",
+      description: "Moving to Roatán? We offer comprehensive relocation support, including advice on residency, banking, schools, and settling into island life.",
+      imageUrl: "/Photos/relocation-assistance-header.jpg",
+      features: ["Residency Guidance", "School Information", "Local Integration"],
+      badge: "New Service",
+      badgeColor: "from-green-400 to-green-600"
+    },
+    {
+      slug: "land-development-investment",
+      icon: <TrendingUp className="w-12 h-12 text-primary" />,
+      title: "Development & Investment",
+      description: "Identifying prime land for development, connecting with architects and builders, and advising on investment strategies for maximum returns.",
+      imageUrl: "/Photos/land-development-header.jpeg",
+      features: ["Site Selection", "Investment Analysis", "Development Planning"],
+      badge: "Premium",
+      badgeColor: "from-purple-400 to-purple-600"
+    },
+    {
+      slug: "vacation-rental-management",
+      icon: <Anchor className="w-12 h-12 text-primary" />,
+      title: "Vacation Rental Management",
+      description: "Turn your Roatán property into a profitable investment with our professional vacation rental management services, handling bookings, maintenance, and guest services.",
+      imageUrl: "/Photos/vacation-rental-h.jpeg",
+      features: ["Booking Management", "Property Maintenance", "Guest Services"],
+      badge: "High Demand",
+      badgeColor: "from-pink-400 to-pink-600"
+    },
+    {
+      slug: "commercial-real-estate",
+      icon: <Briefcase className="w-12 h-12 text-primary" />,
+      title: "Commercial Real Estate",
+      description: "Specialized services for businesses looking to establish or expand in Roatán, including office spaces, retail locations, and hospitality ventures.",
+      imageUrl: "/Photos/commercial-real-estate-header.jpg",
+      features: ["Business Location", "Market Research", "Investment Strategy"],
+      badge: "Specialized",
+      badgeColor: "from-indigo-400 to-indigo-600"
+    }
+  ];
 
   return (
     <div className="space-y-16 md:space-y-24">
@@ -176,30 +177,35 @@ const servicesList = [
       {/* Enhanced Services Grid */}
       <section className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {servicesList.map((service, index) => (
-            <div 
-              key={service.title} 
-              className="h-full group"
-            >
-              <Card className="bg-card rounded-xl shadow-md overflow-hidden hover:shadow-lg flex flex-col h-full group border border-border/50">
-                <Link to={`/services/${service.slug}`} className="flex flex-col h-full">
-                  <CardHeader className="p-0 relative">
-                    <div className="relative aspect-w-16 aspect-h-9">
-                      <img   
-                        alt={service.title + " service visual"} 
-                        className="object-cover w-full h-full"
-                        src={service.imageUrl} 
-                        loading="lazy" />
-                      
-                      {/* Service Badge - Removed for cleaner look */}
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-4 sm:p-6 flex-grow">
-                    <div className="flex items-center gap-3 mb-3">
-                      {service.icon}
-                      <CardTitle className="text-xl sm:text-2xl font-semibold text-primary line-clamp-2 drop-shadow-sm">{service.title}</CardTitle>
-                    </div>
-                    <CardDescription className="text-muted-foreground flex-grow mb-4 line-clamp-3 drop-shadow-sm">{service.description}</CardDescription>
+          {servicesList.map((service, index) => {
+            // Get dynamic content for this service
+            const dynamicTitle = getContent(service.slug, '', 'title') || service.title;
+            const dynamicDescription = getContent(service.slug, '', 'description') || service.description;
+            
+            return (
+              <div 
+                key={service.slug} 
+                className="h-full group"
+              >
+                <Card className="bg-card rounded-xl shadow-md overflow-hidden hover:shadow-lg flex flex-col h-full group border border-border/50">
+                  <Link to={`/services/${service.slug}`} className="flex flex-col h-full">
+                    <CardHeader className="p-0 relative">
+                      <div className="relative aspect-w-16 aspect-h-9">
+                        <img   
+                          alt={dynamicTitle + " service visual"} 
+                          className="object-cover w-full h-full"
+                          src={service.imageUrl} 
+                          loading="lazy" />
+                        
+                        {/* Service Badge - Removed for cleaner look */}
+                      </div>
+                    </CardHeader>
+                    <CardContent className="p-4 sm:p-6 flex-grow">
+                      <div className="flex items-center gap-3 mb-3">
+                        {service.icon}
+                        <CardTitle className="text-xl sm:text-2xl font-semibold text-primary line-clamp-2 drop-shadow-sm">{dynamicTitle}</CardTitle>
+                      </div>
+                      <CardDescription className="text-muted-foreground flex-grow mb-4 line-clamp-3 drop-shadow-sm">{dynamicDescription}</CardDescription>
                     
                     {/* Service Features */}
                     <div className="space-y-2 mb-4">
@@ -219,7 +225,8 @@ const servicesList = [
                 </Link>
               </Card>
             </div>
-          ))}
+          );
+          })}
         </div>
       </section>
 
