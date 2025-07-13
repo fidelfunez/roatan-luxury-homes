@@ -160,16 +160,22 @@ const Services = () => {
           {/* Service Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {[
-              { number: getContent('services', 'hero', 'stat1Number'), label: getContent('services', 'hero', 'stat1Label') },
-              { number: getContent('services', 'hero', 'stat2Number'), label: getContent('services', 'hero', 'stat2Label') },
-              { number: getContent('services', 'hero', 'stat3Number'), label: getContent('services', 'hero', 'stat3Label') },
-              { number: getContent('services', 'hero', 'stat4Number'), label: getContent('services', 'hero', 'stat4Label') }
-            ].map((stat, index) => (
-              <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20">
-                <div className="text-2xl md:text-3xl font-bold text-white">{stat.number}</div>
-                <div className="text-sm text-white/80">{stat.label}</div>
-              </div>
-            ))}
+              { number: '500+', label: 'Properties Sold' },
+              { number: '15+', label: 'Years Experience' },
+              { number: '100%', label: 'Client Satisfaction' },
+              { number: '24/7', label: 'Support Available' }
+            ].map((stat, index) => {
+              // Get dynamic content for this stat
+              const dynamicNumber = getContent('services', 'hero', `stat${index + 1}Number`) || stat.number;
+              const dynamicLabel = getContent('services', 'hero', `stat${index + 1}Label`) || stat.label;
+              
+              return (
+                              <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20">
+                  <div className="text-2xl md:text-3xl font-bold text-white">{dynamicNumber}</div>
+                  <div className="text-sm text-white/80">{dynamicLabel}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -244,25 +250,30 @@ const Services = () => {
             {[
               {
                 icon: <Shield className="w-8 h-8 text-primary" />,
-                title: getContent('services', 'whyChooseUs', 'feature1Title'),
-                description: getContent('services', 'whyChooseUs', 'feature1Desc')
+                title: 'Trusted Expertise',
+                description: '15+ years of experience in Caribbean real estate with deep local knowledge.'
               },
               {
                 icon: <Users className="w-8 h-8 text-primary" />,
-                title: getContent('services', 'whyChooseUs', 'feature2Title'),
-                description: getContent('services', 'whyChooseUs', 'feature2Desc')
+                title: 'Personalized Service',
+                description: 'Dedicated support throughout your entire real estate journey.'
               },
               {
                 icon: <Award className="w-8 h-8 text-primary" />,
-                title: getContent('services', 'whyChooseUs', 'feature3Title'),
-                description: getContent('services', 'whyChooseUs', 'feature3Desc')
+                title: 'Quality Assurance',
+                description: 'Rigorous due diligence and quality standards for every transaction.'
               },
               {
                 icon: <Phone className="w-8 h-8 text-primary" />,
-                title: getContent('services', 'whyChooseUs', 'feature4Title'),
-                description: getContent('services', 'whyChooseUs', 'feature4Desc')
+                title: '24/7 Support',
+                description: 'Round-the-clock assistance for all your real estate needs.'
               }
-            ].map((item, index) => (
+            ].map((item, index) => {
+              // Get dynamic content for this feature
+              const dynamicTitle = getContent('services', 'whyChooseUs', `feature${index + 1}Title`) || item.title;
+              const dynamicDescription = getContent('services', 'whyChooseUs', `feature${index + 1}Desc`) || item.description;
+              
+              return (
               <div 
                 key={index}
                 className="text-center p-6 bg-card rounded-xl shadow-md hover:shadow-lg border border-border/50 transition-all duration-300 hover:-translate-y-1"
@@ -272,10 +283,11 @@ const Services = () => {
                     {item.icon}
                   </div>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.description}</p>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{dynamicTitle}</h3>
+                <p className="text-muted-foreground text-sm">{dynamicDescription}</p>
               </div>
-            ))}
+            );
+          })}
           </div>
         </div>
       </section>
