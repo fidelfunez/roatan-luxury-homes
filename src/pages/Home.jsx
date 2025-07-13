@@ -62,7 +62,7 @@ const Home = () => {
 
 
   return (
-    <div className="space-y-4 md:space-y-8">
+    <div className="space-y-2 md:space-y-4">
       {/* Enhanced Hero Section - Compact & Full Width */}
       <section className="hero-full-bleed relative py-12 md:py-16 lg:py-20 flex items-center justify-center text-center overflow-hidden w-full lg:w-screen lg:left-1/2 lg:right-1/2 lg:-translate-x-1/2 lg:mx-0">
         {/* Desktop Background */}
@@ -141,7 +141,7 @@ const Home = () => {
       </section>
 
       {/* Welcome Text Section */}
-      <section className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
+      <section className="container mx-auto px-4 py-4 md:py-6 lg:py-8">
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-primary">{getContent('home', 'welcome', 'title')}</h2>
           <p className="text-lg lg:text-xl text-muted-foreground mb-0">
@@ -151,7 +151,7 @@ const Home = () => {
       </section>
 
       {/* Features & Image Section */}
-      <section className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
+      <section className="container mx-auto px-4 py-4 md:py-6 lg:py-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center">
           {/* Desktop: Left - Feature Cards */}
           <div className="hidden lg:grid lg:grid-cols-1 gap-6">
