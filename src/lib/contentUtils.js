@@ -13,7 +13,7 @@ const defaultContent = {
       trustIndicator3: '24/7 Support'
     },
     welcome: {
-      title: 'Welcome to Paradise',
+      title: 'Welcome to Paradise 👋🏼',
       description: 'The Caribbean, a collection of jewels, offers unparalleled beauty, vibrant cultures, and welcoming communities. Whether you\'re seeking a vacation home, a permanent residence, or a smart investment, Caribbean Lux Realty is your trusted guide.',
       feature1Title: 'Expert Guidance',
       feature1Desc: 'Navigating the Caribbean market with local expertise and personalized service.',
