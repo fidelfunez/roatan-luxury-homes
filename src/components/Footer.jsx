@@ -100,9 +100,11 @@ const Footer = () => {
               </div>
             </div>
 
-            {footerSections.map((section) => (
+            {footerSections.map((section, index) => (
               <div key={section.title}>
-                <p className="font-semibold text-lg text-primary mb-4">{section.title}</p>
+                <p className="font-semibold text-lg text-primary mb-4">
+                  {index === 0 ? getContent('footer', 'links', 'exploreTitle') : getContent('footer', 'links', 'companyTitle')}
+                </p>
                 <ul className="space-y-2">
                   {section.links.map((link) => (
                     <li key={link.label}>
@@ -134,7 +136,7 @@ const Footer = () => {
           </div>
 
           <div className="border-t border-primary/20 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-muted-foreground">&copy; {currentYear} Caribbean Lux Realty. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">&copy; {currentYear} {getContent('footer', 'links', 'copyright')}</p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
                 <a

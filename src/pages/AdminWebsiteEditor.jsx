@@ -35,7 +35,9 @@ import {
   RefreshCw,
   Download,
   Upload,
-  Trash2
+  Trash2,
+  Menu,
+  Link
 } from 'lucide-react';
 import { getWebsiteContent, saveWebsiteContent, resetToDefaults, getDefaultContent } from '@/lib/contentUtils';
 
@@ -483,6 +485,24 @@ const AdminWebsiteEditor = () => {
       ]
     },
     {
+      id: 'blog',
+      title: 'Blog Page',
+      icon: <FileText className="w-5 h-5" />,
+      description: 'Edit blog page hero section and content',
+      sections: [
+        {
+          id: 'hero',
+          title: 'Hero Section',
+          icon: <Star className="w-4 h-4" />,
+          fields: [
+            { key: 'title', label: 'Page Title', type: 'text', placeholder: 'Roatán Real Estate Insights' },
+            { key: 'subtitle', label: 'Subtitle', type: 'textarea', placeholder: 'Stay informed with our latest articles, news, and guides on buying, selling, and living in Roatán.' },
+            { key: 'badge', label: 'Badge Text', type: 'text', placeholder: 'Real Estate Insights' }
+          ]
+        }
+      ]
+    },
+    {
       id: 'contact',
       title: 'Contact Page',
       icon: <MessageSquare className="w-5 h-5" />,
@@ -537,6 +557,55 @@ const AdminWebsiteEditor = () => {
       ]
     },
     {
+      id: 'header',
+      title: 'Header & Navigation',
+      icon: <Globe className="w-5 h-5" />,
+      description: 'Edit header content, navigation menu, and contact info',
+      sections: [
+        {
+          id: 'logo',
+          title: 'Logo & Brand',
+          icon: <Type className="w-4 h-4" />,
+          fields: [
+            { key: 'companyName', label: 'Company Name', type: 'text', placeholder: 'Caribbean Lux Realty' },
+            { key: 'tagline', label: 'Tagline', type: 'text', placeholder: 'Luxury Caribbean Properties' }
+          ]
+        },
+        {
+          id: 'navigation',
+          title: 'Navigation Menu',
+          icon: <Menu className="w-4 h-4" />,
+          fields: [
+            { key: 'homeLabel', label: 'Home Menu Label', type: 'text', placeholder: 'Home' },
+            { key: 'propertiesLabel', label: 'Properties Menu Label', type: 'text', placeholder: 'Properties' },
+            { key: 'servicesLabel', label: 'Services Menu Label', type: 'text', placeholder: 'Services' },
+            { key: 'aboutLabel', label: 'About Menu Label', type: 'text', placeholder: 'About Us' },
+            { key: 'blogLabel', label: 'Blog Menu Label', type: 'text', placeholder: 'Blog' },
+            { key: 'contactLabel', label: 'Contact Menu Label', type: 'text', placeholder: 'Contact' }
+          ]
+        },
+        {
+          id: 'topBar',
+          title: 'Top Bar Information',
+          icon: <Phone className="w-4 h-4" />,
+          fields: [
+            { key: 'location', label: 'Location Text', type: 'text', placeholder: 'Roatán, Honduras' },
+            { key: 'phone', label: 'Phone Number', type: 'text', placeholder: '+504 123-456-7890' },
+            { key: 'hours', label: 'Business Hours', type: 'text', placeholder: 'Mon-Fri 9AM-6PM' }
+          ]
+        },
+        {
+          id: 'cta',
+          title: 'Header CTA Button',
+          icon: <MessageSquare className="w-4 h-4" />,
+          fields: [
+            { key: 'ctaText', label: 'CTA Button Text', type: 'text', placeholder: 'Get in Touch' },
+            { key: 'searchPlaceholder', label: 'Search Placeholder', type: 'text', placeholder: 'Search the entire website...' }
+          ]
+        }
+      ]
+    },
+    {
       id: 'footer',
       title: 'Footer',
       icon: <Settings className="w-5 h-5" />,
@@ -562,6 +631,17 @@ const AdminWebsiteEditor = () => {
             { key: 'description', label: 'Description', type: 'textarea', placeholder: 'Subscribe to our newsletter for the latest luxury properties and news.' },
             { key: 'placeholder', label: 'Email Placeholder', type: 'text', placeholder: 'Enter your email' },
             { key: 'buttonText', label: 'Button Text', type: 'text', placeholder: 'Subscribe' }
+          ]
+        },
+        {
+          id: 'links',
+          title: 'Footer Links',
+          icon: <Link className="w-4 h-4" />,
+          fields: [
+            { key: 'exploreTitle', label: 'Explore Section Title', type: 'text', placeholder: 'Explore' },
+            { key: 'companyTitle', label: 'Company Section Title', type: 'text', placeholder: 'Company' },
+            { key: 'privacyPolicy', label: 'Privacy Policy Link', type: 'text', placeholder: 'Privacy Policy' },
+            { key: 'copyright', label: 'Copyright Text', type: 'text', placeholder: 'Caribbean Lux Realty. All rights reserved.' }
           ]
         }
       ]

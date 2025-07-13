@@ -134,12 +134,12 @@ const Blog = () => {
             <div className="mb-6">
               <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm font-medium mb-4 drop-shadow-md">
                 <BookOpen className="w-4 h-4" />
-                <span>Real Estate Insights</span>
+                <span>{getContent('blog', 'hero', 'badge')}</span>
               </div>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">Roatán Real Estate Insights</h1>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">{getContent('blog', 'hero', 'title')}</h1>
             <p className="text-lg md:text-xl lg:text-2xl text-white/95 max-w-4xl mx-auto mb-8 drop-shadow-md">
-              Stay informed with our latest articles, news, and guides on buying, selling, and living in Roatán.
+              {getContent('blog', 'hero', 'subtitle')}
             </p>
             
             {/* Blog Stats */}
@@ -199,12 +199,12 @@ const Blog = () => {
             <div className="mb-6">
               <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm font-medium mb-4 drop-shadow-md">
                 <BookOpen className="w-4 h-4" />
-                <span>Real Estate Insights</span>
+                <span>{getContent('blog', 'hero', 'badge')}</span>
               </div>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">Roatán Real Estate Insights</h1>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">{getContent('blog', 'hero', 'title')}</h1>
             <p className="text-lg md:text-xl lg:text-2xl text-white/95 max-w-4xl mx-auto mb-8 drop-shadow-md">
-              Stay informed with our latest articles, news, and guides on buying, selling, and living in Roatán.
+              {getContent('blog', 'hero', 'subtitle')}
             </p>
           </div>
         </section>
@@ -247,12 +247,12 @@ const Blog = () => {
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm font-medium mb-4 drop-shadow-md">
               <BookOpen className="w-4 h-4" />
-              <span>Real Estate Insights</span>
+              <span>{getContent('blog', 'hero', 'badge')}</span>
             </div>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">Roatán Real Estate Insights</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">{getContent('blog', 'hero', 'title')}</h1>
           <p className="text-lg md:text-xl lg:text-2xl text-white/95 max-w-4xl mx-auto mb-8 drop-shadow-md">
-            Stay informed with our latest articles, news, and guides on buying, selling, and living in Roatán.
+            {getContent('blog', 'hero', 'subtitle')}
           </p>
           
           {/* Blog Stats */}

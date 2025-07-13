@@ -178,6 +178,29 @@ const defaultContent = {
     description: 'For businesses looking to establish or expand their presence in Roatán, we offer specialized commercial real estate services. We can help you find suitable office spaces, retail locations, warehouses, or properties for hospitality ventures like hotels and restaurants. Our team understands the local commercial market dynamics and can assist with site selection, lease negotiation, and connecting you with relevant business support services.',
     ctaText: 'Let\'s discuss how we can assist you with commercial real estate. Contact us today for a personalized consultation.'
   },
+  header: {
+    logo: {
+      companyName: 'Caribbean Lux Realty',
+      tagline: 'Luxury Caribbean Properties'
+    },
+    navigation: {
+      homeLabel: 'Home',
+      propertiesLabel: 'Properties',
+      servicesLabel: 'Services',
+      aboutLabel: 'About Us',
+      blogLabel: 'Blog',
+      contactLabel: 'Contact'
+    },
+    topBar: {
+      location: 'Roatán, Honduras',
+      phone: '+504 123-456-7890',
+      hours: 'Mon-Fri 9AM-6PM'
+    },
+    cta: {
+      ctaText: 'Get in Touch',
+      searchPlaceholder: 'Search the entire website...'
+    }
+  },
   footer: {
     companyInfo: {
       description: 'Your trusted partner for finding exceptional properties in the Caribbean.',
@@ -190,6 +213,12 @@ const defaultContent = {
       description: 'Subscribe to our newsletter for the latest luxury properties and news.',
       placeholder: 'Enter your email',
       buttonText: 'Subscribe'
+    },
+    links: {
+      exploreTitle: 'Explore',
+      companyTitle: 'Company',
+      privacyPolicy: 'Privacy Policy',
+      copyright: 'Caribbean Lux Realty. All rights reserved.'
     }
   }
 };

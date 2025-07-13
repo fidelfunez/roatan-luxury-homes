@@ -5,15 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Menu, X, Home as HomeIcon, Info, Mail, Briefcase, Building2, Newspaper, Phone, Search, ChevronDown, MapPin, Clock, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
 import { searchWebsite, getSearchSuggestions } from '@/lib/searchUtils';
-
-const navLinks = [
-  { to: '/', label: 'Home', icon: <HomeIcon className="w-4 h-4 mr-2" /> },
-  { to: '/properties', label: 'Properties', icon: <Building2 className="w-4 h-4 mr-2" /> },
-  { to: '/services', label: 'Services', icon: <Briefcase className="w-4 h-4 mr-2" /> },
-  { to: '/about', label: 'About Us', icon: <Info className="w-4 h-4 mr-2" /> },
-  { to: '/blog', label: 'Blog', icon: <Newspaper className="w-4 h-4 mr-2" /> },
-  { to: '/contact', label: 'Contact', icon: <Mail className="w-4 h-4 mr-2" /> },
-];
+import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +14,51 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
   const [showResults, setShowResults] = useState(false);
+  const [content, setContent] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Load website content
+    const loadContent = () => {
+      const websiteContent = getWebsiteContent();
+      setContent(websiteContent);
+    };
+    
+    loadContent();
+    
+    // Listen for content updates
+    const handleContentUpdate = () => {
+      loadContent();
+    };
+    
+    window.addEventListener('websiteContentUpdated', handleContentUpdate);
+    
+    return () => {
+      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
+    };
+  }, []);
+
+  // Helper function to get content with fallback
+  const getContent = (page, section, field) => {
+    const value = content[page]?.[section]?.[field];
+    
+    // If the value is empty, null, or undefined, return the default
+    if (!value || value.trim() === '') {
+      return getContentField(page, section, field);
+    }
+    
+    return value;
+  };
+
+  // Navigation links with editable content
+  const navLinks = [
+    { to: '/', label: getContent('header', 'navigation', 'homeLabel'), icon: <HomeIcon className="w-4 h-4 mr-2" /> },
+    { to: '/properties', label: getContent('header', 'navigation', 'propertiesLabel'), icon: <Building2 className="w-4 h-4 mr-2" /> },
+    { to: '/services', label: getContent('header', 'navigation', 'servicesLabel'), icon: <Briefcase className="w-4 h-4 mr-2" /> },
+    { to: '/about', label: getContent('header', 'navigation', 'aboutLabel'), icon: <Info className="w-4 h-4 mr-2" /> },
+    { to: '/blog', label: getContent('header', 'navigation', 'blogLabel'), icon: <Newspaper className="w-4 h-4 mr-2" /> },
+    { to: '/contact', label: getContent('header', 'navigation', 'contactLabel'), icon: <Mail className="w-4 h-4 mr-2" /> },
+  ];
 
   // Optimized scroll handler with throttling
   const handleScroll = useCallback(() => {
@@ -116,15 +152,15 @@ const Header = () => {
             <div className="flex items-center space-x-6 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <MapPin className="w-4 h-4 mr-2 text-primary" />
-                <span>Roatán, Honduras</span>
+                <span>{getContent('header', 'topBar', 'location')}</span>
               </div>
               <div className="flex items-center">
                 <Phone className="w-4 h-4 mr-2 text-primary" />
-                <span>+504 123-456-7890</span>
+                <span>{getContent('header', 'topBar', 'phone')}</span>
               </div>
               <div className="flex items-center">
                 <Clock className="w-4 h-4 mr-2 text-primary" />
-                <span>Mon-Fri 9AM-6PM</span>
+                <span>{getContent('header', 'topBar', 'hours')}</span>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -134,7 +170,7 @@ const Header = () => {
               <Button asChild size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-white/80 backdrop-blur-sm font-semibold shadow-lg">
                 <Link to="/contact">
                   <Phone className="w-4 h-4 mr-2" />
-                  Get in Touch
+                  {getContent('header', 'cta', 'ctaText')}
                 </Link>
               </Button>
             </div>
@@ -166,7 +202,7 @@ const Header = () => {
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input 
                       type="text" 
-                      placeholder="Search the entire website..." 
+                      placeholder={getContent('header', 'cta', 'searchPlaceholder')} 
                       value={searchQuery}
                       onChange={handleSearchChange}
                       onKeyPress={handleSearchKeyPress}
