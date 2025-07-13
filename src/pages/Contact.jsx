@@ -122,7 +122,7 @@ const Contact = () => {
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Desktop: Contact Info - 1/3 Width (LEFT) */}
           <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-sandy-light to-turquoise-light p-6 lg:p-8 rounded-xl shadow-lg border border-border/50 h-full">
+            <div className="bg-gradient-to-br from-sandy-light to-turquoise-light p-6 lg:p-8 rounded-xl shadow-2xl border border-border/50 h-full">
               <h3 className="text-2xl font-bold text-primary mb-6">Contact Information</h3>
               
               <div className="space-y-4">
@@ -175,7 +175,7 @@ const Contact = () => {
 
           {/* Desktop: Contact Form - 2/3 Width (RIGHT) */}
           <div className="lg:col-span-2">
-            <div className="bg-card p-8 lg:p-12 rounded-xl shadow-lg border border-border/50 h-full">
+            <div className="bg-card p-8 lg:p-12 rounded-xl shadow-2xl border border-border/50 h-full">
               <div className="mb-8">
                 <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">Send Us a Message</h2>
                 <p className="text-lg text-muted-foreground">Fill out the form below and we'll get back to you within 24 hours.</p>
