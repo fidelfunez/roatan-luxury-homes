@@ -224,13 +224,11 @@ const servicesList = [
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="relative w-full">
-        <img src="/Photos/boat-ocean-optimized.jpg" alt="Boat on Caribbean ocean" className="absolute inset-0 w-full h-full object-cover rounded-2xl" loading="lazy" />
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary/60 via-turquoise-dark/60 to-primary/40 rounded-2xl" />
-        <div className="relative container mx-auto px-4 z-10 p-8 md:p-12">
+      <section className="bg-gradient-to-br from-sandy-light via-turquoise-light/30 to-blue-50 py-16 md:py-20 rounded-2xl shadow-inner">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg">{getContent('services', 'whyChooseUs', 'title')}</h2>
-            <p className="text-lg text-white/95 max-w-3xl mx-auto drop-shadow-md">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{getContent('services', 'whyChooseUs', 'title')}</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               {getContent('services', 'whyChooseUs', 'subtitle')}
             </p>
           </div>
@@ -238,33 +236,37 @@ const servicesList = [
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: <Shield className="w-8 h-8 text-white" />,
+                icon: <Shield className="w-8 h-8 text-primary" />,
                 title: getContent('services', 'whyChooseUs', 'feature1Title'),
                 description: getContent('services', 'whyChooseUs', 'feature1Desc')
               },
               {
-                icon: <Users className="w-8 h-8 text-white" />,
+                icon: <Users className="w-8 h-8 text-primary" />,
                 title: getContent('services', 'whyChooseUs', 'feature2Title'),
                 description: getContent('services', 'whyChooseUs', 'feature2Desc')
               },
               {
-                icon: <Award className="w-8 h-8 text-white" />,
+                icon: <Award className="w-8 h-8 text-primary" />,
                 title: getContent('services', 'whyChooseUs', 'feature3Title'),
                 description: getContent('services', 'whyChooseUs', 'feature3Desc')
               },
               {
-                icon: <Phone className="w-8 h-8 text-white" />,
+                icon: <Phone className="w-8 h-8 text-primary" />,
                 title: getContent('services', 'whyChooseUs', 'feature4Title'),
                 description: getContent('services', 'whyChooseUs', 'feature4Desc')
               }
             ].map((item, index) => (
               <div 
                 key={index}
-                className="text-center"
+                className="text-center p-6 bg-card rounded-xl shadow-md hover:shadow-lg border border-border/50 transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="mb-4 flex justify-center">{item.icon}</div>
-                <h3 className="text-lg font-semibold text-white mb-2 drop-shadow-md">{item.title}</h3>
-                <p className="text-white/90 text-sm drop-shadow-sm">{item.description}</p>
+                <div className="mb-4 flex justify-center">
+                  <div className="p-3 bg-primary/10 rounded-xl">
+                    {item.icon}
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
+                <p className="text-muted-foreground text-sm">{item.description}</p>
               </div>
             ))}
           </div>
