@@ -135,9 +135,8 @@ const servicesList = [
       <section className="hero-full-bleed text-center py-16 md:py-20 relative overflow-hidden rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600" style={{ background: 'linear-gradient(to bottom right, #22d3ee, #3b82f6, #4f46e5)' }}>
         {/* Background Image with Color-Matched Placeholder */}
         <div className="absolute inset-0">
-          <OptimizedImage 
+          <img 
             src="/Photos/turtle-ocean-optimized.jpg" 
-            webpSrc="/Photos/turtle-ocean-optimized.webp"
             alt="Turtle in Caribbean ocean" 
             className="w-full h-full object-cover"
             loading="eager"
