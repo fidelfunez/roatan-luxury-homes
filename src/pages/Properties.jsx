@@ -203,10 +203,10 @@ const Properties = () => {
           {/* Property Stats - Desktop Enhanced */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { number: allProperties.length.toString(), label: "Total Properties", icon: <Grid3X3 className="w-6 h-6 text-primary" /> },
-              { number: allProperties.filter(p => p.type === "Luxury").length.toString(), label: "Luxury Homes", icon: <Star className="w-6 h-6 text-primary" /> },
-              { number: allProperties.filter(p => p.type === "Beachfront").length.toString(), label: "Beachfront", icon: <MapPin className="w-6 h-6 text-primary" /> },
-              { number: allProperties.filter(p => p.type === "Land").length.toString(), label: "Land Plots", icon: <TrendingUp className="w-6 h-6 text-primary" /> }
+              { number: allProperties.length.toString(), label: "Total Properties", icon: <Grid3X3 className="w-6 h-6 text-white" /> },
+              { number: allProperties.filter(p => p.type === "Luxury").length.toString(), label: "Luxury Homes", icon: <Star className="w-6 h-6 text-white" /> },
+              { number: allProperties.filter(p => p.type === "Beachfront").length.toString(), label: "Beachfront", icon: <MapPin className="w-6 h-6 text-white" /> },
+              { number: allProperties.filter(p => p.type === "Land").length.toString(), label: "Land Plots", icon: <TrendingUp className="w-6 h-6 text-white" /> }
             ].map((stat, index) => (
               <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20">
                 <div className="flex justify-center mb-2">{stat.icon}</div>
