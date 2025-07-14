@@ -4,51 +4,43 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import OptimizedImage from '@/components/OptimizedImage';
-import { getPageContent } from '@/lib/supabaseUtils';
+import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
 
 const Services = () => {
   const [content, setContent] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loadContent = async () => {
-      try {
-        const pageContent = await getPageContent('services');
-        setContent(pageContent);
-      } catch (error) {
-        console.error('Error loading page content:', error);
-        setContent({});
-      } finally {
-        setIsLoading(false);
-      }
+    // Load website content
+    const loadContent = () => {
+      const websiteContent = getWebsiteContent();
+      setContent(websiteContent);
     };
+    
     loadContent();
+    
+    // Listen for content updates
+    const handleContentUpdate = () => {
+      loadContent();
+    };
+    
+    window.addEventListener('websiteContentUpdated', handleContentUpdate);
+    
+    return () => {
+      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
+    };
   }, []);
 
   // Helper function to get content with fallback
   const getContent = (section, field, fallback = '') => {
-    try {
-      const value = content[section]?.[field];
-      if (!value || typeof value !== 'string' || value.trim() === '' || typeof value === 'object') {
-        return fallback;
-      }
-      return String(value);
-    } catch (error) {
-      return fallback;
+    const value = content['services']?.[section]?.[field];
+    
+    // If the value is empty, null, or undefined, return the fallback
+    if (!value || value.trim() === '') {
+      return getContentField('services', section, field) || fallback;
     }
+    
+    return value;
   };
-
-  // Show loading state
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading services...</p>
-        </div>
-      </div>
-    );
-  }
 
   // Services list with static data - content will be loaded dynamically
   const servicesList = [
