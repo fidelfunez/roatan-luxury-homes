@@ -76,7 +76,7 @@ const Contact = () => {
   return (
     <div className="space-y-16 md:space-y-24">
       {/* Enhanced Hero Section */}
-      <section className="hero-full-bleed text-center py-16 md:py-20 lg:py-24 relative overflow-hidden rounded-xl bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-600" style={{ background: 'linear-gradient(to bottom right, #2dd4bf, #06b6d4, #2563eb)' }}>
+      <section className="hero-full-bleed text-center py-16 md:py-20 lg:py-24 relative overflow-hidden rounded-xl bg-gradient-to-br from-teal-400 via-cyan-500 to-blue-600 min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center" style={{ background: 'linear-gradient(to bottom right, #2dd4bf, #06b6d4, #2563eb)' }}>
         {/* Background Image with Color-Matched Placeholder */}
         <div className="absolute inset-0">
           <img 
