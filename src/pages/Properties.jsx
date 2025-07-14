@@ -175,7 +175,7 @@ const Properties = () => {
   return (
     <div className="space-y-16 md:space-y-24">
       {/* Enhanced Hero Section - Desktop Full Width */}
-      <section className="hero-full-bleed text-center py-16 md:py-20 lg:py-24 relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-400 via-blue-500 to-teal-600 min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center" style={{ background: 'linear-gradient(to bottom right, #60a5fa, #3b82f6, #0d9488)' }}>
+      <section className="hero-full-bleed text-center py-12 md:py-16 lg:py-20 relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-400 via-blue-500 to-teal-600 min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex items-center" style={{ background: 'linear-gradient(to bottom right, #60a5fa, #3b82f6, #0d9488)' }}>
         {/* Background Image with Color-Matched Placeholder */}
         <div className="absolute inset-0">
           <img 

@@ -50,7 +50,7 @@ const About = () => {
   return (
     <div className="space-y-16 md:space-y-24">
       {/* Enhanced Hero Section */}
-      <section className="hero-full-bleed text-center py-16 md:py-20 lg:py-24 relative overflow-hidden rounded-xl bg-gradient-to-br from-sandy-light via-turquoise-light to-blue-500 min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center" style={{ background: 'linear-gradient(to bottom right, #f4f1eb, #06b6d4, #3b82f6)' }}>
+      <section className="hero-full-bleed text-center py-12 md:py-16 lg:py-20 relative overflow-hidden rounded-xl bg-gradient-to-br from-sandy-light via-turquoise-light to-blue-500 min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex items-center" style={{ background: 'linear-gradient(to bottom right, #f4f1eb, #06b6d4, #3b82f6)' }}>
         {/* Background Image with Color-Matched Placeholder */}
         <div className="absolute inset-0">
           <img 
