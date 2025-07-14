@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider'; 
 import { Label } from '@/components/ui/label';
 import { MapPin, DollarSign, Search, Filter, BedDouble, Bath, CarFront, ArrowRight, PlusSquare, Star, CheckCircle, Eye, Heart, TrendingUp, Grid3X3, List, SortAsc, SortDesc } from 'lucide-react';
@@ -251,17 +250,16 @@ const Properties = () => {
               
               <div className="flex items-center gap-2">
                 <Label className="text-sm font-medium">Sort:</Label>
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-32 h-8">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="featured">Featured</SelectItem>
-                    <SelectItem value="price-low">Price: Low to High</SelectItem>
-                    <SelectItem value="price-high">Price: High to Low</SelectItem>
-                    <SelectItem value="newest">Newest</SelectItem>
-                  </SelectContent>
-                </Select>
+                <select 
+                  value={sortBy} 
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="w-32 h-8 rounded-md border border-input bg-background px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="featured">Featured</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="newest">Newest</option>
+                </select>
               </div>
             </div>
             
@@ -288,30 +286,30 @@ const Properties = () => {
 
             <div>
               <Label htmlFor="propertyType" className="text-sm font-medium text-foreground">Property Type</Label>
-              <Select value={propertyType} onValueChange={setPropertyType}>
-                <SelectTrigger id="propertyType" className="mt-1 bg-background/70 focus:bg-background">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {uniquePropertyTypes.map(type => (
-                    <SelectItem key={type} value={type}>{type === 'all' ? 'All Types' : type}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select 
+                id="propertyType" 
+                value={propertyType} 
+                onChange={(e) => setPropertyType(e.target.value)}
+                className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                {uniquePropertyTypes.map(type => (
+                  <option key={type} value={type}>{type === 'all' ? 'All Types' : type}</option>
+                ))}
+              </select>
             </div>
 
             <div>
               <Label htmlFor="bedrooms" className="text-sm font-medium text-foreground">Bedrooms</Label>
-              <Select value={bedrooms} onValueChange={setBedrooms}>
-                <SelectTrigger id="bedrooms" className="mt-1 bg-background/70 focus:bg-background">
-                  <SelectValue placeholder="Any" />
-                </SelectTrigger>
-                <SelectContent>
-                  {bedroomOptions.map(option => (
-                    <SelectItem key={option} value={option}>{option === 'all' ? 'Any Bedrooms' : option}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select 
+                id="bedrooms" 
+                value={bedrooms} 
+                onChange={(e) => setBedrooms(e.target.value)}
+                className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                {bedroomOptions.map(option => (
+                  <option key={option} value={option}>{option === 'all' ? 'Any Bedrooms' : option}</option>
+                ))}
+              </select>
             </div>
 
             <div className="lg:col-span-1">
