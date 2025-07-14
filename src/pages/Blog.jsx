@@ -119,7 +119,7 @@ const Blog = () => {
     return (
       <div className="space-y-16 md:space-y-24">
         {/* Enhanced Loading Hero Section */}
-        <section className="hero-full-bleed text-center py-16 md:py-20 lg:py-24 relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-400 via-pink-500 to-orange-500" style={{ background: 'linear-gradient(to bottom right, #a855f7, #ec4899, #f97316)' }}>
+        <section className="hero-full-bleed text-center py-12 md:py-16 lg:py-20 relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-400 via-pink-500 to-orange-500 min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex items-center" style={{ background: 'linear-gradient(to bottom right, #a855f7, #ec4899, #f97316)' }}>
           <div className="absolute inset-0">
             <img 
               src="/Photos/roatan-island-optimized.jpg" 
