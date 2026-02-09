@@ -120,3 +120,15 @@ Applied to address PageSpeed’s “Opportunities” for mobile:
 **Cause:** The app hid the whole page (`#root` had `opacity: 0`) until JS ran and a 100ms timeout finished. On Lighthouse’s throttled mobile (slow 4G + slow CPU), the main JS bundle could load very late, so the page stayed blank long enough for the run to time out or be treated as a failure.
 
 **Fix:** Removed the initial `#root.loading` (opacity 0) and the 100ms delay in `main.jsx`. Content is visible as soon as React renders, so the mobile audit can finish even when JS is slow.
+
+---
+
+## Accessibility & Best Practices (Lighthouse mobile)
+
+**Accessibility (contrast):** Outline primary buttons/links (“List Your Property”, etc.) and the Subscribe button were flagged for low contrast. Changes: added `--primary-dark` (darker blue) and a global rule so elements with `border-primary` + `text-primary` use it for text; Subscribe button uses `bg-primary-dark` so white text meets WCAG AA.
+
+**Accessibility (names and labels):** The mobile logo link (icon only on small screens) had no discernible name. Added `aria-label="Roatán Luxury Homes - Home"` to the Logo `Link` in `Logo.jsx`.
+
+**Best practices – source maps:** Enabled `build.sourcemap: true` in `vite.config.js` so the main JS file has a source map (Lighthouse “Missing source maps” resolved).
+
+**Best practices – console errors:** “Failed to load resource: net::ERR_CONNECTION_FAILED” for the Supabase `/v1/properties` request during Lighthouse is expected: the audit runs in a throttled/simulated environment and often cannot reach the API. No code change required; the app already handles fetch errors.

@@ -6,7 +6,7 @@ import { hoverScale, buttonTap } from '@/lib/animations';
 
 const Logo = ({ className = "", textClassName = "" }) => {
   return (
-    <Link to="/" className={`flex items-center space-x-2 ${className}`}>
+    <Link to="/" className={`flex items-center space-x-2 ${className}`} aria-label="Roatán Luxury Homes - Home">
       <motion.div 
         whileHover={hoverScale}
         whileTap={buttonTap}

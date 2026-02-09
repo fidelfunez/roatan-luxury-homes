@@ -59,7 +59,7 @@ const NewsletterSignup = () => {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full sm:w-auto bg-primary hover:bg-primary/90"
+              className="w-full sm:w-auto bg-primary-dark hover:bg-primary-dark/90 text-primary-foreground"
             >
               {isSubmitting ? 'Subscribing...' : 'Subscribe'}
             </Button>
