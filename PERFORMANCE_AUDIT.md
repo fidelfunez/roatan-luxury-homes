@@ -36,10 +36,9 @@ Performance is the main lever; accessibility and best practices are already stro
 
 ## Changes made
 
-### 1. Preload only the LCP image
+### 1. ~~Preload only the LCP image~~ Preload removed
 - **File:** `index.html`
-- Removed preload for turtle-ocean, beach, reef. Kept only `hero-banner-optimized.jpg` (the home hero / LCP).
-- Reduces contention so the browser can load the LCP image faster on mobile.
+- Hero image preload was removed. The home hero is **desktop-only** (`hidden lg:block`); on mobile the hero is a gradient with no image. Preloading the hero caused a “preloaded but not used” warning on mobile and wasted bandwidth. On desktop the hero still loads with `loading="eager"` and `fetchpriority="high"` from the component.
 
 ### 2. Route-based code splitting (React.lazy)
 - **File:** `src/App.jsx`
@@ -48,17 +47,9 @@ Performance is the main lever; accessibility and best practices are already stro
 - Wrapped `<Routes>` in `<Suspense fallback={<PageFallback />}>` with a small spinner so the UI doesn’t jump.
 - **Effect:** Initial JS bundle is much smaller; other pages load on demand. Improves LCP and TBT/INP on the first visit.
 
-### 3. Vendor chunk splitting (Vite)
+### 3. ~~Vendor chunk splitting (Vite)~~ Reverted
 - **File:** `vite.config.js`
-- Added `build.rollupOptions.output.manualChunks` to split:
-  - `vendor-react` (react, react-dom)
-  - `vendor-router` (react-router-dom)
-  - `vendor-motion` (framer-motion)
-  - `vendor-radix` (@radix-ui/*)
-  - `vendor-icons` (lucide-react)
-  - `vendor-supabase` (@supabase/supabase-js)
-  - `vendor` (rest of node_modules)
-- **Effect:** Smaller initial chunk; better caching when you update app code but not libs.
+- Custom `manualChunks` was reverted because it caused **"Cannot access 'o' before initialization"** (chunk load order / circular dependency). Rollup’s default chunking is used instead. Route-based code splitting (lazy routes) is still in place and gives the main benefit.
 
 ### 4. Fewer high-priority images on Blog
 - **File:** `src/pages/Blog.jsx`
@@ -98,9 +89,9 @@ Performance is the main lever; accessibility and best practices are already stro
 
 ## Files touched
 
-- `index.html` – preload only hero-banner
-- `src/App.jsx` – lazy routes + Suspense
-- `vite.config.js` – manualChunks
-- `src/pages/Blog.jsx` – loading/error hero no longer high-priority
+- `index.html` – hero preload removed (hero is desktop-only; preload caused “not used” warning on mobile)
+- `src/App.jsx` – lazy routes + Suspense (kept)
+- `vite.config.js` – custom manualChunks reverted (caused blank page / “Cannot access before initialization”)
+- `src/pages/Blog.jsx` – loading/error hero no longer high-priority (kept)
 
 After deploying, run PageSpeed again and iterate on any remaining suggestions (images, fonts, third-party scripts) as needed.
