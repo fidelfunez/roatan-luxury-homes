@@ -98,6 +98,21 @@ After deploying, run PageSpeed again and iterate on any remaining suggestions (i
 
 ---
 
+## Mobile 84 → 100: further optimizations (Feb 2025)
+
+Applied to address PageSpeed’s “Opportunities” for mobile:
+
+1. **Render-blocking CSS (~300ms est.)**  
+   - **Change:** Vite plugin `nonBlockingCss` in `vite.config.js` turns the main stylesheet link into `media="print" onload="this.media='all'"` so it no longer blocks first paint. Critical CSS remains inline in `index.html`.
+
+2. **Preconnect**  
+   - **Change:** In `index.html`, added `<link rel="preconnect" href="https://zseevllqomushqhlqpon.supabase.co" crossorigin>` so the first Supabase request starts sooner (shorter critical path).
+
+3. **Boat image (~247 KiB est.)**  
+   - **Change:** Replaced raw `<img>` for `boat-ocean-optimized.jpg` with `OptimizedImage` using `webpSrc` and `sizes` in `Home.jsx` and `Contact.jsx`. Modern format (WebP) and `sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 904px"` reduce payload and improve image delivery.
+
+---
+
 ## Mobile audit failing completely (no scores)
 
 **Symptom:** Desktop 100, but mobile run showed red exclamation marks and no scores for any category.

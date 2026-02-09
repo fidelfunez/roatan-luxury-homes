@@ -466,13 +466,15 @@ const Home = () => {
       {/* Enhanced CTA Section */}
       <section className="container mx-auto px-4">
         <div className="relative rounded-xl p-8 md:p-12 lg:p-16 text-center text-white overflow-hidden">
-          {/* Background Image */}
+          {/* Background Image - WebP + sizes to reduce payload (PageSpeed: was 335 KiB, ~247 KiB savings with modern format + responsive). */}
           <div className="absolute inset-0">
-            <img 
+            <OptimizedImage 
               src="/Photos/boat-ocean-optimized.jpg" 
+              webpSrc="/Photos/boat-ocean-optimized.webp"
               alt="Boat on Caribbean ocean" 
               className="w-full h-full object-cover"
               loading="lazy"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 904px"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-primary/60 via-turquoise-dark/60 to-primary/40"></div>
           </div>

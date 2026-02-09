@@ -15,10 +15,24 @@ logger.error = (msg, options) => {
 	loggerError(msg, options);
 }
 
+// Make main CSS non-render-blocking so LCP isn't delayed (~300ms est. savings on mobile).
+function nonBlockingCss() {
+	return {
+		name: 'non-blocking-css',
+		transformIndexHtml: (html) => {
+			return html.replace(
+				/<link rel="stylesheet"(?:\s+crossorigin)?\s+href="([^"]+)">/g,
+				(_, href) => `<link rel="stylesheet" href="${href}" media="print" onload="this.media='all'; this.onload=null;">`
+			);
+		},
+	};
+}
+
 export default defineConfig({
 	customLogger: logger,
 	plugins: [
-		react()
+		react(),
+		nonBlockingCss(),
 	],
 	server: {
 		cors: true,

@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { Mail, Phone, MapPin, MessageSquare, Send, Clock, Star, CheckCircle, Users, Award, Shield, ArrowRight, MessageCircle } from 'lucide-react';
 import NewsletterSignup from '@/components/NewsletterSignup';
+import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
 import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
 
@@ -309,7 +310,7 @@ const Contact = () => {
 
       {/* Why Choose Us Section - Enhanced */}
       <section className="relative w-full">
-        <img src="/Photos/boat-ocean-optimized.jpg" alt="Boat on Caribbean ocean" className="absolute inset-0 w-full h-full object-cover rounded-2xl" loading="lazy" />
+        <OptimizedImage src="/Photos/boat-ocean-optimized.jpg" webpSrc="/Photos/boat-ocean-optimized.webp" alt="Boat on Caribbean ocean" className="absolute inset-0 w-full h-full object-cover rounded-2xl" loading="lazy" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 904px" />
         <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary/60 via-turquoise-dark/60 to-primary/40 rounded-2xl" />
         <div className="relative container mx-auto px-4 z-10 p-8 md:p-12 lg:p-16">
           <div className="text-center mb-12">

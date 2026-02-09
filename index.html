@@ -14,6 +14,9 @@
     
     <!-- No hero preload: home hero image is desktop-only (hidden on mobile); preloading it caused "preloaded but not used" warning on mobile. -->
 
+    <!-- Preconnect to Supabase so the first API request starts sooner (saves ~100–200ms on critical path). -->
+    <link rel="preconnect" href="https://zseevllqomushqhlqpon.supabase.co" crossorigin>
+
     <!-- Default Open Graph / Twitter (per-page overrides via react-helmet-async) -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Roatán Luxury Homes">
