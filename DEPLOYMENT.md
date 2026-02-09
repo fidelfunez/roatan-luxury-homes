@@ -128,6 +128,20 @@ Consider adding:
 
 ## 🐛 Troubleshooting
 
+### "Failed to prepare repo" (before install/build)
+
+If the deploy fails at **"Failed during stage 'preparing repo'"**, Netlify could not clone the repo. Common cause: **the site is still linked to an old repository**.
+
+**Fix:** Point Netlify at the correct repo (`roatan-luxury-homes`):
+
+1. **Site configuration** → **Build & deploy** → **Continuous Deployment**
+2. Under **Repository**, click **Link repository** or **Options** → **Manage repository**
+3. If it shows `caribbean-lux-realty` (or another old name), **disconnect** and **connect** the repo `fidelfunez/roatan-luxury-homes`
+4. Re-authorize GitHub if prompted, select **roatan-luxury-homes**, then **Save**
+5. **Deploys** → **Trigger deploy** → **Clear cache and deploy site**
+
+Repository `roatan-luxury-homes` has no submodules or LFS; the failure is almost always the wrong repo link.
+
 ### Common Issues
 
 1. **Build Fails**

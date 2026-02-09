@@ -125,8 +125,7 @@ const Blog = () => {
               src="/Photos/roatan-island-optimized.jpg" 
               alt="Roatán Island" 
               className="w-full h-full object-cover"
-              loading="eager"
-              fetchpriority="high"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/50"></div>
           </div>
@@ -190,8 +189,7 @@ const Blog = () => {
               src="/Photos/roatan-island-optimized.jpg" 
               alt="Roatán Island" 
               className="w-full h-full object-cover"
-              loading="eager"
-              fetchpriority="high"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/50"></div>
           </div>

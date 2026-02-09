@@ -1,39 +1,49 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Home from '@/pages/Home';
-import About from '@/pages/About';
-import Contact from '@/pages/Contact';
-import Services from '@/pages/Services';
-import Properties from '@/pages/Properties';
-import Blog from '@/pages/Blog';
-import ServiceDetail from '@/pages/ServiceDetail'; 
-import PropertyDetail from '@/pages/PropertyDetail';
-import AddPropertyPage from '@/pages/AddPropertyPage';
-import EditPropertyPage from '@/pages/EditPropertyPage';
-import AdminLoginPage from '@/pages/AdminLoginPage';
-import AdminDashboard from '@/pages/AdminDashboard';
-import AdminSubmissions from '@/pages/AdminSubmissions';
-import ClientPropertySubmission from '@/pages/ClientPropertySubmission';
-import AdminAnalytics from '@/pages/AdminAnalytics';
-import AdminWebsiteEditor from '@/pages/AdminWebsiteEditor';
-import PerformanceTest from '@/pages/PerformanceTest';
-import DatabaseTest from '@/components/DatabaseTest';
-
-import AdminProperties from '@/pages/AdminProperties';
-import AdminBlog from '@/pages/AdminBlog';
-import BlogDetail from '@/pages/BlogDetail';
-import NotFound from '@/pages/NotFound';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/AdminLayout';
 import ScrollToTop from '@/components/ScrollToTop';
+
+// Lazy-load all non-Home routes to shrink initial JS bundle (improves LCP / Performance score)
+const About = lazy(() => import('@/pages/About'));
+const Contact = lazy(() => import('@/pages/Contact'));
+const Services = lazy(() => import('@/pages/Services'));
+const ServiceDetail = lazy(() => import('@/pages/ServiceDetail'));
+const Properties = lazy(() => import('@/pages/Properties'));
+const PropertyDetail = lazy(() => import('@/pages/PropertyDetail'));
+const Blog = lazy(() => import('@/pages/Blog'));
+const BlogDetail = lazy(() => import('@/pages/BlogDetail'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
+const ClientPropertySubmission = lazy(() => import('@/pages/ClientPropertySubmission'));
+const PerformanceTest = lazy(() => import('@/pages/PerformanceTest'));
+const AdminLoginPage = lazy(() => import('@/pages/AdminLoginPage'));
+const AdminDashboard = lazy(() => import('@/pages/AdminDashboard'));
+const AdminSubmissions = lazy(() => import('@/pages/AdminSubmissions'));
+const AdminAnalytics = lazy(() => import('@/pages/AdminAnalytics'));
+const AdminWebsiteEditor = lazy(() => import('@/pages/AdminWebsiteEditor'));
+const AdminProperties = lazy(() => import('@/pages/AdminProperties'));
+const AdminBlog = lazy(() => import('@/pages/AdminBlog'));
+const AddPropertyPage = lazy(() => import('@/pages/AddPropertyPage'));
+const EditPropertyPage = lazy(() => import('@/pages/EditPropertyPage'));
+const DatabaseTest = lazy(() => import('@/components/DatabaseTest'));
+
+function PageFallback() {
+  return (
+    <div className="min-h-[50vh] flex items-center justify-center" aria-hidden="true">
+      <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary border-t-transparent" />
+    </div>
+  );
+}
 
 function App() {
   return (
     <>
       <ScrollToTop />
-      <Routes>
+      <Suspense fallback={<PageFallback />}>
+        <Routes>
         {/* Public Routes */}
         <Route path="/" element={
           <Layout>
@@ -191,7 +201,8 @@ function App() {
             <NotFound />
           </Layout>
         } />
-      </Routes>
+        </Routes>
+      </Suspense>
     </>
   );
 }
