@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Home",
+    "properties": "Properties",
+    "services": "Services",
+    "about": "About Us",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "common": {
+    "getInTouch": "Get in Touch",
+    "searchPlaceholder": "Search the entire website...",
+    "noResults": "No results found",
+    "tryDifferentKeywords": "Try different keywords or browse our site",
+    "viewAllResults": "View all {{count}} results",
+    "pages": "Pages",
+    "properties_count": "Properties"
+  },
+  "properties": {
+    "forSale": "For Sale",
+    "forRent": "For Rent",
+    "all": "All",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "viewDetails": "View Details",
+    "totalProperties": "Total Properties",
+    "landPlots": "Land Plots"
+  },
+  "footer": {
+    "explore": "Explore",
+    "company": "Company",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "testimonials": "Testimonials",
+    "newsletter": "Stay Updated",
+    "newsletterDesc": "Get the latest property listings and exclusive offers.",
+    "subscribe": "Subscribe"
+  }
+}

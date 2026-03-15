@@ -7,16 +7,16 @@ import { CalendarDays, UserCircle, ArrowRight, Search, Filter, BookOpen, Trendin
 import { getBlogPosts } from '@/lib/supabaseUtils';
 import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
+import { useContent } from '@/lib/useContent';
 
 const Blog = () => {
+  const { getContent } = useContent();
   const [blogPosts, setBlogPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [content, setContent] = useState({});
 
   const categories = [
     'Investment Guide',
@@ -28,39 +28,6 @@ const Blog = () => {
     'Caribbean Living',
     'Real Estate Tips'
   ];
-
-  useEffect(() => {
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
-  }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (page, section, field) => {
-    const value = content[page]?.[section]?.[field];
-    
-    // If the value is empty, null, or undefined, return the default
-    if (!value || value.trim() === '') {
-      return getContentField(page, section, field);
-    }
-    
-    return value;
-  };
 
   useEffect(() => {
     loadBlogPosts();

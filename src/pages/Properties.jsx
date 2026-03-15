@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,13 +13,14 @@ import { useAdmin } from '@/context/AdminContext.jsx';
 import { useToast } from '@/components/ui/use-toast';
 import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
+import { useContent } from '@/lib/useContent';
+import { useLocalizedProperty } from '@/lib/useLocalizedProperty';
 
 const Properties = () => {
+  const { getContent } = useContent();
   const [allProperties, setAllProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [content, setContent] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -32,39 +34,8 @@ const Properties = () => {
   const [sortBy, setSortBy] = useState('featured'); // 'featured', 'price-low', 'price-high', 'newest'
   const { isAdmin, loading: adminLoading } = useAdmin();
   const { toast } = useToast();
-
-  useEffect(() => {
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
-  }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (page, section, field) => {
-    const value = content[page]?.[section]?.[field];
-    
-    // If the value is empty, null, or undefined, return the default
-    if (!value || value.trim() === '') {
-      return getContentField(page, section, field);
-    }
-    
-    return value;
-  };
+  const { t } = useTranslation();
+  const { getTitle, getLocation, getDescription } = useLocalizedProperty();
 
   // Handle URL search parameters
   useEffect(() => {
@@ -111,11 +82,17 @@ const Properties = () => {
     }
 
     if (searchTerm) {
-      currentProperties = currentProperties.filter(p => 
-        p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (p.description && p.description.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
+      const term = searchTerm.toLowerCase();
+      currentProperties = currentProperties.filter(p => {
+        const title = getTitle(p);
+        const location = getLocation(p);
+        const desc = p.description || '';
+        const descEs = p.descriptionEs || '';
+        return (title && title.toLowerCase().includes(term)) ||
+          (location && location.toLowerCase().includes(term)) ||
+          desc.toLowerCase().includes(term) ||
+          descEs.toLowerCase().includes(term);
+      });
     }
 
     if (propertyType !== 'all') {
@@ -219,10 +196,10 @@ const Properties = () => {
           {/* Property Stats - Desktop Enhanced */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { number: allProperties.length.toString(), label: "Total Properties", icon: <Grid3X3 className="w-6 h-6 text-white" /> },
-              { number: allProperties.filter(p => (p.listingType || 'sale') === 'sale').length.toString(), label: "For Sale", icon: <DollarSign className="w-6 h-6 text-white" /> },
-              { number: allProperties.filter(p => p.listingType === 'rent').length.toString(), label: "For Rent", icon: <Heart className="w-6 h-6 text-white" /> },
-              { number: allProperties.filter(p => p.type === "Land").length.toString(), label: "Land Plots", icon: <TrendingUp className="w-6 h-6 text-white" /> }
+              { number: allProperties.length.toString(), label: t('properties.totalProperties'), icon: <Grid3X3 className="w-6 h-6 text-white" /> },
+              { number: allProperties.filter(p => (p.listingType || 'sale') === 'sale').length.toString(), label: t('properties.forSale'), icon: <DollarSign className="w-6 h-6 text-white" /> },
+              { number: allProperties.filter(p => p.listingType === 'rent').length.toString(), label: t('properties.forRent'), icon: <Heart className="w-6 h-6 text-white" /> },
+              { number: allProperties.filter(p => p.type === "Land").length.toString(), label: t('properties.landPlots'), icon: <TrendingUp className="w-6 h-6 text-white" /> }
             ].map((stat, index) => (
               <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20">
                 <div className="flex justify-center mb-2">{stat.icon}</div>
@@ -244,21 +221,21 @@ const Properties = () => {
               onClick={() => setListingTypeTab('sale')}
               className="font-semibold"
             >
-              For Sale ({allProperties.filter(p => (p.listingType || 'sale') === 'sale').length})
+              {t('properties.forSale')} ({allProperties.filter(p => (p.listingType || 'sale') === 'sale').length})
             </Button>
             <Button
               variant={listingTypeTab === 'rent' ? 'default' : 'outline'}
               onClick={() => setListingTypeTab('rent')}
               className="font-semibold"
             >
-              For Rent ({allProperties.filter(p => p.listingType === 'rent').length})
+              {t('properties.forRent')} ({allProperties.filter(p => p.listingType === 'rent').length})
             </Button>
             <Button
               variant={listingTypeTab === 'all' ? 'default' : 'outline'}
               onClick={() => setListingTypeTab('all')}
               className="font-semibold"
             >
-              All ({allProperties.length})
+              {t('properties.all')} ({allProperties.length})
             </Button>
           </div>
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8">
@@ -444,7 +421,7 @@ const Properties = () => {
                     <CardHeader className={`p-0 relative ${viewMode === 'list' ? 'lg:w-1/3' : ''}`}>
                       <div className={`${viewMode === 'list' ? 'h-full' : 'aspect-w-16 aspect-h-9'}`}>
                         <img 
-                          alt={property.title} 
+                          alt={getTitle(property)} 
                           className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" 
                           src={property.image || "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"} 
                           loading="lazy" 
@@ -455,7 +432,7 @@ const Properties = () => {
                       <div className="absolute top-2 right-2 flex flex-col gap-1 items-end">
                         {property.listingType === 'rent' && (
                           <div className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
-                            For Rent
+                            {t('properties.forRent')}
                           </div>
                         )}
                         {property.type && (
@@ -476,14 +453,14 @@ const Properties = () => {
                       <CardContent className={`p-4 sm:p-6 flex-grow ${viewMode === 'list' ? 'lg:w-2/3' : ''}`}>
                         <CardTitle className={`font-semibold mb-2 text-primary line-clamp-2 ${
                           viewMode === 'list' ? 'text-xl lg:text-2xl' : 'text-lg sm:text-xl'
-                        }`}>{property.title}</CardTitle>
+                        }`}>{getTitle(property)}</CardTitle>
                         <div className="flex items-center text-sm text-muted-foreground mb-2">
                           <MapPin className="w-4 h-4 mr-1 text-turquoise-dark flex-shrink-0" /> 
-                          <span className="truncate">{property.location}</span>
+                          <span className="truncate">{getLocation(property)}</span>
                         </div>
                         <CardDescription className={`text-foreground mb-3 line-clamp-2 ${
                           viewMode === 'list' ? 'text-base lg:text-lg' : 'text-sm'
-                        }`}>{property.description}</CardDescription>
+                        }`}>{getDescription(property)}</CardDescription>
                         
                         {property.type !== 'Land' && property.type !== 'Commercial' && (
                           <div className={`flex flex-wrap gap-x-3 gap-y-1 text-muted-foreground mb-3 ${
@@ -511,7 +488,7 @@ const Properties = () => {
                         </p>
                         <Button variant="link" className="text-primary p-0 group-hover:underline font-semibold">
                           <span className={viewMode === 'list' ? 'text-base lg:text-lg' : 'text-sm sm:text-base'}>
-                            View Details
+                            {t('properties.viewDetails')}
                           </span>
                           <ArrowRight className={`ml-1 ${
                             viewMode === 'list' ? 'h-4 w-4 lg:h-5 lg:w-5' : 'h-3 w-3 sm:h-4 sm:w-4'

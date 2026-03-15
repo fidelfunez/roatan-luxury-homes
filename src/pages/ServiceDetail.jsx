@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Mail, ArrowRight } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
+import { useContent } from '@/lib/useContent';
 
 const servicesData = {
   "property-sales-acquisition": {
@@ -48,44 +48,8 @@ const getServiceName = (slug) => servicesData[slug]?.title || "Service";
 
 const ServiceDetail = () => {
   const { slug } = useParams();
+  const { getContent } = useContent();
   const service = servicesData[slug];
-  const [content, setContent] = useState({});
-
-  useEffect(() => {
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
-  }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (page, section, field) => {
-    // For individual service pages, content is stored directly under the page key
-    const value = section === '' 
-      ? content[page]?.[field]
-      : content[page]?.[section]?.[field];
-    
-    // If the value is empty, null, undefined, or not a string, return the default
-    if (!value || typeof value !== 'string' || value.trim() === '') {
-      return getContentField(page, section, field);
-    }
-    
-    return value;
-  };
 
   if (!service) {
     return (

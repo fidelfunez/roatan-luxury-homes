@@ -1,63 +1,32 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useContent } from '@/lib/useContent';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Menu, X, Home as HomeIcon, Info, Mail, Briefcase, Building2, Newspaper, Phone, Search, ChevronDown, MapPin, Clock, ArrowRight } from 'lucide-react';
 import Logo from './Logo';
+import LanguageSwitcher from './LanguageSwitcher';
 import { searchWebsite, getSearchSuggestions } from '@/lib/searchUtils';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
 
 const Header = () => {
+  const { t } = useTranslation();
+  const { getContent } = useContent();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
   const [showResults, setShowResults] = useState(false);
-  const [content, setContent] = useState({});
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
-  }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (page, section, field) => {
-    const value = content[page]?.[section]?.[field];
-    
-    // If the value is empty, null, or undefined, return the default
-    if (!value || value.trim() === '') {
-      return getContentField(page, section, field);
-    }
-    
-    return value;
-  };
-
-  // Navigation links with static data - content will be loaded dynamically
   const navLinks = [
-    { to: '/', label: 'Home', icon: <HomeIcon className="w-4 h-4 mr-2" /> },
-    { to: '/properties', label: 'Properties', icon: <Building2 className="w-4 h-4 mr-2" /> },
-    { to: '/services', label: 'Services', icon: <Briefcase className="w-4 h-4 mr-2" /> },
-    { to: '/about', label: 'About Us', icon: <Info className="w-4 h-4 mr-2" /> },
-    { to: '/blog', label: 'Blog', icon: <Newspaper className="w-4 h-4 mr-2" /> },
-    { to: '/contact', label: 'Contact', icon: <Mail className="w-4 h-4 mr-2" /> },
+    { to: '/', labelKey: 'nav.home', icon: <HomeIcon className="w-4 h-4 mr-2" /> },
+    { to: '/properties', labelKey: 'nav.properties', icon: <Building2 className="w-4 h-4 mr-2" /> },
+    { to: '/services', labelKey: 'nav.services', icon: <Briefcase className="w-4 h-4 mr-2" /> },
+    { to: '/about', labelKey: 'nav.about', icon: <Info className="w-4 h-4 mr-2" /> },
+    { to: '/blog', labelKey: 'nav.blog', icon: <Newspaper className="w-4 h-4 mr-2" /> },
+    { to: '/contact', labelKey: 'nav.contact', icon: <Mail className="w-4 h-4 mr-2" /> },
   ];
 
   // Optimized scroll handler with throttling
@@ -163,14 +132,15 @@ const Header = () => {
                 <span>{getContent('header', 'topBar', 'hours')}</span>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <LanguageSwitcher />
               <Button variant="ghost" size="sm" onClick={toggleSearch} className="text-muted-foreground hover:text-primary" aria-label="Search">
                 <Search className="w-4 h-4" />
               </Button>
               <Button asChild size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-white/80 backdrop-blur-sm font-semibold shadow-lg">
                 <Link to="/contact">
                   <Phone className="w-4 h-4 mr-2" />
-                  {getContent('header', 'cta', 'ctaText')}
+                  {getContent('header', 'cta', 'ctaText') || t('common.getInTouch')}
                 </Link>
               </Button>
             </div>
@@ -182,13 +152,12 @@ const Header = () => {
             
             <nav className="flex space-x-1">
               {navLinks.map((link) => {
-                // Get dynamic content for this navigation link
                 const dynamicLabel = getContent('header', 'navigation', link.to === '/' ? 'homeLabel' : 
                   link.to === '/properties' ? 'propertiesLabel' :
                   link.to === '/services' ? 'servicesLabel' :
                   link.to === '/about' ? 'aboutLabel' :
                   link.to === '/blog' ? 'blogLabel' :
-                  link.to === '/contact' ? 'contactLabel' : 'homeLabel') || link.label;
+                  link.to === '/contact' ? 'contactLabel' : 'homeLabel') || t(link.labelKey);
                 
                 return (
                   <NavLink
@@ -198,7 +167,7 @@ const Header = () => {
                   >
                     {link.icon}
                     {dynamicLabel}
-                    {dynamicLabel === getContent('header', 'navigation', 'propertiesLabel') && <ChevronDown className="w-3 h-3 ml-1" />}
+                    {link.to === '/properties' && <ChevronDown className="w-3 h-3 ml-1" />}
                   </NavLink>
                 );
               })}
@@ -212,7 +181,7 @@ const Header = () => {
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input 
                       type="text" 
-                      placeholder={getContent('header', 'cta', 'searchPlaceholder')} 
+                      placeholder={getContent('header', 'cta', 'searchPlaceholder') || t('common.searchPlaceholder')} 
                       value={searchQuery}
                       onChange={handleSearchChange}
                       onKeyPress={handleSearchKeyPress}
@@ -236,8 +205,8 @@ const Header = () => {
                     <div className="max-w-2xl mx-auto mt-4 bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg shadow-lg max-h-96 overflow-y-auto">
                       {searchResults.total === 0 ? (
                         <div className="p-6 text-center text-muted-foreground">
-                          <p className="text-lg font-medium mb-2">No results found</p>
-                          <p className="text-sm">Try different keywords or browse our site</p>
+                          <p className="text-lg font-medium mb-2">{t('common.noResults')}</p>
+                          <p className="text-sm">{t('common.tryDifferentKeywords')}</p>
                         </div>
                       ) : (
                         <div className="p-4">
@@ -246,7 +215,7 @@ const Header = () => {
                             <div className="mb-6">
                               <h3 className="text-sm font-semibold text-primary mb-3 flex items-center">
                                 <Building2 className="w-4 h-4 mr-2" />
-                                Properties ({searchResults.properties.length})
+                                {t('common.properties_count')} ({searchResults.properties.length})
                               </h3>
                               <div className="space-y-2">
                                 {searchResults.properties.slice(0, 3).map((property) => (
@@ -268,7 +237,7 @@ const Header = () => {
                             <div className="mb-6">
                               <h3 className="text-sm font-semibold text-primary mb-3 flex items-center">
                                 <HomeIcon className="w-4 h-4 mr-2" />
-                                Pages ({searchResults.pages.length})
+                                {t('common.pages')} ({searchResults.pages.length})
                               </h3>
                               <div className="space-y-2">
                                 {searchResults.pages.slice(0, 3).map((page) => (
@@ -314,7 +283,7 @@ const Header = () => {
                                 onClick={() => handleResultClick(`/properties?search=${encodeURIComponent(searchQuery)}`)}
                                 className="w-full text-center p-3 text-primary hover:bg-primary/10 rounded-md transition-colors font-medium"
                               >
-                                View all {searchResults.total} results <ArrowRight className="w-4 h-4 ml-2 inline" />
+                                {t('common.viewAllResults', { count: searchResults.total })} <ArrowRight className="w-4 h-4 ml-2 inline" />
                               </button>
                             </div>
                           )}
@@ -336,6 +305,7 @@ const Header = () => {
             <Logo textClassName="hidden sm:inline-block" imgClassName="h-8 sm:h-9" />
             
             <div className="flex items-center space-x-2">
+              <LanguageSwitcher />
               <Button variant="ghost" onClick={toggleSearch} aria-label="Search">
                 <Search className="h-5 w-5 text-primary" />
               </Button>
@@ -353,7 +323,7 @@ const Header = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input 
                 type="text" 
-                placeholder="Search the entire website..." 
+                placeholder={t('common.searchPlaceholder')} 
                 value={searchQuery}
                 onChange={handleSearchChange}
                 onKeyPress={handleSearchKeyPress}
@@ -377,8 +347,8 @@ const Header = () => {
               <div className="mt-4 bg-background/95 backdrop-blur-sm border border-border/50 rounded-lg shadow-lg max-h-80 overflow-y-auto">
                 {searchResults.total === 0 ? (
                   <div className="p-4 text-center text-muted-foreground">
-                    <p className="font-medium mb-1">No results found</p>
-                    <p className="text-sm">Try different keywords</p>
+                    <p className="font-medium mb-1">{t('common.noResults')}</p>
+                    <p className="text-sm">{t('common.tryDifferentKeywords')}</p>
                   </div>
                 ) : (
                   <div className="p-4 space-y-3">
@@ -422,7 +392,7 @@ const Header = () => {
                     className={({ isActive }) => `${mobileLinkClasses} ${isActive ? mobileActiveLinkClasses : mobileInactiveLinkClasses}`}
                   >
                     {link.icon}
-                    {link.label}
+                    {t(link.labelKey)}
                   </NavLink>
                 ))}
                 <div className="pt-4">
@@ -433,7 +403,7 @@ const Header = () => {
                   >
                     <Link to="/contact" onClick={() => setIsOpen(false)}>
                       <Phone className="w-4 h-4 mr-2" />
-                      Get in Touch
+                      {t('common.getInTouch')}
                     </Link>
                   </Button>
                 </div>

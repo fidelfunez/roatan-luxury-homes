@@ -5,43 +5,15 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
+import { useContent } from '@/lib/useContent';
 
+const SERVICES_SECTIONS = ['hero', 'whyChooseUs', 'cta'];
 const Services = () => {
-  const [content, setContent] = useState({});
-
-  useEffect(() => {
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
-  }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (section, field, fallback = '') => {
-    const value = content['services']?.[section]?.[field];
-    
-    // If the value is empty, null, or undefined, return the fallback
-    if (!value || value.trim() === '') {
-      return getContentField('services', section, field) || fallback;
-    }
-    
-    return value;
-  };
+  const { getContent: getContentBase } = useContent();
+  const getContent = (sectionOrPage, field, fallback = '') =>
+    SERVICES_SECTIONS.includes(sectionOrPage)
+      ? getContentBase('services', sectionOrPage, field, fallback)
+      : getContentBase(sectionOrPage, '', field, fallback);
 
   // Services list with static data - content will be loaded dynamically
   const servicesList = [

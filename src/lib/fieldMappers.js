@@ -141,6 +141,19 @@ export const dbToFrontend = (dbObject, tableType = 'properties') => {
       frontendObject.pricePeriod = frontendObject.price_period;
       delete frontendObject.price_period;
     }
+    
+    if (frontendObject.title_es !== undefined) {
+      frontendObject.titleEs = frontendObject.title_es;
+      delete frontendObject.title_es;
+    }
+    if (frontendObject.description_es !== undefined) {
+      frontendObject.descriptionEs = frontendObject.description_es;
+      delete frontendObject.description_es;
+    }
+    if (frontendObject.location_es !== undefined) {
+      frontendObject.locationEs = frontendObject.location_es;
+      delete frontendObject.location_es;
+    }
   }
   
   if (tableType === 'client_submissions') {
@@ -233,6 +246,19 @@ export const frontendToDb = (frontendObject, tableType = 'properties') => {
     if (dbObject.pricePeriod !== undefined && dbObject.pricePeriod !== null) {
       dbObject.price_period = dbObject.pricePeriod;
       delete dbObject.pricePeriod;
+    }
+    
+    if (dbObject.titleEs !== undefined) {
+      dbObject.title_es = dbObject.titleEs;
+      delete dbObject.titleEs;
+    }
+    if (dbObject.descriptionEs !== undefined) {
+      dbObject.description_es = dbObject.descriptionEs;
+      delete dbObject.descriptionEs;
+    }
+    if (dbObject.locationEs !== undefined) {
+      dbObject.location_es = dbObject.locationEs;
+      delete dbObject.locationEs;
     }
   }
   

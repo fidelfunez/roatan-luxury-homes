@@ -7,17 +7,16 @@ import NewsletterSignup from '@/components/NewsletterSignup';
 import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
 import { getProperties } from '@/lib/supabaseUtils';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
+import { useContent } from '@/lib/useContent';
 
 const Home = () => {
+  const { getContent } = useContent();
   const [featuredProperties, setFeaturedProperties] = useState([]);
-  const [content, setContent] = useState({});
 
   useEffect(() => {
     const loadFeaturedProperties = async () => {
       try {
         const allProperties = await getProperties();
-        // Show up to 3 properties as featured, or show empty state
         const featured = allProperties.slice(0, 3);
         setFeaturedProperties(featured);
       } catch (error) {
@@ -25,40 +24,8 @@ const Home = () => {
         setFeaturedProperties([]);
       }
     };
-
     loadFeaturedProperties();
-    
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
   }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (page, section, field) => {
-    const value = content[page]?.[section]?.[field];
-    
-    // If the value is empty, null, or undefined, return the default
-    if (!value || value.trim() === '') {
-      return getContentField(page, section, field);
-    }
-    
-    return value;
-  };
 
 
 

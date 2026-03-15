@@ -6,9 +6,11 @@ import { ChevronLeft, ChevronRight, MapPin, DollarSign, BedDouble, Bath, CarFron
 import SEO from '@/components/SEO';
 import { getPropertyById } from '@/lib/supabaseUtils';
 import { formatPropertyPrice } from '@/lib/propertyUtils';
+import { useLocalizedProperty } from '@/lib/useLocalizedProperty';
 
 const PropertyDetail = () => {
   const { propertyId } = useParams();
+  const { getTitle, getDescription, getLocation } = useLocalizedProperty();
   const [property, setProperty] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -80,7 +82,10 @@ const PropertyDetail = () => {
   }
   
   const propertyImages = property.images && property.images.length > 0 ? property.images : (property.image ? [property.image] : ['https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60']);
-  const metaDescription = property.description ? (property.description.length > 160 ? property.description.slice(0, 157) + '...' : property.description) : `${property.title} - ${property.location || 'Roatán'}. ${property.price ? formatPropertyPrice(property) : ''}`;
+  const displayTitle = getTitle(property);
+  const displayDescription = getDescription(property);
+  const displayLocation = getLocation(property);
+  const metaDescription = displayDescription ? (displayDescription.length > 160 ? displayDescription.slice(0, 157) + '...' : displayDescription) : `${displayTitle} - ${displayLocation || 'Roatán'}. ${property.price ? formatPropertyPrice(property) : ''}`;
   const ogImage = propertyImages[0] && propertyImages[0].startsWith('http') ? propertyImages[0] : (typeof window !== 'undefined' ? `${window.location.origin}${propertyImages[0]?.startsWith('/') ? propertyImages[0] : '/' + propertyImages[0]}` : propertyImages[0]);
 
   const nextImage = () => {
@@ -103,7 +108,7 @@ const PropertyDetail = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <SEO
-        title={property.title}
+        title={displayTitle}
         description={metaDescription}
         canonical={`/properties/${propertyId}`}
         ogImage={ogImage}
@@ -111,7 +116,7 @@ const PropertyDetail = () => {
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Product',
-          name: property.title,
+          name: displayTitle,
           description: metaDescription,
           image: ogImage,
           ...(property.price && { offers: { '@type': 'Offer', price: property.price, priceCurrency: 'USD' } }),
@@ -161,11 +166,11 @@ const PropertyDetail = () => {
               <span>Roatán, Honduras</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary leading-tight">
-          {property.title}
+          {displayTitle}
         </h1>
             <div className="flex items-center text-lg lg:text-xl text-muted-foreground">
               <MapPin className="w-5 h-5 mr-2 text-turquoise-dark" /> 
-              <span>{property.location}</span>
+              <span>{displayLocation}</span>
             </div>
         </div>
 
@@ -173,7 +178,7 @@ const PropertyDetail = () => {
           <div className="space-y-4">
             <div className="relative aspect-w-16 aspect-h-10 lg:aspect-h-9 rounded-xl overflow-hidden shadow-lg group">
               <img  
-                alt={`${property.title} - image ${currentImageIndex + 1}`} 
+                alt={`${displayTitle} - image ${currentImageIndex + 1}`} 
                 className="object-cover w-full h-full cursor-pointer transition-transform duration-300 group-hover:scale-105"
                 onClick={() => openLightbox(currentImageIndex)}
                 src={propertyImages[currentImageIndex]} 
@@ -223,7 +228,7 @@ const PropertyDetail = () => {
                     onClick={() => setCurrentImageIndex(index)}
                   >
                     <img  
-                      alt={`${property.title} - thumbnail ${index + 1}`} 
+                      alt={`${displayTitle} - thumbnail ${index + 1}`} 
                       className="object-cover w-full h-full" 
                       src={imgSrc} 
                       loading="lazy" />
@@ -240,7 +245,7 @@ const PropertyDetail = () => {
               </CardHeader>
               <CardContent className="p-0">
               <p className="text-base sm:text-lg lg:text-xl leading-relaxed text-foreground whitespace-pre-line">
-                  {property.description}
+                  {displayDescription}
                 </p>
               </CardContent>
             </Card>
@@ -439,7 +444,7 @@ const PropertyDetail = () => {
         >
           <div className="relative max-w-6xl max-h-full">
             <img  
-              alt={`${property.title} - lightbox`} 
+              alt={`${displayTitle} - lightbox`} 
               className="max-w-full max-h-full object-contain" 
               src={propertyImages[currentImageIndex]} 
             />

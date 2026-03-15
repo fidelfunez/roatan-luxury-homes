@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from '@/App';
 import '@/index.css';
+import '@/i18n';
 import { Toaster } from '@/components/ui/toaster';
 import { AdminProvider } from '@/context/AdminContext.jsx';
 import { BrowserRouter as Router } from 'react-router-dom';

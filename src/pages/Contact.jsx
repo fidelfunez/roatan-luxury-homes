@@ -8,46 +8,13 @@ import { Mail, Phone, MapPin, MessageSquare, Send, Clock, Star, CheckCircle, Use
 import NewsletterSignup from '@/components/NewsletterSignup';
 import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
+import { useContent } from '@/lib/useContent';
 
 const Contact = () => {
   const { toast } = useToast();
+  const { getContent } = useContent();
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [content, setContent] = useState({});
-
-  useEffect(() => {
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
-  }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (page, section, field) => {
-    const value = content[page]?.[section]?.[field];
-    
-    // If the value is empty, null, or undefined, return the default
-    if (!value || value.trim() === '') {
-      return getContentField(page, section, field);
-    }
-    
-    return value;
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;

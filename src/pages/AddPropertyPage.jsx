@@ -24,9 +24,12 @@ import React, { useState, useRef } from 'react';
       const { toast } = useToast();
       const [formData, setFormData] = useState({
         title: '',
+        titleEs: '',
         location: '',
+        locationEs: '',
         price: '',
         description: '',
+        descriptionEs: '',
         type: '',
         beds: '',
         baths: '',
@@ -34,9 +37,9 @@ import React, { useState, useRef } from 'react';
         area: '',
         listingType: 'sale',
         pricePeriod: 'monthly',
-        image: '', // Main image (will store Base64 string)
-        images: [], // Array for gallery images (will store Base64 strings)
-        features: [''], 
+        image: '',
+        images: [],
+        features: [''],
         ownershipYears: '',
         timeToAttractions: '',
       });
@@ -275,9 +278,12 @@ import React, { useState, useRef } from 'react';
           // Reset form
           setFormData({
             title: '',
+            titleEs: '',
             location: '',
+            locationEs: '',
             price: '',
             description: '',
+            descriptionEs: '',
             type: '',
             beds: '',
             baths: '',
@@ -336,6 +342,20 @@ import React, { useState, useRef } from 'react';
                   <div>
                     <Label htmlFor="description" className="flex items-center mb-1"><Info className="w-4 h-4 mr-2 text-primary" />Description</Label>
                     <Textarea id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Detailed description of the property..." rows={4} required />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border/50">
+                    <div>
+                      <Label htmlFor="titleEs" className="flex items-center mb-1 text-muted-foreground">Titulo (Espanol)</Label>
+                      <Input id="titleEs" name="titleEs" value={formData.titleEs} onChange={handleChange} placeholder="e.g., Villa frente al mar" />
+                    </div>
+                    <div>
+                      <Label htmlFor="locationEs" className="flex items-center mb-1 text-muted-foreground">Ubicacion (Espanol)</Label>
+                      <Input id="locationEs" name="locationEs" value={formData.locationEs} onChange={handleChange} placeholder="e.g., West Bay, Roatan" />
+                    </div>
+                  </div>
+                  <div>
+                    <Label htmlFor="descriptionEs" className="flex items-center mb-1 text-muted-foreground">Descripcion (Espanol)</Label>
+                    <Textarea id="descriptionEs" name="descriptionEs" value={formData.descriptionEs} onChange={handleChange} placeholder="Descripcion en espanol..." rows={3} />
                   </div>
                 </section>
 

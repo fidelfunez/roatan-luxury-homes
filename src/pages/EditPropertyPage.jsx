@@ -226,6 +226,20 @@ import React, { useState, useEffect, useRef } from 'react';
                     <Label htmlFor="description" className="flex items-center mb-1"><Info className="w-4 h-4 mr-2 text-primary" />Description</Label>
                     <Textarea id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Detailed description of the property..." rows={4} required />
                   </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border/50">
+                    <div>
+                      <Label htmlFor="titleEs" className="flex items-center mb-1 text-muted-foreground">Titulo (Espanol)</Label>
+                      <Input id="titleEs" name="titleEs" value={formData.titleEs || ''} onChange={handleChange} placeholder="e.g., Villa frente al mar" />
+                    </div>
+                    <div>
+                      <Label htmlFor="locationEs" className="flex items-center mb-1 text-muted-foreground">Ubicacion (Espanol)</Label>
+                      <Input id="locationEs" name="locationEs" value={formData.locationEs || ''} onChange={handleChange} placeholder="e.g., West Bay, Roatan" />
+                    </div>
+                  </div>
+                  <div>
+                    <Label htmlFor="descriptionEs" className="flex items-center mb-1 text-muted-foreground">Descripcion (Espanol)</Label>
+                    <Textarea id="descriptionEs" name="descriptionEs" value={formData.descriptionEs || ''} onChange={handleChange} placeholder="Descripcion en espanol..." rows={3} />
+                  </div>
                 </section>
 
                 <section className="space-y-4">

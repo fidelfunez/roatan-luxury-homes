@@ -39,7 +39,7 @@ import {
   Menu,
   Link
 } from 'lucide-react';
-import { getWebsiteContent, saveWebsiteContent, resetToDefaults, getDefaultContent } from '@/lib/contentUtils';
+import { getWebsiteContent, saveWebsiteContent, resetToDefaults, getDefaultContent, getDefaultContentEs } from '@/lib/contentUtils';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -50,6 +50,7 @@ const AdminWebsiteEditor = () => {
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState('home');
   const [editingSection, setEditingSection] = useState(null);
+  const [editLang, setEditLang] = useState('en');
   const [showPreview, setShowPreview] = useState(false);
   const [content, setContent] = useState({});
   const [originalContent, setOriginalContent] = useState({});
@@ -650,7 +651,7 @@ const AdminWebsiteEditor = () => {
 
   const currentPageData = pages.find(page => page.id === currentPage);
 
-  const renderField = (field, value, onChange) => {
+  const renderField = (field, value, onChange, fieldKey) => {
     const commonProps = {
       value: value || '',
       onChange: (e) => onChange(e.target.value),
@@ -659,12 +660,11 @@ const AdminWebsiteEditor = () => {
     };
 
     const getDefaultValue = () => {
-      const defaultContent = getDefaultContent();
-      // Handle individual service pages that don't have sections
+      const defaults = editLang === 'es' ? getDefaultContentEs() : getDefaultContent();
       if (editingSection === '') {
-        return defaultContent[currentPage]?.[field.key] || field.placeholder;
+        return defaults[currentPage]?.[field.key] || field.placeholder;
       }
-      return defaultContent[currentPage]?.[editingSection]?.[field.key] || field.placeholder;
+      return defaults[currentPage]?.[editingSection]?.[field.key] || field.placeholder;
     };
 
     if (field.type === 'textarea') {
@@ -831,19 +831,39 @@ const AdminWebsiteEditor = () => {
             {editingSection !== null && editingSection !== undefined ? (
               <Card>
                 <CardHeader>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <CardTitle className="flex items-center gap-2">
                       {currentPageData.sections.find(s => s.id === editingSection)?.icon}
                       Edit {currentPageData.sections.find(s => s.id === editingSection)?.title}
                     </CardTitle>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setShowPreview(!showPreview)}
-                    >
-                      {showPreview ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
-                      {showPreview ? 'Hide Preview' : 'Show Preview'}
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <div className="flex rounded-md border">
+                        <Button
+                          variant={editLang === 'en' ? 'default' : 'ghost'}
+                          size="sm"
+                          onClick={() => setEditLang('en')}
+                          className="rounded-r-none"
+                        >
+                          EN
+                        </Button>
+                        <Button
+                          variant={editLang === 'es' ? 'default' : 'ghost'}
+                          size="sm"
+                          onClick={() => setEditLang('es')}
+                          className="rounded-l-none"
+                        >
+                          ES
+                        </Button>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowPreview(!showPreview)}
+                      >
+                        {showPreview ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
+                        {showPreview ? 'Hide Preview' : 'Show Preview'}
+                      </Button>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -854,20 +874,25 @@ const AdminWebsiteEditor = () => {
                         return null;
                       }
                       
-                      return currentSection.fields.map((field) => (
-                        <div key={field.key}>
-                          <Label htmlFor={field.key} className="text-sm font-medium">
-                            {field.label}
-                          </Label>
-                          {renderField(
-                            field,
-                            editingSection === '' 
-                              ? content[currentPage]?.[field.key] || ''
-                              : content[currentPage]?.[editingSection]?.[field.key] || '',
-                            (value) => handleContentChange(currentPage, editingSection, field.key, value)
-                          )}
-                        </div>
-                      ));
+                      return currentSection.fields.map((field) => {
+                        const fieldKey = editLang === 'es' ? field.key + 'Es' : field.key;
+                        const labelSuffix = editLang === 'es' ? ' (Espanol)' : '';
+                        return (
+                          <div key={fieldKey}>
+                            <Label htmlFor={fieldKey} className="text-sm font-medium">
+                              {field.label}{labelSuffix}
+                            </Label>
+                            {renderField(
+                              field,
+                              editingSection === ''
+                                ? content[currentPage]?.[fieldKey] || ''
+                                : content[currentPage]?.[editingSection]?.[fieldKey] || '',
+                              (value) => handleContentChange(currentPage, editingSection, fieldKey, value),
+                              fieldKey
+                            )}
+                          </div>
+                        );
+                      });
                     })()}
                   </div>
                 </CardContent>

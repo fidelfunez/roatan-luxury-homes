@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "properties": "Propiedades",
+    "services": "Servicios",
+    "about": "Nosotros",
+    "blog": "Blog",
+    "contact": "Contacto"
+  },
+  "common": {
+    "getInTouch": "Contactanos",
+    "searchPlaceholder": "Buscar en todo el sitio...",
+    "noResults": "No se encontraron resultados",
+    "tryDifferentKeywords": "Proba con otras palabras o navega el sitio",
+    "viewAllResults": "Ver los {{count}} resultados",
+    "pages": "Paginas",
+    "properties_count": "Propiedades"
+  },
+  "properties": {
+    "forSale": "En Venta",
+    "forRent": "En Alquiler",
+    "all": "Todas",
+    "bedrooms": "Habitaciones",
+    "bathrooms": "Banos",
+    "viewDetails": "Ver Detalles",
+    "totalProperties": "Propiedades Totales",
+    "landPlots": "Terrenos"
+  },
+  "footer": {
+    "explore": "Explorar",
+    "company": "Empresa",
+    "contactUs": "Contacto",
+    "privacyPolicy": "Politica de Privacidad",
+    "testimonials": "Testimonios",
+    "newsletter": "Mantente Informado",
+    "newsletterDesc": "Recibe las ultimas propiedades y ofertas exclusivas.",
+    "subscribe": "Suscribirse"
+  }
+}

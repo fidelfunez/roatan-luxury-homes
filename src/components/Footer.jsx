@@ -1,67 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useContent } from '@/lib/useContent';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input'; 
 import { Label } from '@/components/ui/label';
 import { Facebook, Instagram, Linkedin, Twitter, Youtube, Mail, MapPin, Phone } from 'lucide-react';
 import Logo from './Logo';
 import OptimizedImage from './OptimizedImage';
-import { getContentField, getWebsiteContent } from '@/lib/contentUtils';
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const { getContent } = useContent();
   const currentYear = new Date().getFullYear();
-  const [content, setContent] = useState({});
-
-  useEffect(() => {
-    // Load website content
-    const loadContent = () => {
-      const websiteContent = getWebsiteContent();
-      setContent(websiteContent);
-    };
-    
-    loadContent();
-    
-    // Listen for content updates
-    const handleContentUpdate = () => {
-      loadContent();
-    };
-    
-    window.addEventListener('websiteContentUpdated', handleContentUpdate);
-    
-    return () => {
-      window.removeEventListener('websiteContentUpdated', handleContentUpdate);
-    };
-  }, []);
-
-  // Helper function to get content with fallback
-  const getContent = (page, section, field) => {
-    const value = content[page]?.[section]?.[field];
-    
-    // If the value is empty, null, or undefined, return the default
-    if (!value || value.trim() === '') {
-      return getContentField(page, section, field);
-    }
-    
-    return value;
-  };
 
   const footerSections = [
     {
-      title: 'Explore',
+      title: t('footer.explore'),
       links: [
-        { label: 'Home', to: '/' },
-        { label: 'Properties', to: '/properties' },
-        { label: 'Services', to: '/services' },
-        { label: 'Blog', to: '/blog' },
+        { label: t('nav.home'), to: '/' },
+        { label: t('nav.properties'), to: '/properties' },
+        { label: t('nav.services'), to: '/services' },
+        { label: t('nav.blog'), to: '/blog' },
       ],
     },
     {
-      title: 'Company',
+      title: t('footer.company'),
       links: [
-        { label: 'About Us', to: '/about' },
-        { label: 'Contact Us', to: '/contact' },
-        { label: 'Testimonials', to: '/#testimonials' }, 
-        { label: 'Privacy Policy', to: '/privacy-policy' },
+        { label: t('nav.about'), to: '/about' },
+        { label: t('footer.contactUs'), to: '/contact' },
+        { label: t('footer.testimonials'), to: '/#testimonials' }, 
+        { label: t('footer.privacyPolicy'), to: '/privacy-policy' },
       ],
     },
   ];

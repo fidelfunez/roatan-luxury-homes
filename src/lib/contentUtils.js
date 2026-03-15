@@ -160,6 +160,13 @@ const defaultContent = {
       feature4Desc: '500+ satisfied clients with 100% satisfaction rate.'
     }
   },
+  blog: {
+    hero: {
+      title: 'Our Blog',
+      subtitle: 'Insights, tips, and news about real estate in Roatán and the Bay Islands.',
+      badge: 'Latest Updates'
+    }
+  },
   properties: {
     hero: {
       title: 'Houses for Sale & Rent in Roatán, Honduras',
@@ -238,6 +245,233 @@ const defaultContent = {
       companyTitle: 'Company',
       privacyPolicy: 'Privacy Policy',
       copyright: 'Roatán Luxury Homes. All rights reserved.'
+    }
+  }
+};
+
+const defaultContentEs = {
+  home: {
+    hero: {
+      title: 'Comprar o alquilar una casa en Roatan, Honduras',
+      subtitle: 'Tu fuente confiable para comprar y alquilar casas en Roatan, las Islas de la Bahia y el Caribe. Casas de lujo, propiedades frente al mar e inversiones.',
+      trustIndicator1: '15+ anos de experiencia',
+      trustIndicator2: '500+ propiedades vendidas',
+      trustIndicator3: 'Soporte 24/7'
+    },
+    welcome: {
+      title: 'Bienvenido al paraiso',
+      description: 'Roatan, Honduras, en las Islas de la Bahia del Caribe, ofrece una belleza incomparable y una comunidad acogedora. Ya sea que quieras comprar, alquilar o invertir en bienes raices en Honduras, Roatan Luxury Homes es tu guia de confianza.',
+      feature1Title: 'Orientacion experta',
+      feature1Desc: 'Navegando el mercado inmobiliario de Roatan e Islas de la Bahia con conocimiento local y servicio personalizado.',
+      feature2Title: 'Enfocados en el cliente',
+      feature2Desc: 'Tus suenos son nuestra prioridad. Escuchamos, asesoramos y entregamos resultados excepcionales.',
+      feature3Title: 'Ubicaciones privilegiadas',
+      feature3Desc: 'Acceso a listados exclusivos en Roatan, Honduras y los destinos mas codiciados del Caribe.'
+    },
+    featuredLocation: {
+      title: 'Ubicacion destacada: Roatan, Islas de la Bahia, Honduras',
+      description: 'Descubre Roatan, Honduras, la mas grande de las Islas de la Bahia en el Caribe. Compra o alquila una casa en Roatan entre aguas cristalinas y playas de arena blanca. Nuestras propiedades exclusivas ofrecen la combinacion perfecta de lujo y vida insular.',
+      feature1: 'Buceo y snorkel de clase mundial',
+      feature2: 'Playas pristinas y arrecifes de coral',
+      feature3: 'Amenidades de lujo y comodidades modernas',
+      startingPrice: 'Desde $450,000'
+    },
+    testimonials: {
+      title: 'Lo que dicen nuestros clientes',
+      subtitle: 'No solo nos creas a nosotros. Esto es lo que nuestros clientes satisfechos dicen sobre su experiencia.',
+      testimonial1Name: 'Sarah y Mike',
+      testimonial1Location: 'Villa en playa Roatan',
+      testimonial1Text: 'Roatan Luxury Homes hizo realidad nuestro sueno de tener una propiedad frente al mar. Su atencion al detalle fue excepcional.',
+      testimonial2Name: 'David Rodriguez',
+      testimonial2Location: 'Condominio West Bay',
+      testimonial2Text: 'Profesionales, receptivos y entienden el mercado local. No podria estar mas feliz con mi propiedad de inversion.',
+      testimonial3Name: 'Emma Thompson',
+      testimonial3Location: 'Casa Sandy Bay',
+      testimonial3Text: 'Desde la primera consulta hasta el cierre, todo fue fluido. Realmente se preocupan por el exito de sus clientes.'
+    },
+    cta: {
+      title: 'Listo para encontrar tu paraiso?',
+      subtitle: 'Comencemos tu camino hacia tu pedazo del paraiso caribeno hoy.'
+    }
+  },
+  about: {
+    company: {
+      title: 'Sobre Roatan Luxury Homes',
+      subtitle: 'Tus socios de confianza para comprar y alquilar casas en Roatan, Honduras e Islas de la Bahia. Te ayudamos a encontrar tu pedazo del paraiso caribeno.',
+      missionTitle: 'Nuestra mision',
+      missionText: 'En Roatan Luxury Homes, nuestra mision es brindar servicios inmobiliarios excepcionales con integridad, profesionalismo y un profundo conocimiento del mercado local. Ayudamos a nuestros clientes, ya sean compradores estadounidenses buscando casas tropicales o inversionistas, a tomar decisiones informadas y alcanzar sus metas en Roatan.',
+      missionText2: 'Creemos en construir relaciones duraderas basadas en confianza y transparencia, asegurando que cada cliente se sienta seguro y apoyado durante todo el proceso.'
+    },
+    whyChooseUs: {
+      title: 'Por que elegirnos?',
+      feature1Title: 'Experiencia local',
+      feature1Desc: 'Conocimiento incomparable de los barrios, tendencias del mercado y aspectos legales de Roatan.',
+      feature2Title: 'Confianza y transparencia',
+      feature2Desc: 'Operamos con los mas altos estandares eticos, asegurando claridad y honestidad en todas las transacciones.',
+      feature3Title: 'Enfoque centrado en el cliente',
+      feature3Desc: 'Tus necesidades son nuestra prioridad. Ofrecemos servicio personalizado adaptado a tus objetivos.'
+    },
+    team: {
+      title: 'Conoce nuestro equipo',
+      member1Name: 'Alice Johnson',
+      member1Role: 'Agente principal y fundadora',
+      member1Bio: 'Con mas de 15 anos de experiencia en bienes raices de Roatan, Alice apasiona conectar clientes con sus propiedades ideales y asegurar un proceso de transaccion fluido.',
+      member2Name: 'Bob Williams',
+      member2Role: 'Especialista en ventas',
+      member2Bio: 'El profundo conocimiento del mercado local y dedicacion a la satisfaccion del cliente de Bob lo hacen un activo invaluable.',
+      member3Name: 'Carol Davis',
+      member3Role: 'Gerente de relaciones con clientes',
+      member3Bio: 'Carol asegura que cada cliente reciba atencion personalizada y apoyo durante todo su proceso inmobiliario.'
+    }
+  },
+  services: {
+    hero: {
+      title: 'Nuestros servicios',
+      subtitle: 'Soluciones inmobiliarias integrales adaptadas a tus necesidades en Roatan. Desde comprar la casa de tus suenos hasta gestionar inversiones.',
+      stat1Number: '500+',
+      stat1Label: 'Propiedades vendidas',
+      stat2Number: '15+',
+      stat2Label: 'Anos de experiencia',
+      stat3Number: '100%',
+      stat3Label: 'Satisfaccion del cliente',
+      stat4Number: '24/7',
+      stat4Label: 'Soporte disponible'
+    },
+    whyChooseUs: {
+      title: 'Por que elegir Roatan Luxury Homes?',
+      subtitle: 'Combinamos experiencia local con estandares internacionales para entregar resultados excepcionales.',
+      feature1Title: 'Experiencia confiable',
+      feature1Desc: '15+ anos de experiencia en bienes raices del Caribe con profundo conocimiento local.',
+      feature2Title: 'Servicio personalizado',
+      feature2Desc: 'Soporte dedicado durante todo tu proceso inmobiliario.',
+      feature3Title: 'Garantia de calidad',
+      feature3Desc: 'Debida diligencia rigurosa y estandares de calidad en cada transaccion.',
+      feature4Title: 'Soporte 24/7',
+      feature4Desc: 'Asistencia las 24 horas para todas tus necesidades inmobiliarias.'
+    },
+    cta: {
+      title: 'Listo para comenzar?',
+      subtitle: 'Contactanos hoy para discutir tus necesidades inmobiliarias y descubrir como podemos ayudarte a alcanzar tus metas en Roatan.'
+    }
+  },
+  contact: {
+    hero: {
+      title: 'Contactanos',
+      subtitle: 'Estamos aqui para ayudarte con todas tus necesidades inmobiliarias en Roatan. Escribenos hoy!',
+      stat1Number: '24/7',
+      stat1Label: 'Soporte disponible',
+      stat2Number: '< 2hrs',
+      stat2Label: 'Tiempo de respuesta',
+      stat3Number: '500+',
+      stat3Label: 'Clientes satisfechos',
+      stat4Number: '15+',
+      stat4Label: 'Anos de experiencia'
+    },
+    contactInfo: {
+      phone: '+504 3341-9532',
+      email: 'info@roatanluxuryhomes.com',
+      address: 'Roatan, Islas de la Bahia, Honduras',
+      officeHours: 'Lunes - Viernes: 9:00 AM - 6:00 PM',
+      emergencyContact: 'Disponible 24/7 para consultas urgentes'
+    },
+    whyChooseUs: {
+      title: 'Por que elegir Roatan Luxury Homes?',
+      subtitle: 'Combinamos experiencia local con estandares internacionales para entregar resultados excepcionales.',
+      feature1Title: 'Experiencia confiable',
+      feature1Desc: '15+ anos de experiencia en bienes raices del Caribe.',
+      feature2Title: 'Servicio personalizado',
+      feature2Desc: 'Soporte dedicado durante todo tu proceso inmobiliario.',
+      feature3Title: 'Garantia de calidad',
+      feature3Desc: 'Debida diligencia rigurosa en cada transaccion.',
+      feature4Title: 'Satisfaccion del cliente',
+      feature4Desc: '500+ clientes satisfechos con 100% de satisfaccion.'
+    }
+  },
+  blog: {
+    hero: {
+      title: 'Nuestro blog',
+      subtitle: 'Informacion, consejos y noticias sobre bienes raices en Roatan e Islas de la Bahia.',
+      badge: 'Ultimas actualizaciones'
+    }
+  },
+  properties: {
+    hero: {
+      title: 'Casas en venta y alquiler en Roatan, Honduras',
+      subtitle: 'Compra o alquila una casa en Roatan e Islas de la Bahia. Explora casas de lujo, propiedades frente al mar y bienes raices en Roatan, Honduras.',
+      badge: 'Propiedades Roatan e Islas de la Bahia'
+    }
+  },
+  'property-sales-acquisition': {
+    title: 'Ventas y adquisicion de propiedades',
+    description: 'Nuestro equipo experto brinda soporte integral para comprar o vender propiedades en Roatan. Nos encargamos de todo: analisis de mercado, visitas a propiedades, negociacion y cierre. Ya sea una villa frente al mar, un condominio, un terreno o una inversion comercial, utilizamos nuestra red y conocimiento local para encontrar la opcion perfecta. Garantizamos un proceso transparente y fluido.',
+    ctaText: 'Hablemos de como podemos ayudarte con ventas y adquisicion. Contactanos hoy para una consulta personalizada.'
+  },
+  'legal-guidance-due-diligence': {
+    title: 'Asesoria legal y asistencia',
+    description: 'Navegar el panorama legal de bienes raices en Honduras puede ser desafiante. Te conectamos con profesionales legales especializados en derecho inmobiliario para due diligence, busqueda de titulos y revision de contratos.',
+    ctaText: 'Hablemos de como podemos ayudarte con asesoria legal. Contactanos hoy.'
+  },
+  'relocation-assistance': {
+    title: 'Asistencia para reubicacion',
+    description: 'Mudarse a Roatan es una aventura emocionante. Cubrimos residencia, visas, cuentas bancarias, escuelas y servicios locales para que tu transicion sea fluida.',
+    ctaText: 'Hablemos de asistencia para reubicacion. Contactanos hoy.'
+  },
+  'land-development-investment': {
+    title: 'Desarrollo e inversion',
+    description: 'Roatan ofrece oportunidades significativas para desarrollo de terrenos e inversion inmobiliaria. Te ayudamos a identificar parcelas para desarrollo residencial, comercial o mixto.',
+    ctaText: 'Hablemos de desarrollo e inversion. Contactanos hoy.'
+  },
+  'vacation-rental-management': {
+    title: 'Gestion de alquileres vacacionales',
+    description: 'Convierte tu propiedad en Roatan en una fuente de ingresos. Gestionamos marketing, reservas, check-in/out, limpieza y mantenimiento para maximizar tu ocupacion e ingresos.',
+    ctaText: 'Hablemos de gestion de alquileres. Contactanos hoy.'
+  },
+  'commercial-real-estate': {
+    title: 'Bienes raices comerciales',
+    description: 'Para negocios que buscan establecerse o expandirse en Roatan, ofrecemos servicios comerciales especializados: oficinas, locales, almacenes, hoteles y restaurantes.',
+    ctaText: 'Hablemos de bienes raices comerciales. Contactanos hoy.'
+  },
+  header: {
+    logo: {
+      companyName: 'Roatan Luxury Homes',
+      tagline: 'Propiedades de lujo en el Caribe'
+    },
+    navigation: {
+      homeLabel: 'Inicio',
+      propertiesLabel: 'Propiedades',
+      servicesLabel: 'Servicios',
+      aboutLabel: 'Nosotros',
+      blogLabel: 'Blog',
+      contactLabel: 'Contacto'
+    },
+    topBar: {
+      location: 'Roatan, Honduras',
+      phone: '+504 3341-9532',
+      hours: 'Lun-Vie 9AM-6PM'
+    },
+    cta: {
+      ctaText: 'Contactanos',
+      searchPlaceholder: 'Buscar en todo el sitio...'
+    }
+  },
+  footer: {
+    companyInfo: {
+      description: 'Tu socio de confianza para comprar y alquilar casas en Roatan, Honduras y el Caribe. Bienes raices de lujo en las Islas de la Bahia.',
+      address: 'Roatan, Islas de la Bahia, Honduras',
+      phone: '+504 3341-9532',
+      email: 'info@roatanluxuryhomes.com'
+    },
+    newsletter: {
+      title: 'Mantente informado',
+      description: 'Suscribete a nuestro boletin para las ultimas propiedades y noticias.',
+      placeholder: 'Ingresa tu email',
+      buttonText: 'Suscribirse'
+    },
+    links: {
+      exploreTitle: 'Explorar',
+      companyTitle: 'Empresa',
+      privacyPolicy: 'Politica de privacidad',
+      copyright: 'Roatan Luxury Homes. Todos los derechos reservados.'
     }
   }
 };
@@ -332,45 +566,53 @@ export const getContentSection = (page, section) => {
   return content[page]?.[section] || {};
 };
 
-// Get specific content field with fallback defaults
-export const getContentField = (page, section, field) => {
+// Get specific content field with fallback defaults. Pass lang ('en'|'es') for bilingual support.
+export const getContentField = (page, section, field, lang = 'en') => {
   const content = getWebsiteContent();
-  
-  // Handle individual service pages that don't have sections
+  const fieldKey = lang === 'es' ? field + 'Es' : field;
+
   let value;
   if (section === '') {
-    value = content[page]?.[field];
+    value = content[page]?.[fieldKey];
   } else {
     const sectionContent = getContentSection(page, section);
-    value = sectionContent[field];
+    value = sectionContent[fieldKey];
   }
-  
-  // If the value is empty, null, undefined, or not a string, return the default
+
   if (!value || typeof value !== 'string' || value.trim() === '') {
-    // Handle individual service pages that don't have sections in defaults
+    const def = lang === 'es' ? defaultContentEs : defaultContent;
     if (section === '') {
-      return defaultContent[page]?.[field] || '';
-    } else {
-      return defaultContent[page]?.[section]?.[field] || '';
+      return def[page]?.[field] || '';
     }
+    return def[page]?.[section]?.[field] || '';
   }
-  
+
   return value;
 };
 
-// Merge stored content with defaults to ensure all fields exist
+// Merge stored content with defaults to ensure all fields exist (EN + ES)
 const mergeWithDefaults = (stored) => {
-  const merged = { ...defaultContent };
-  
-  // Recursively merge stored content with defaults
+  const merged = JSON.parse(JSON.stringify(defaultContent));
+
+  const addEsFields = (target, source, page, section) => {
+    if (!source || typeof source !== 'object') return;
+    Object.keys(source).forEach(field => {
+      if (typeof source[field] === 'string' && source[field].trim()) {
+        const esKey = field + 'Es';
+        if (!target[esKey] || !target[esKey].trim()) {
+          target[esKey] = source[field];
+        }
+      }
+    });
+  };
+
   Object.keys(stored).forEach(page => {
     if (merged[page]) {
       Object.keys(stored[page]).forEach(section => {
-        if (merged[page][section]) {
-          merged[page][section] = {
-            ...merged[page][section],
-            ...stored[page][section]
-          };
+        if (merged[page][section] && typeof merged[page][section] === 'object') {
+          merged[page][section] = { ...merged[page][section], ...stored[page][section] };
+          const esSection = defaultContentEs[page]?.[section];
+          if (esSection) addEsFields(merged[page][section], esSection, page, section);
         } else {
           merged[page][section] = stored[page][section];
         }
@@ -379,7 +621,16 @@ const mergeWithDefaults = (stored) => {
       merged[page] = stored[page];
     }
   });
-  
+
+  Object.keys(defaultContentEs).forEach(page => {
+    if (!merged[page]) merged[page] = {};
+    Object.keys(defaultContentEs[page] || {}).forEach(section => {
+      if (merged[page][section] && typeof merged[page][section] === 'object') {
+        addEsFields(merged[page][section], defaultContentEs[page][section], page, section);
+      }
+    });
+  });
+
   return merged;
 };
 
@@ -396,6 +647,7 @@ export const resetToDefaults = () => {
 
 // Export default content for backup
 export const getDefaultContent = () => defaultContent;
+export const getDefaultContentEs = () => defaultContentEs;
 
 // Clear localStorage and reset to defaults
 export const clearWebsiteContent = () => {
