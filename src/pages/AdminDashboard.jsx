@@ -185,14 +185,16 @@ const AdminDashboard = () => {
           <motion.p variants={fadeIn} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
             Manage your Caribbean luxury real estate portfolio. Add properties, review submissions, and control your website content from one central dashboard.
           </motion.p>
-          <motion.div variants={fadeIn} className="flex justify-center">
-            <Link 
-              to="/admin/database-test" 
-              className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200 underline decoration-dotted"
-            >
-              Database Connection Test
-            </Link>
-          </motion.div>
+          {import.meta.env.DEV && (
+            <motion.div variants={fadeIn} className="flex justify-center">
+              <Link 
+                to="/admin/database-test" 
+                className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200 underline decoration-dotted"
+              >
+                Database Connection Test
+              </Link>
+            </motion.div>
+          )}
         </div>
       </motion.section>
 

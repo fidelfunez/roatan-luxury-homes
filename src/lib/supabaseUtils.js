@@ -1,23 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from './supabase';
 import { dbToFrontend, frontendToDb, dbArrayToFrontend, frontendArrayToDb, validateAndConvertTypes } from './fieldMappers';
 
-// Initialize Supabase client with error handling
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY;
-
-// Validate environment variables
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing required Supabase environment variables:', {
-    url: !!supabaseUrl,
-    anonKey: !!supabaseAnonKey,
-    serviceKey: !!supabaseServiceKey
-  });
-}
-
-// Create two clients: one for public operations (anon key) and one for admin operations (service key)
-const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
-const supabaseAdmin = createClient(supabaseUrl || '', supabaseServiceKey || supabaseAnonKey || '');
 
 // Properties functions
 export const getProperties = async () => {
@@ -84,9 +69,7 @@ export const addProperty = async (newPropertyData) => {
     const validatedData = validateAndConvertTypes(newPropertyData, 'properties');
     const dbData = frontendToDb(validatedData, 'properties');
 
-    console.log('Attempting to add property to Supabase...');
-    // Use admin client for insert operations
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('properties')
       .insert([dbData])
       .select()
@@ -97,8 +80,6 @@ export const addProperty = async (newPropertyData) => {
       throw error;
     }
 
-    console.log('Property added successfully:', data);
-    // Convert back to frontend format
     return dbToFrontend(data, 'properties');
   } catch (error) {
     console.error('Error in addProperty:', error);
@@ -117,8 +98,7 @@ export const updateProperty = async (propertyId, updatedData) => {
     const validatedData = validateAndConvertTypes(updatedData, 'properties');
     const dbData = frontendToDb(validatedData, 'properties');
 
-    // Use admin client for update operations
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('properties')
       .update(dbData)
       .eq('id', propertyId)
@@ -145,8 +125,7 @@ export const deleteProperty = async (propertyId) => {
       throw new Error('Supabase not configured. Please check your environment variables.');
     }
 
-    // Use admin client for delete operations
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('properties')
       .delete()
       .eq('id', propertyId);
@@ -172,9 +151,6 @@ export const getBlogPosts = async () => {
       return [];
     }
 
-    console.log('Supabase URL:', supabaseUrl);
-    console.log('Supabase Key exists:', !!supabaseAnonKey);
-    
     const { data, error } = await supabase
       .from('blog_posts')
       .select('*')
@@ -185,8 +161,6 @@ export const getBlogPosts = async () => {
       return [];
     }
 
-    console.log('Supabase response:', { data, error });
-    // Convert database format to frontend format
     return dbArrayToFrontend(data || [], 'blog_posts');
   } catch (error) {
     console.error('Error in getBlogPosts:', error);
@@ -232,8 +206,7 @@ export const addBlogPost = async (newBlogData) => {
     const validatedData = validateAndConvertTypes(newBlogData, 'blog_posts');
     const dbData = frontendToDb(validatedData, 'blog_posts');
 
-    // Use admin client for insert operations
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('blog_posts')
       .insert([dbData])
       .select()
@@ -263,8 +236,7 @@ export const updateBlogPost = async (postId, updatedData) => {
     const validatedData = validateAndConvertTypes(updatedData, 'blog_posts');
     const dbData = frontendToDb(validatedData, 'blog_posts');
 
-    // Use admin client for update operations
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('blog_posts')
       .update(dbData)
       .eq('id', postId)
@@ -291,8 +263,7 @@ export const deleteBlogPost = async (postId) => {
       throw new Error('Supabase not configured. Please check your environment variables.');
     }
 
-    // Use admin client for delete operations
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('blog_posts')
       .delete()
       .eq('id', postId);
@@ -318,50 +289,19 @@ export const getClientSubmissions = async () => {
       return [];
     }
 
-    console.log('Fetching client submissions with admin client...');
-    console.log('Supabase URL:', supabaseUrl);
-    console.log('Service key exists:', !!supabaseServiceKey);
-
-    // Use admin client since RLS requires authentication for SELECT
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('client_submissions')
       .select('*')
       .order('created_at', { ascending: false });
-
-    console.log('Raw Supabase response:', { data, error });
 
     if (error) {
       console.error('Error fetching client submissions:', error);
       return [];
     }
 
-    console.log('Raw data before conversion:', data);
-    console.log('Raw data length:', data ? data.length : 0);
-    
-    if (data && data.length > 0) {
-      console.log('First raw submission:', data[0]);
-      console.log('First raw submission keys:', Object.keys(data[0]));
-    }
-    
-    // Convert database format to frontend format
-    console.log('About to call dbArrayToFrontend...');
-    const convertedData = dbArrayToFrontend(data || [], 'client_submissions');
-    console.log('Converted data:', convertedData);
-    console.log('Converted data length:', convertedData ? convertedData.length : 0);
-    
-    if (convertedData && convertedData.length > 0) {
-      console.log('First converted submission:', convertedData[0]);
-      console.log('First converted submission keys:', Object.keys(convertedData[0]));
-    }
-    
-    return convertedData;
+    return dbArrayToFrontend(data || [], 'client_submissions');
   } catch (error) {
     console.error('Error in getClientSubmissions:', error);
-    console.error('Error details:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    });
     return [];
   }
 };
@@ -377,8 +317,7 @@ export const addClientSubmission = async (submissionData) => {
     const validatedData = validateAndConvertTypes(submissionData, 'client_submissions');
     const dbData = frontendToDb(validatedData, 'client_submissions');
 
-    // Use admin client for insert operations
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('client_submissions')
       .insert([dbData])
       .select()
@@ -408,8 +347,7 @@ export const updateClientSubmission = async (submissionId, updatedData) => {
     const validatedData = validateAndConvertTypes(updatedData, 'client_submissions');
     const dbData = frontendToDb(validatedData, 'client_submissions');
 
-    // Use admin client for update operations
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('client_submissions')
       .update(dbData)
       .eq('id', submissionId)
@@ -436,8 +374,7 @@ export const deleteClientSubmission = async (submissionId) => {
       throw new Error('Supabase not configured. Please check your environment variables.');
     }
 
-    // Use admin client for delete operations
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('client_submissions')
       .delete()
       .eq('id', submissionId);
@@ -526,7 +463,7 @@ export const updatePageContent = async (pageName, sectionName, content) => {
     if (!supabaseUrl || !supabaseAnonKey) {
       throw new Error('Supabase not configured. Please check your environment variables.');
     }
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('page_content')
       .upsert({
         page_name: pageName,

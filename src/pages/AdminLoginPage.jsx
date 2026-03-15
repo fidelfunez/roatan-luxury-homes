@@ -15,28 +15,43 @@ import React, { useState } from 'react';
     };
 
     const AdminLoginPage = () => {
+      const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
+      const [isSubmitting, setIsSubmitting] = useState(false);
       const { login } = useAdmin();
       const navigate = useNavigate();
       const location = useLocation();
       const { toast } = useToast();
 
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
-        if (login(password)) {
-          toast({
-            title: 'Login Successful!',
-            description: 'Welcome, Admin! You now have full access to the management panel.',
-          });
-          const from = location.state?.from?.pathname || '/admin/dashboard';
-          navigate(from, { replace: true });
-        } else {
+        setIsSubmitting(true);
+        try {
+          const success = await login(email, password);
+          if (success) {
+            toast({
+              title: 'Login Successful',
+              description: 'Welcome. You now have full access to the management panel.',
+            });
+            const from = location.state?.from?.pathname || '/admin/dashboard';
+            navigate(from, { replace: true });
+          } else {
+            toast({
+              title: 'Login Failed',
+              description: 'Incorrect email or password. Please try again.',
+              variant: 'destructive',
+            });
+            setPassword('');
+          }
+        } catch (err) {
           toast({
             title: 'Login Failed',
-            description: 'Incorrect password. Please try again.',
+            description: err?.message || 'An error occurred. Please try again.',
             variant: 'destructive',
           });
           setPassword('');
+        } finally {
+          setIsSubmitting(false);
         }
       };
 
@@ -51,10 +66,22 @@ import React, { useState } from 'react';
             <CardHeader className="text-center bg-primary/10 p-6 rounded-t-lg">
               <Shield className="w-16 h-16 text-primary mx-auto mb-4" />
               <CardTitle className="text-3xl font-bold text-primary">Admin Access</CardTitle>
-              <CardDescription className="text-muted-foreground">Enter the password to manage property listings.</CardDescription>
+              <CardDescription className="text-muted-foreground">Sign in with your admin account to manage property listings.</CardDescription>
             </CardHeader>
             <CardContent className="p-6 md:p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@example.com"
+                    required
+                    className="mt-1"
+                  />
+                </div>
                 <div>
                   <Label htmlFor="password">Password</Label>
                   <Input
@@ -62,13 +89,13 @@ import React, { useState } from 'react';
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter admin password"
+                    placeholder="Enter password"
                     required
                     className="mt-1"
                   />
                 </div>
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-lg py-3">
-                  <LogIn className="mr-2 h-5 w-5" /> Login
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-lg py-3" disabled={isSubmitting}>
+                  <LogIn className="mr-2 h-5 w-5" /> {isSubmitting ? 'Signing in...' : 'Login'}
                 </Button>
               </form>
             </CardContent>

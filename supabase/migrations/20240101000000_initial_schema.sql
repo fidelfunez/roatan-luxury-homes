@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS properties (
   image TEXT,
   images TEXT[],
   features TEXT[],
-  "ownershipYears" TEXT,
-  "timeToAttractions" TEXT,
+  ownership_years TEXT,
+  time_to_attractions TEXT,
   status TEXT DEFAULT 'active',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS blog_posts (
 -- Client Submissions Table
 CREATE TABLE IF NOT EXISTS client_submissions (
   id BIGSERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  phone TEXT,
+  contactname TEXT NOT NULL,
+  contactemail TEXT NOT NULL,
+  contactphone TEXT,
   property_type TEXT,
   budget DECIMAL(12,2),
   message TEXT,

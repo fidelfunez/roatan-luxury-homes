@@ -275,7 +275,6 @@ const AdminBlog = () => {
 
       // Log cleanup for transparency
       if (hasImage) {
-        console.log(`Blog post "${postToDelete.title}" deleted. Image data (~${imageSize}KB) has been removed from storage.`);
       }
 
       toast({

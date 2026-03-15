@@ -264,9 +264,6 @@ import React, { useState, useRef } from 'react';
           // Add created_at timestamp
           processedData.created_at = new Date().toISOString();
 
-          // Log the data being sent for debugging
-          console.log('Data being sent to Supabase:', processedData);
-
           const newProperty = await addProperty(processedData);
           
           toast({

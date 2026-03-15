@@ -173,14 +173,16 @@ function App() {
             </AdminLayout>
           } 
         />
-        <Route 
-          path="/admin/database-test" 
-          element={
-            <AdminLayout>
-              <DatabaseTest />
-            </AdminLayout>
-          } 
-        />
+        {import.meta.env.DEV && (
+          <Route 
+            path="/admin/database-test" 
+            element={
+              <AdminLayout>
+                <DatabaseTest />
+              </AdminLayout>
+            } 
+          />
+        )}
         
         {/* Legacy routes for backward compatibility */}
         <Route path="/add-property" element={

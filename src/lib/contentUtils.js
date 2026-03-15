@@ -401,7 +401,6 @@ export const getDefaultContent = () => defaultContent;
 export const clearWebsiteContent = () => {
   try {
     localStorage.removeItem(CONTENT_STORAGE_KEY);
-    console.log('🧹 contentUtils: localStorage cleared');
     return true;
   } catch (error) {
     console.error('Error clearing website content:', error);

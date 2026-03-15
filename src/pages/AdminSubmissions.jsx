@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import { getClientSubmissions, updateClientSubmission, deleteClientSubmission } from '@/lib/supabaseUtils';
 import { getDisplayValue } from '@/lib/fieldMappers';
+import { formatPropertyPrice } from '@/lib/propertyUtils';
 import { useAdmin } from '@/context/AdminContext.jsx';
 import { testDatabaseConnection, testRLSPolicies } from '@/lib/testConnection';
 import { 
@@ -67,42 +68,15 @@ const AdminSubmissions = () => {
   }, []);
 
   useEffect(() => {
-    console.log('=== FILTER EFFECT TRIGGERED ===');
-    console.log('Submissions state:', submissions);
-    console.log('Status filter:', statusFilter);
-    console.log('Search term:', searchTerm);
     filterSubmissions();
   }, [submissions, statusFilter, searchTerm]);
 
   const loadSubmissions = async () => {
     try {
-      console.log('Admin status:', isAdmin);
-      console.log('=== LOADING SUBMISSIONS ===');
-      console.log('About to call getClientSubmissions...');
       const submissionsData = await getClientSubmissions();
-      console.log('getClientSubmissions returned:', submissionsData);
-      console.log('Number of submissions:', submissionsData.length);
-      console.log('Type of submissionsData:', typeof submissionsData);
-      console.log('Is array:', Array.isArray(submissionsData));
-      
-      if (submissionsData && submissionsData.length > 0) {
-        console.log('First submission structure:', submissionsData[0]);
-        console.log('First submission keys:', Object.keys(submissionsData[0]));
-        console.log('Title field:', submissionsData[0].title);
-        console.log('Contact name field:', submissionsData[0].contactName);
-      } else {
-        console.log('No submissions data or empty array');
-      }
-      
       setSubmissions(submissionsData || []);
-      console.log('Submissions state set with:', (submissionsData || []).length, 'items');
     } catch (error) {
       console.error('Error loading submissions:', error);
-      console.error('Error details:', {
-        message: error.message,
-        stack: error.stack,
-        name: error.name
-      });
       toast({
         title: "Error loading submissions",
         description: "Failed to load submissions from database.",
@@ -112,16 +86,10 @@ const AdminSubmissions = () => {
   };
 
   const filterSubmissions = () => {
-    console.log('=== FILTERING SUBMISSIONS ===');
-    console.log('Original submissions count:', submissions.length);
-    console.log('Status filter:', statusFilter);
-    console.log('Search term:', searchTerm);
-    
     let filtered = [...submissions];
 
     if (statusFilter !== 'all') {
       filtered = filtered.filter(sub => (sub.status || 'pending') === statusFilter);
-      console.log('After status filter:', filtered.length);
     }
 
     if (searchTerm) {
@@ -132,10 +100,8 @@ const AdminSubmissions = () => {
         sub.contactName?.toLowerCase().includes(term) ||
         sub.contactEmail?.toLowerCase().includes(term)
       );
-      console.log('After search filter:', filtered.length);
     }
 
-    console.log('Final filtered count:', filtered.length);
     setFilteredSubmissions(filtered);
   };
 
@@ -143,7 +109,6 @@ const AdminSubmissions = () => {
     setIsProcessing(true);
     
     try {
-      console.log('Updating submission:', submissionId, 'to status:', newStatus);
       await updateClientSubmission(submissionId, { 
         status: newStatus, 
         reviewed_at: new Date().toISOString() 
@@ -153,14 +118,14 @@ const AdminSubmissions = () => {
       await loadSubmissions();
 
       toast({
-        title: `Submission ${newStatus === 'approved' ? 'Approved' : 'Rejected'} ✅`,
+        title: `Submission ${newStatus === 'approved' ? 'Approved' : 'Rejected'}`,
         description: `The property submission has been ${newStatus === 'approved' ? 'approved' : 'rejected'}.`,
         variant: newStatus === 'approved' ? 'default' : 'destructive',
       });
     } catch (error) {
       console.error('Error updating submission:', error);
       toast({
-        title: "Error ❌",
+        title: "Error",
         description: "Failed to update submission status. Please try again.",
         variant: "destructive",
       });
@@ -191,13 +156,8 @@ const AdminSubmissions = () => {
       // Reload submissions to get the updated data
       await loadSubmissions();
 
-      // Log cleanup for transparency
-      if (hasImages) {
-        console.log(`Submission "${submissionToDelete.title}" deleted. Image data (~${imageSize}KB) has been removed from storage.`);
-      }
-
       toast({
-        title: "Submission Deleted! 🗑️",
+        title: "Submission Deleted",
         description: hasImages 
           ? `"${submissionToDelete.title}" and its associated images have been successfully deleted.`
           : `"${submissionToDelete.title}" has been successfully deleted.`,
@@ -206,7 +166,7 @@ const AdminSubmissions = () => {
     } catch (error) {
       console.error('Error deleting submission:', error);
       toast({
-        title: "Delete Failed ❌",
+        title: "Delete Failed",
         description: "Failed to delete submission. Please try again.",
         variant: "destructive",
       });
@@ -338,7 +298,6 @@ const AdminSubmissions = () => {
         <Button 
           variant="outline" 
           onClick={async () => {
-            console.log('=== RUNNING DATABASE TESTS ===');
             await testDatabaseConnection();
             await testRLSPolicies();
           }}
@@ -349,32 +308,8 @@ const AdminSubmissions = () => {
         </Button>
       </div>
 
-      {/* Debug Info */}
-      <div className="bg-yellow-100 p-4 rounded-lg mb-4">
-        <h3 className="font-bold text-yellow-800">Debug Info:</h3>
-        <p>Total submissions: {submissions.length}</p>
-        <p>Filtered submissions: {filteredSubmissions.length}</p>
-        <p>Status filter: {statusFilter}</p>
-        <p>Search term: {searchTerm}</p>
-        {submissions.length > 0 && (
-          <div>
-            <p>First submission title: {submissions[0]?.title || 'No title'}</p>
-            <p>First submission contact: {submissions[0]?.contactName || 'No contact'}</p>
-            <p>Raw contactname: {submissions[0]?.contactname || 'No raw contact'}</p>
-            <p>Raw name: {submissions[0]?.name || 'No raw name'}</p>
-            <p>Raw email: {submissions[0]?.email || 'No raw email'}</p>
-            <p>Raw contactemail: {submissions[0]?.contactemail || 'No raw contactemail'}</p>
-            <p>All keys: {Object.keys(submissions[0]).join(', ')}</p>
-            <p>getDisplayValue contactName: {getDisplayValue(submissions[0], 'contactName', 'FAILED')}</p>
-            <p>getDisplayValue contactEmail: {getDisplayValue(submissions[0], 'contactEmail', 'FAILED')}</p>
-          </div>
-        )}
-      </div>
-
       {/* Submissions List */}
       <div className="space-y-4">
-        {console.log('Rendering submissions. Count:', filteredSubmissions.length)}
-        {console.log('Filtered submissions:', filteredSubmissions)}
         {filteredSubmissions.length === 0 ? (
           <Card>
             <CardContent className="p-8 text-center">
@@ -390,8 +325,6 @@ const AdminSubmissions = () => {
           </Card>
         ) : (
           filteredSubmissions.map((submission) => {
-            // Debug log for each submission
-            console.log('Submission object:', submission);
             const StatusIcon = statusIcons[submission.status];
             return (
               <Card key={submission.id} className="hover:shadow-lg transition-shadow">
@@ -419,8 +352,11 @@ const AdminSubmissions = () => {
                             </span>
                             <span className="flex items-center gap-1">
                               <DollarSign className="h-4 w-4" />
-                              {getDisplayValue(submission, 'price', 'Price not specified')}
+                              {formatPropertyPrice(submission)}
                             </span>
+                            {submission.listingType === 'rent' && (
+                              <span className="font-medium text-amber-600">For Rent</span>
+                            )}
                           </div>
                         </div>
                         

@@ -1,76 +1,62 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { supabase } from '@/lib/supabase';
 
-    const AdminContext = createContext();
+const AdminContext = createContext();
 
-    export const useAdmin = () => useContext(AdminContext);
+export const useAdmin = () => useContext(AdminContext);
 
-    const ADMIN_PASSWORD = 'supersecretpassword';
-    const LOCAL_STORAGE_ADMIN_KEY = 'caribbeanLuxRealty_isAdmin';
+export const AdminProvider = ({ children }) => {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    export const AdminProvider = ({ children }) => {
-      const [isAdmin, setIsAdmin] = useState(false);
-      const [loading, setLoading] = useState(true);
-
-      useEffect(() => {
-        try {
-          const storedIsAdmin = localStorage.getItem(LOCAL_STORAGE_ADMIN_KEY);
-          if (storedIsAdmin) {
-            const parsedValue = JSON.parse(storedIsAdmin);
-            // Only set admin if it's explicitly true
-            setIsAdmin(parsedValue === true);
-          } else {
-            setIsAdmin(false);
-          }
-        } catch (error) {
-          console.error("Error reading admin status from localStorage:", error);
-          setIsAdmin(false);
-        }
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setIsAdmin(!!session);
+      } catch (err) {
+        setIsAdmin(false);
+      } finally {
         setLoading(false);
-      }, []);
-
-      const login = (password) => {
-        if (password === ADMIN_PASSWORD) {
-          setIsAdmin(true);
-          try {
-            localStorage.setItem(LOCAL_STORAGE_ADMIN_KEY, JSON.stringify(true));
-          } catch (error) {
-            console.error("Error saving admin status to localStorage:", error);
-          }
-          return true;
-        }
-        return false;
-      };
-
-      const logout = () => {
-        setIsAdmin(false);
-        try {
-          localStorage.removeItem(LOCAL_STORAGE_ADMIN_KEY);
-        } catch (error) {
-          console.error("Error removing admin status from localStorage:", error);
-        }
-      };
-
-      // Debug function to clear admin state
-      const clearAdminState = () => {
-        setIsAdmin(false);
-        try {
-          localStorage.removeItem(LOCAL_STORAGE_ADMIN_KEY);
-        } catch (error) {
-          console.error("Error clearing admin status from localStorage:", error);
-        }
-      };
-
-      if (loading) {
-        return (
-          <div className="flex justify-center items-center h-screen bg-background">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
-          </div>
-        );
       }
-
-      return (
-        <AdminContext.Provider value={{ isAdmin, login, logout, loading, clearAdminState }}>
-          {children}
-        </AdminContext.Provider>
-      );
     };
+    checkSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAdmin(!!session);
+    });
+
+    return () => subscription?.unsubscribe();
+  }, []);
+
+  const login = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return false;
+    setIsAdmin(!!data.session);
+    return true;
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setIsAdmin(false);
+  };
+
+  const clearAdminState = () => {
+    supabase.auth.signOut();
+    setIsAdmin(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-background">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  return (
+    <AdminContext.Provider value={{ isAdmin, login, logout, loading, clearAdminState }}>
+      {children}
+    </AdminContext.Provider>
+  );
+};

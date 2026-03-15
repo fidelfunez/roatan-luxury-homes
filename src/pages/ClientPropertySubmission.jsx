@@ -11,7 +11,7 @@ import { useToast } from '@/components/ui/use-toast';
 import SEO from '@/components/SEO';
 import { addClientSubmission } from '@/lib/supabaseUtils';
 import { validateAndConvertTypes } from '@/lib/fieldMappers';
-import { DollarSign, Type, MapPin as MapPinIcon, BedDouble, Bath, CarFront, Maximize, Info, Image as ImageIcon, ListChecks, CalendarDays, Clock, PlusCircle, Trash2, UploadCloud, Send } from 'lucide-react';
+import { DollarSign, Type, MapPin as MapPinIcon, BedDouble, Bath, CarFront, Maximize, Info, Image as ImageIcon, ListChecks, CalendarDays, Clock, PlusCircle, Trash2, UploadCloud, Send, KeyRound } from 'lucide-react';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -29,6 +29,8 @@ const ClientPropertySubmission = () => {
     price: '',
     description: '',
     type: '',
+    listingType: 'sale',
+    pricePeriod: 'monthly',
     beds: '',
     baths: '',
     parking: '',
@@ -170,24 +172,21 @@ const ClientPropertySubmission = () => {
         phone: processedData.contactPhone,
         property_type: processedData.type,
         budget: processedData.price,
-        message: `Property: ${processedData.title}\nLocation: ${processedData.location}\nDescription: ${processedData.description}\nBedrooms: ${processedData.beds}\nBathrooms: ${processedData.baths}\nParking: ${processedData.parking}\nArea: ${processedData.area}`,
+        message: `Property: ${processedData.title}\nLocation: ${processedData.location}\nDescription: ${processedData.description}\nListing: ${processedData.listingType === 'rent' ? 'For Rent' : 'For Sale'}${processedData.listingType === 'rent' && processedData.pricePeriod ? ` (${processedData.pricePeriod})` : ''}\nBedrooms: ${processedData.beds}\nBathrooms: ${processedData.baths}\nParking: ${processedData.parking}\nArea: ${processedData.area}`,
         
         // Media and features
         image: processedData.image,
         images: processedData.images,
         features: processedData.features,
-        status: 'pending'
+        status: 'pending',
+        listingType: processedData.listingType || 'sale',
+        pricePeriod: processedData.listingType === 'rent' ? (processedData.pricePeriod || 'monthly') : null
       };
-      
-      // Debug logging
-      console.log('Submitting data:', submissionData);
-      console.log('Contact name:', processedData.contactName);
-      console.log('Name field:', submissionData.name);
       
       await addClientSubmission(submissionData);
 
       toast({
-        title: "Submission Sent! 📝",
+        title: "Submission Sent",
         description: "Thank you for your property submission. Our team will review it within 24 hours and contact you with the results.",
         variant: "default",
       });
@@ -196,7 +195,7 @@ const ClientPropertySubmission = () => {
     } catch (error) {
       console.error("Failed to submit property:", error);
       toast({
-        title: "Submission Failed ❌",
+        title: "Submission Failed",
         description: "There was a problem submitting your property. Please try again.",
         variant: "destructive",
       });
@@ -215,7 +214,7 @@ const ClientPropertySubmission = () => {
     >
       <SEO
         title="Submit Your Property"
-        description="Submit your Roatán property for listing. Our team will review and contact you within 24 hours."
+        description="Submit your Roatán property for sale or rent. Our team will review and contact you within 24 hours."
         canonical="/submit-property"
       />
       <Card className="max-w-4xl mx-auto shadow-2xl">
@@ -269,10 +268,41 @@ const ClientPropertySubmission = () => {
             {/* Property Details */}
             <section className="space-y-4">
               <h3 className="text-xl font-semibold text-primary border-b pb-2 mb-4">Property Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="listingType" className="flex items-center mb-1"><KeyRound className="w-4 h-4 mr-2 text-primary" />Listing Type</Label>
+                  <select
+                    id="listingType"
+                    name="listingType"
+                    value={formData.listingType}
+                    onChange={handleChange}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    <option value="sale">For Sale</option>
+                    <option value="rent">For Rent</option>
+                  </select>
+                </div>
+                {formData.listingType === 'rent' && (
+                  <div>
+                    <Label htmlFor="pricePeriod" className="flex items-center mb-1"><CalendarDays className="w-4 h-4 mr-2 text-primary" />Price Period</Label>
+                    <select
+                      id="pricePeriod"
+                      name="pricePeriod"
+                      value={formData.pricePeriod}
+                      onChange={handleChange}
+                      className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="monthly">Monthly</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="nightly">Nightly</option>
+                    </select>
+                  </div>
+                )}
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
-                  <Label htmlFor="price" className="flex items-center mb-1"><DollarSign className="w-4 h-4 mr-2 text-primary" />Price (USD)</Label>
-                  <Input id="price" name="price" type="number" value={formData.price} onChange={handleChange} placeholder="e.g., 500000" required />
+                  <Label htmlFor="price" className="flex items-center mb-1"><DollarSign className="w-4 h-4 mr-2 text-primary" />{formData.listingType === 'rent' ? (formData.pricePeriod === 'monthly' ? 'Monthly Rent (USD)' : formData.pricePeriod === 'weekly' ? 'Weekly Rent (USD)' : 'Nightly Rate (USD)') : 'Price (USD)'}</Label>
+                  <Input id="price" name="price" type="number" value={formData.price} onChange={handleChange} placeholder={formData.listingType === 'rent' ? 'e.g., 2500' : 'e.g., 500000'} required />
                 </div>
                 <div>
                   <Label htmlFor="type" className="flex items-center mb-1"><Type className="w-4 h-4 mr-2 text-primary" />Property Type</Label>

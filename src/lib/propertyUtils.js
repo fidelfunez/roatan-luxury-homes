@@ -83,10 +83,5 @@ export const deleteProperty = (propertyId) => {
   const updatedProperties = properties.filter(p => p.id !== numericId);
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedProperties));
 
-  // Log cleanup for transparency
-  if (totalImageSize > 0) {
-    console.log(`Property "${propertyToDelete.title}" deleted. Image data (~${totalImageSize}KB) has been removed from storage.`);
-  }
-
   return true;
 };

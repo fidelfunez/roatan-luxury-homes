@@ -61,7 +61,6 @@ const Contact = () => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    console.log("Form data submitted:", formData);
     toast({
       title: "Message Sent!",
       description: "Thank you for contacting us. We'll get back to you shortly.",

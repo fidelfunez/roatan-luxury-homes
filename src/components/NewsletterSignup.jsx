@@ -24,7 +24,6 @@ const NewsletterSignup = () => {
     
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    console.log("Newsletter signup:", email);
     toast({
       title: "Subscribed!",
       description: "Thank you for subscribing to our newsletter.",

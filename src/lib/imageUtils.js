@@ -45,7 +45,6 @@ export const optimizeImage = (file, options = {}) => {
               const optimizedSize = blob.size;
               const compressionRatio = ((originalSize - optimizedSize) / originalSize * 100).toFixed(1);
               
-              console.log(`Image optimized: ${(originalSize / 1024 / 1024).toFixed(2)}MB → ${(optimizedSize / 1024 / 1024).toFixed(2)}MB (${compressionRatio}% reduction)`);
               
               resolve({
                 dataUrl: reader.result,

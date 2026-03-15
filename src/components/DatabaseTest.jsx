@@ -15,10 +15,6 @@ export default function DatabaseTest() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        console.log('Fetching categories from Supabase...');
-        console.log('Supabase URL:', supabaseUrl);
-        console.log('Supabase Key exists:', !!supabaseAnonKey);
-        
         const { data, error } = await supabase
           .from('properties')
           .select('*')
@@ -28,7 +24,6 @@ export default function DatabaseTest() {
           console.error('Supabase error:', error);
           setError(error.message);
         } else {
-          console.log('Categories fetched successfully:', data);
           setCategories(data || []);
         }
       } catch (err) {
@@ -64,9 +59,7 @@ export default function DatabaseTest() {
             <h2 className="text-xl font-bold text-red-400 mb-4">Connection Error</h2>
             <p className="text-red-300">{error}</p>
             <div className="mt-4 p-4 bg-gray-800 rounded">
-              <p className="text-sm text-gray-300">Check your environment variables:</p>
-              <p className="text-sm text-gray-400">VITE_SUPABASE_URL: {supabaseUrl ? 'Set' : 'Missing'}</p>
-              <p className="text-sm text-gray-400">VITE_SUPABASE_ANON_KEY: {supabaseAnonKey ? 'Set' : 'Missing'}</p>
+              <p className="text-sm text-gray-300">Check your environment variables in .env</p>
             </div>
           </div>
         </div>
