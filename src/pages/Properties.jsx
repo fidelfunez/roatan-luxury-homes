@@ -24,7 +24,7 @@ const Properties = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  const [listingTypeTab, setListingTypeTab] = useState('sale'); // 'sale' | 'rent' | 'all'
+  const [listingTypeTab, setListingTypeTab] = useState('all'); // 'all' | 'sale' | 'rent'
   const [searchTerm, setSearchTerm] = useState('');
   const [propertyType, setPropertyType] = useState('all');
   const [priceRange, setPriceRange] = useState([0, 2000000]);
@@ -214,8 +214,15 @@ const Properties = () => {
       {/* Enhanced Filter Section - Desktop Advanced */}
       <section className="container mx-auto px-4">
         <div className="bg-card p-6 md:p-8 lg:p-10 rounded-xl shadow-md mb-12 border border-border/50">
-          {/* Listing Type Tabs */}
+          {/* Listing Type Tabs - All first (default), then Sale, then Rent */}
           <div className="flex flex-wrap gap-2 mb-8">
+            <Button
+              variant={listingTypeTab === 'all' ? 'default' : 'outline'}
+              onClick={() => setListingTypeTab('all')}
+              className="font-semibold"
+            >
+              {t('properties.all')} ({allProperties.length})
+            </Button>
             <Button
               variant={listingTypeTab === 'sale' ? 'default' : 'outline'}
               onClick={() => setListingTypeTab('sale')}
@@ -230,24 +237,17 @@ const Properties = () => {
             >
               {t('properties.forRent')} ({allProperties.filter(p => p.listingType === 'rent').length})
             </Button>
-            <Button
-              variant={listingTypeTab === 'all' ? 'default' : 'outline'}
-              onClick={() => setListingTypeTab('all')}
-              className="font-semibold"
-            >
-              {t('properties.all')} ({allProperties.length})
-            </Button>
           </div>
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8">
             <div>
-              <h2 className="text-2xl lg:text-3xl font-semibold text-primary mb-2">Filter Properties</h2>
-              <p className="text-sm lg:text-base text-muted-foreground">Find exactly what you're looking for</p>
+              <h2 className="text-2xl lg:text-3xl font-semibold text-primary mb-2">{t('properties.filterProperties')}</h2>
+              <p className="text-sm lg:text-base text-muted-foreground">{t('properties.findWhatYouNeed')}</p>
             </div>
             
             {/* Desktop: View Controls */}
             <div className="hidden lg:flex items-center gap-4 mt-4 lg:mt-0">
               <div className="flex items-center gap-2">
-                <Label className="text-sm font-medium">View:</Label>
+                <Label className="text-sm font-medium">{t('properties.view')}:</Label>
                 <Button
                   variant={viewMode === 'grid' ? 'default' : 'outline'}
                   size="sm"
@@ -267,28 +267,28 @@ const Properties = () => {
               </div>
               
               <div className="flex items-center gap-2">
-                <Label className="text-sm font-medium">Sort:</Label>
+                <Label className="text-sm font-medium">{t('properties.sort')}:</Label>
                 <select 
                   value={sortBy} 
                   onChange={(e) => setSortBy(e.target.value)}
                   className="w-32 h-8 rounded-md border border-input bg-background px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 >
-                  <option value="featured">Featured</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="newest">Newest</option>
+                  <option value="featured">{t('properties.featured')}</option>
+                  <option value="price-low">{t('properties.priceLow')}</option>
+                  <option value="price-high">{t('properties.priceHigh')}</option>
+                  <option value="newest">{t('properties.newest')}</option>
                 </select>
               </div>
             </div>
             
             <Button variant="outline" onClick={() => setShowFilters(!showFilters)} className="lg:hidden w-full">
-              <Filter className="w-4 h-4 mr-2" /> {showFilters ? 'Hide Filters' : 'Show Filters'}
+              <Filter className="w-4 h-4 mr-2" /> {showFilters ? t('properties.hideFilters') : t('properties.showFilters')}
             </Button>
           </div>
           
           <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 ${showFilters ? 'block' : 'hidden lg:grid'}`}>
             <div className="lg:col-span-2">
-              <Label htmlFor="search" className="text-sm font-medium text-foreground">Search by Keyword</Label>
+              <Label htmlFor="search" className="text-sm font-medium text-foreground">{t('properties.searchByKeyword')}</Label>
               <div className="relative mt-1">
                 <Input 
                   type="text" 
@@ -303,7 +303,7 @@ const Properties = () => {
             </div>
 
             <div>
-              <Label htmlFor="propertyType" className="text-sm font-medium text-foreground">Property Type</Label>
+              <Label htmlFor="propertyType" className="text-sm font-medium text-foreground">{t('properties.propertyType')}</Label>
               <select 
                 id="propertyType" 
                 value={propertyType} 
@@ -311,13 +311,13 @@ const Properties = () => {
                 className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 {uniquePropertyTypes.map(type => (
-                  <option key={type} value={type}>{type === 'all' ? 'All Types' : type}</option>
+                  <option key={type} value={type}>{type === 'all' ? t('properties.allTypes') : type}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <Label htmlFor="bedrooms" className="text-sm font-medium text-foreground">Bedrooms</Label>
+              <Label htmlFor="bedrooms" className="text-sm font-medium text-foreground">{t('properties.bedrooms')}</Label>
               <select 
                 id="bedrooms" 
                 value={bedrooms} 
@@ -325,13 +325,13 @@ const Properties = () => {
                 className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 {bedroomOptions.map(option => (
-                  <option key={option} value={option}>{option === 'all' ? 'Any Bedrooms' : option}</option>
+                  <option key={option} value={option}>{option === 'all' ? t('properties.anyBedrooms') : option}</option>
                 ))}
               </select>
             </div>
 
             <div className="lg:col-span-1">
-              <Label className="text-sm font-medium text-foreground">Price Range (USD)</Label>
+              <Label className="text-sm font-medium text-foreground">{t('properties.priceRange')}</Label>
               <div className="mt-2 space-y-2">
                 <Slider
                   min={0}
@@ -356,18 +356,18 @@ const Properties = () => {
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <p className="text-muted-foreground text-lg">
-                  Showing <span className="font-semibold text-primary">{filteredProperties.length}</span> {listingTypeTab === 'all' ? `of ${allProperties.length}` : listingTypeTab === 'sale' ? `of ${allProperties.filter(p => (p.listingType || 'sale') === 'sale').length} for sale` : `of ${allProperties.filter(p => p.listingType === 'rent').length} for rent`} properties
+                  {t('properties.showing')} <span className="font-semibold text-primary">{filteredProperties.length}</span> {t('properties.of')} {listingTypeTab === 'all' ? allProperties.length : listingTypeTab === 'sale' ? allProperties.filter(p => (p.listingType || 'sale') === 'sale').length : allProperties.filter(p => p.listingType === 'rent').length} {listingTypeTab === 'sale' ? t('properties.forSaleCount') : listingTypeTab === 'rent' ? t('properties.forRentCount') : ''} {t('properties.properties_label')}
               </p>
                 {sortBy !== 'featured' && (
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     {sortBy === 'price-low' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
-                    <span>Sorted by {sortBy === 'price-low' ? 'Price (Low to High)' : sortBy === 'price-high' ? 'Price (High to Low)' : 'Newest'}</span>
+                    <span>{sortBy === 'price-low' ? t('properties.priceLow') : sortBy === 'price-high' ? t('properties.priceHigh') : t('properties.newest')}</span>
                   </div>
                 )}
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Eye className="w-4 h-4" />
-                <span>Click on any property for details</span>
+                <span>{t('properties.clickForDetails')}</span>
               </div>
             </div>
           </div>
@@ -378,8 +378,8 @@ const Properties = () => {
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Loading Properties</h3>
-              <p className="text-muted-foreground">Fetching the latest properties from our database...</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('properties.loading')}</h3>
+              <p className="text-muted-foreground">{t('properties.loadingDesc')}</p>
             </div>
           </div>
         )}
@@ -389,14 +389,14 @@ const Properties = () => {
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
               <div className="text-6xl mb-6">⚠️</div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Error Loading Properties</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('properties.errorLoading')}</h3>
               <p className="text-muted-foreground mb-4">{error}</p>
               <Button 
                 onClick={() => window.location.reload()} 
                 variant="outline"
                 className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
               >
-                Try Again
+                {t('properties.tryAgain')}
               </Button>
             </div>
           </div>
@@ -507,14 +507,14 @@ const Properties = () => {
               <div className="text-8xl mb-6">🏠</div>
               <h3 className="text-2xl font-semibold text-foreground mb-4">
                 {searchTerm || listingTypeTab !== 'all' || propertyType !== 'all' || bedrooms !== 'all' || priceRange[0] > 0 || priceRange[1] < 2000000
-                  ? 'No Properties Found'
-                  : 'No Properties Listed Yet'
+                  ? t('properties.noPropertiesFound')
+                  : t('properties.noPropertiesListed')
                 }
               </h3>
               <p className="text-muted-foreground mb-8 text-lg">
                 {searchTerm || listingTypeTab !== 'all' || propertyType !== 'all' || bedrooms !== 'all' || priceRange[0] > 0 || priceRange[1] < 2000000
-                  ? 'Try adjusting your search filters or browse all properties.'
-                  : 'Our team is working on adding amazing properties. Check back soon or contact us to list your property!'
+                  ? t('properties.adjustFilters')
+                  : t('properties.checkBackSoon')
                 }
               </p>
               
@@ -533,11 +533,11 @@ const Properties = () => {
                       }}
                       className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                     >
-                      Clear All Filters
+                      {t('properties.clearFilters')}
                     </Button>
                     <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                     <Link to="/contact">
-                      Contact Us
+                      {t('common.contactUs')}
                     </Link>
                   </Button>
                   </>
@@ -545,12 +545,12 @@ const Properties = () => {
                   <>
                     <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                       <Link to="/contact">
-                      List Your Property
+                      {t('home.listYourProperty')}
                     </Link>
                   </Button>
                     <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                       <Link to="/services">
-                        Our Services
+                        {t('nav.services')}
                       </Link>
                     </Button>
                   </>
@@ -570,29 +570,29 @@ const Properties = () => {
               <TrendingUp className="w-12 h-12 lg:w-16 lg:h-16 text-primary mx-auto mb-4" />
             </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-              Want to List Your Property with Us?
+              {t('properties.wantToList')}
             </h2>
             <p className="text-lg lg:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Enter your property details for submission and approval. Our team will review your listing and get back to you within 24 hours.
+              {t('properties.listCta')}
             </p>
             <div className="grid md:grid-cols-3 gap-4 mb-8 text-sm lg:text-base">
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle className="w-4 h-4 text-primary" />
-                <span>Quick submission process</span>
+                <span>{t('properties.quickSubmission')}</span>
               </div>
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle className="w-4 h-4 text-primary" />
-                <span>100% Free Listing</span>
+                <span>{t('properties.freeListing')}</span>
               </div>
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle className="w-4 h-4 text-primary" />
-                <span>48-hour response time</span>
+                <span>{t('properties.responseTime')}</span>
               </div>
             </div>
               <div>
               <Button asChild size="lg" variant="outline" className="text-lg px-8 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors bg-white/80 backdrop-blur-sm font-semibold shadow-lg">
                   <Link to="/submit-property">
-                    Submit Your Property
+                    {t('properties.submitProperty')}
                   </Link>
                 </Button>
               </div>

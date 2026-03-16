@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -8,9 +9,12 @@ import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
 import { getProperties } from '@/lib/supabaseUtils';
 import { useContent } from '@/lib/useContent';
+import { useLocalizedProperty } from '@/lib/useLocalizedProperty';
 
 const Home = () => {
   const { getContent } = useContent();
+  const { t } = useTranslation();
+  const { getTitle, getLocation, getDescription } = useLocalizedProperty();
   const [featuredProperties, setFeaturedProperties] = useState([]);
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const Home = () => {
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm font-medium mb-4">
               <Star className="w-4 h-4" />
-              <span>Trusted by 500+ Clients</span>
+              <span>{t('common.trustedBy')}</span>
             </div>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight tracking-tight">
@@ -81,7 +85,7 @@ const Home = () => {
             <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-primary shadow-lg text-lg px-8 py-4 bg-white/20 backdrop-blur-sm font-semibold">
               <Link to="/contact">
                 <Phone className="mr-2 h-5 w-5" />
-                Contact Us
+                {t('common.contactUs')}
               </Link>
             </Button>
           </div>
@@ -89,10 +93,10 @@ const Home = () => {
           {/* Mobile Hero Actions */}
           <div className="lg:hidden space-y-4 mb-8">
             <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-primary shadow-md w-full bg-white/20 backdrop-blur-sm font-semibold">
-              <Link to="/properties">View Properties <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link to="/properties">{t('common.viewProperties')} <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
             <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-primary shadow-md w-full bg-white/20 backdrop-blur-sm font-semibold">
-              <Link to="/contact">Contact Us</Link>
+              <Link to="/contact">{t('common.contactUs')}</Link>
             </Button>
           </div>
           
@@ -196,12 +200,12 @@ const Home = () => {
       {/* Enhanced Featured Properties Section - Desktop Larger Cards */}
       <section className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4 text-primary">
-          {featuredProperties.length > 0 ? 'Featured Properties' : 'Our Properties'}
+          {featuredProperties.length > 0 ? t('home.featuredProperties') : t('nav.properties')}
         </h2>
         <p className="text-lg lg:text-xl text-center text-muted-foreground mb-12 max-w-4xl mx-auto">
           {featuredProperties.length > 0 
-            ? "Discover our handpicked selection of exceptional properties in Roatán's most desirable locations."
-            : "We're working on adding amazing properties to our portfolio. Contact us to learn about upcoming listings or to list your property."
+            ? t('home.featuredPropertiesDesc')
+            : t('home.noPropertiesDesc')
           }
         </p>
         
@@ -214,7 +218,7 @@ const Home = () => {
                   <Card className="overflow-hidden shadow-lg hover:shadow-xl border border-border/50 h-full">
                     <div className="relative h-64 overflow-hidden">
                       <img 
-                        alt={property.title} 
+                        alt={getTitle(property)} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                         src={property.image || "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"} 
                         loading="lazy" 
@@ -226,30 +230,30 @@ const Home = () => {
                       )}
                       {index === 0 && (
                         <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          Featured
+                          {t('home.featured')}
                         </div>
                       )}
                     </div>
                     <CardContent className="p-8">
-                      <CardTitle className="text-2xl mb-3">{property.title}</CardTitle>
+                      <CardTitle className="text-2xl mb-3">{getTitle(property)}</CardTitle>
                       <div className="flex items-center text-muted-foreground mb-4">
                         <MapPin className="w-5 h-5 mr-2" />
-                        <span className="text-lg">{property.location}</span>
+                        <span className="text-lg">{getLocation(property)}</span>
                       </div>
-                      <p className="text-muted-foreground mb-6 text-lg line-clamp-3">{property.description}</p>
+                      <p className="text-muted-foreground mb-6 text-lg line-clamp-3">{getDescription(property)}</p>
                       
                       {/* Property Details */}
                       <div className="flex items-center gap-6 mb-6 text-sm text-muted-foreground">
                         {property.beds && (
                           <div className="flex items-center gap-2">
                             <BedDouble className="w-5 h-5 text-primary" />
-                            <span>{property.beds} beds</span>
+                            <span>{property.beds} {t('home.beds')}</span>
                           </div>
                         )}
                         {property.baths && (
                           <div className="flex items-center gap-2">
                             <Bath className="w-5 h-5 text-primary" />
-                            <span>{property.baths} baths</span>
+                            <span>{property.baths} {t('home.baths')}</span>
                           </div>
                         )}
                         {property.area && (
@@ -263,11 +267,11 @@ const Home = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center text-primary font-bold text-xl">
                           <DollarSign className="w-5 h-5 mr-2" />
-                          {property.price ? property.price.toLocaleString() : 'Contact for price'}
+                          {property.price ? property.price.toLocaleString() : t('home.contactForPrice')}
                         </div>
                         <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
                           <Link to={`/properties/${property.id}`}>
-                            View Details 
+                            {t('common.viewDetails')} 
                             <ArrowRight className="ml-2 h-5 w-5" />
                           </Link>
                         </Button>
@@ -285,7 +289,7 @@ const Home = () => {
                   <Card className="overflow-hidden shadow-md hover:shadow-lg border border-border/50">
                     <div className="relative h-48 overflow-hidden">
                       <img 
-                        alt={property.title} 
+                        alt={getTitle(property)} 
                         className="w-full h-full object-cover" 
                         src={property.image || "https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"} 
                         loading="lazy" 
@@ -297,30 +301,30 @@ const Home = () => {
                       )}
                       {index === 0 && (
                         <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          Featured
+                          {t('home.featured')}
                         </div>
                       )}
                     </div>
                     <CardContent className="p-6">
-                      <CardTitle className="text-xl mb-2">{property.title}</CardTitle>
+                      <CardTitle className="text-xl mb-2">{getTitle(property)}</CardTitle>
                       <div className="flex items-center text-muted-foreground mb-3">
                         <MapPin className="w-4 h-4 mr-1" />
-                        {property.location}
+                        {getLocation(property)}
                       </div>
-                      <p className="text-muted-foreground mb-4 line-clamp-2">{property.description}</p>
+                      <p className="text-muted-foreground mb-4 line-clamp-2">{getDescription(property)}</p>
                       
                       {/* Property Details */}
                       <div className="flex items-center gap-4 mb-4 text-sm text-muted-foreground">
                         {property.beds && (
                           <div className="flex items-center gap-1">
                             <span>🛏️</span>
-                            <span>{property.beds} beds</span>
+                            <span>{property.beds} {t('home.beds')}</span>
                           </div>
                         )}
                         {property.baths && (
                           <div className="flex items-center gap-1">
                             <span>🚿</span>
-                            <span>{property.baths} baths</span>
+                            <span>{property.baths} {t('home.baths')}</span>
                           </div>
                         )}
                         {property.area && (
@@ -334,10 +338,10 @@ const Home = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center text-primary font-bold">
                           <DollarSign className="w-4 h-4 mr-1" />
-                          {property.price ? property.price.toLocaleString() : 'Contact for price'}
+                          {property.price ? property.price.toLocaleString() : t('home.contactForPrice')}
                         </div>
                         <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
-                          <Link to={`/properties/${property.id}`}>View Details <ArrowRight className="ml-1 h-4 w-4" /></Link>
+                          <Link to={`/properties/${property.id}`}>{t('common.viewDetails')} <ArrowRight className="ml-1 h-4 w-4" /></Link>
                         </Button>
                       </div>
                     </CardContent>
@@ -350,7 +354,7 @@ const Home = () => {
               <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-4 bg-white/80 backdrop-blur-sm font-semibold shadow-lg">
                 <Link to="/properties">
                   <Filter className="mr-2 h-5 w-5" />
-                  View All Properties 
+                  {t('common.viewAllProperties')} 
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -360,16 +364,16 @@ const Home = () => {
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
               <div className="text-6xl mb-4">🏠</div>
-              <h3 className="text-xl font-semibold mb-4">No Properties Listed Yet</h3>
+              <h3 className="text-xl font-semibold mb-4">{t('home.noPropertiesYet')}</h3>
               <p className="text-muted-foreground mb-6">
-                Our team is working on adding amazing properties to our portfolio. Contact us to learn about upcoming listings or to list your property.
+                {t('home.noPropertiesDesc')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild variant="outline">
-                  <Link to="/contact">Contact Us</Link>
+                  <Link to="/contact">{t('common.contactUs')}</Link>
                 </Button>
                 <Button asChild className="bg-primary-dark hover:bg-primary-dark/90 text-primary-foreground">
-                  <Link to="/submit-property">List Your Property</Link>
+                  <Link to="/submit-property">{t('home.listYourProperty')}</Link>
                 </Button>
               </div>
             </div>
@@ -453,13 +457,13 @@ const Home = () => {
               <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-primary shadow-md text-lg px-8 py-4 bg-white/20 backdrop-blur-sm font-semibold">
                 <Link to="/properties">
                   <HomeIconLucide className="mr-2 h-5 w-5" />
-                  Browse Properties
+                  {t('common.browseProperties')}
                 </Link>
               </Button>
               <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-primary shadow-md text-lg px-8 py-4 bg-white/20 backdrop-blur-sm font-semibold">
                 <Link to="/contact">
                   <MessageCircle className="mr-2 h-5 w-5" />
-                  Get in Touch
+                  {t('common.getInTouch')}
                 </Link>
               </Button>
             </div>

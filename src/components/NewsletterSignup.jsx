@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,6 +7,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { MailOpen } from 'lucide-react';
 
 const NewsletterSignup = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,18 +38,18 @@ const NewsletterSignup = () => {
     <div className="bg-gradient-to-r from-primary/10 to-turquoise-light/10 rounded-xl p-8 md:p-12 text-center">
       <div className="max-w-2xl mx-auto">
         <MailOpen className="w-12 h-12 text-primary mx-auto mb-4" />
-        <h2 className="text-3xl font-bold text-primary mb-4">Stay Updated</h2>
+        <h2 className="text-3xl font-bold text-primary mb-4">{t('newsletter.stayUpdated')}</h2>
         <p className="text-lg text-muted-foreground mb-8">
-          Get the latest property listings, market insights, and exclusive offers delivered to your inbox.
+          {t('newsletter.description')}
         </p>
         
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
           <div className="flex-1">
-            <Label htmlFor="newsletter-email" className="sr-only">Email Address</Label>
+            <Label htmlFor="newsletter-email" className="sr-only">{t('newsletter.emailAddress')}</Label>
             <Input
               id="newsletter-email"
               type="email"
-              placeholder="Enter your email"
+              placeholder={t('newsletter.enterEmail')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -59,15 +61,15 @@ const NewsletterSignup = () => {
               type="submit" 
               disabled={isSubmitting}
               className="w-full sm:w-auto bg-primary-dark hover:bg-primary-dark/90 text-primary-foreground"
-              aria-label="Subscribe to newsletter"
+              aria-label={t('newsletter.subscribe')}
             >
-              {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+              {isSubmitting ? t('newsletter.subscribing') : t('newsletter.subscribe')}
             </Button>
           </div>
         </form>
         
         <p className="text-sm text-muted-foreground mt-4">
-          We respect your privacy. Unsubscribe at any time.
+          {t('newsletter.privacyNote')}
         </p>
       </div>
     </div>

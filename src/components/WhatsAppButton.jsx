@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { MessageSquare } from 'lucide-react';
 
 const WhatsAppButton = () => {
-  const phoneNumber = "1234567890"; // Replace with actual WhatsApp number
-  const message = "Hello! I'm interested in properties in Roatán.";
+  const { t } = useTranslation();
+  const phoneNumber = "50433419532"; // Carolina
+  const message = t('contact.whatsappMessage');
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (

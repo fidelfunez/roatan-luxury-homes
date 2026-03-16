@@ -254,7 +254,7 @@ const defaultContentEs = {
     hero: {
       title: 'Comprar o alquilar una casa en Roatan, Honduras',
       subtitle: 'Tu fuente confiable para comprar y alquilar casas en Roatan, las Islas de la Bahia y el Caribe. Casas de lujo, propiedades frente al mar e inversiones.',
-      trustIndicator1: '15+ anos de experiencia',
+      trustIndicator1: '15+ años de experiencia',
       trustIndicator2: '500+ propiedades vendidas',
       trustIndicator3: 'Soporte 24/7'
     },
@@ -315,7 +315,7 @@ const defaultContentEs = {
       title: 'Conoce nuestro equipo',
       member1Name: 'Alice Johnson',
       member1Role: 'Agente principal y fundadora',
-      member1Bio: 'Con mas de 15 anos de experiencia en bienes raices de Roatan, Alice apasiona conectar clientes con sus propiedades ideales y asegurar un proceso de transaccion fluido.',
+      member1Bio: 'Con mas de 15 años de experiencia en bienes raices de Roatan, Alice apasiona conectar clientes con sus propiedades ideales y asegurar un proceso de transaccion fluido.',
       member2Name: 'Bob Williams',
       member2Role: 'Especialista en ventas',
       member2Bio: 'El profundo conocimiento del mercado local y dedicacion a la satisfaccion del cliente de Bob lo hacen un activo invaluable.',
@@ -341,7 +341,7 @@ const defaultContentEs = {
       title: 'Por que elegir Roatan Luxury Homes?',
       subtitle: 'Combinamos experiencia local con estandares internacionales para entregar resultados excepcionales.',
       feature1Title: 'Experiencia confiable',
-      feature1Desc: '15+ anos de experiencia en bienes raices del Caribe con profundo conocimiento local.',
+      feature1Desc: '15+ años de experiencia en bienes raices del Caribe con profundo conocimiento local.',
       feature2Title: 'Servicio personalizado',
       feature2Desc: 'Soporte dedicado durante todo tu proceso inmobiliario.',
       feature3Title: 'Garantia de calidad',
@@ -351,12 +351,12 @@ const defaultContentEs = {
     },
     cta: {
       title: 'Listo para comenzar?',
-      subtitle: 'Contactanos hoy para discutir tus necesidades inmobiliarias y descubrir como podemos ayudarte a alcanzar tus metas en Roatan.'
+      subtitle: 'Contáctanos hoy para discutir tus necesidades inmobiliarias y descubrir como podemos ayudarte a alcanzar tus metas en Roatan.'
     }
   },
   contact: {
     hero: {
-      title: 'Contactanos',
+      title: 'Contáctanos',
       subtitle: 'Estamos aqui para ayudarte con todas tus necesidades inmobiliarias en Roatan. Escribenos hoy!',
       stat1Number: '24/7',
       stat1Label: 'Soporte disponible',
@@ -378,7 +378,7 @@ const defaultContentEs = {
       title: 'Por que elegir Roatan Luxury Homes?',
       subtitle: 'Combinamos experiencia local con estandares internacionales para entregar resultados excepcionales.',
       feature1Title: 'Experiencia confiable',
-      feature1Desc: '15+ anos de experiencia en bienes raices del Caribe.',
+      feature1Desc: '15+ años de experiencia en bienes raices del Caribe.',
       feature2Title: 'Servicio personalizado',
       feature2Desc: 'Soporte dedicado durante todo tu proceso inmobiliario.',
       feature3Title: 'Garantia de calidad',
@@ -404,32 +404,32 @@ const defaultContentEs = {
   'property-sales-acquisition': {
     title: 'Ventas y adquisicion de propiedades',
     description: 'Nuestro equipo experto brinda soporte integral para comprar o vender propiedades en Roatan. Nos encargamos de todo: analisis de mercado, visitas a propiedades, negociacion y cierre. Ya sea una villa frente al mar, un condominio, un terreno o una inversion comercial, utilizamos nuestra red y conocimiento local para encontrar la opcion perfecta. Garantizamos un proceso transparente y fluido.',
-    ctaText: 'Hablemos de como podemos ayudarte con ventas y adquisicion. Contactanos hoy para una consulta personalizada.'
+    ctaText: 'Hablemos de como podemos ayudarte con ventas y adquisicion. Contáctanos hoy para una consulta personalizada.'
   },
   'legal-guidance-due-diligence': {
     title: 'Asesoria legal y asistencia',
     description: 'Navegar el panorama legal de bienes raices en Honduras puede ser desafiante. Te conectamos con profesionales legales especializados en derecho inmobiliario para due diligence, busqueda de titulos y revision de contratos.',
-    ctaText: 'Hablemos de como podemos ayudarte con asesoria legal. Contactanos hoy.'
+    ctaText: 'Hablemos de como podemos ayudarte con asesoria legal. Contáctanos hoy.'
   },
   'relocation-assistance': {
     title: 'Asistencia para reubicacion',
     description: 'Mudarse a Roatan es una aventura emocionante. Cubrimos residencia, visas, cuentas bancarias, escuelas y servicios locales para que tu transicion sea fluida.',
-    ctaText: 'Hablemos de asistencia para reubicacion. Contactanos hoy.'
+    ctaText: 'Hablemos de asistencia para reubicacion. Contáctanos hoy.'
   },
   'land-development-investment': {
     title: 'Desarrollo e inversion',
     description: 'Roatan ofrece oportunidades significativas para desarrollo de terrenos e inversion inmobiliaria. Te ayudamos a identificar parcelas para desarrollo residencial, comercial o mixto.',
-    ctaText: 'Hablemos de desarrollo e inversion. Contactanos hoy.'
+    ctaText: 'Hablemos de desarrollo e inversion. Contáctanos hoy.'
   },
   'vacation-rental-management': {
     title: 'Gestion de alquileres vacacionales',
     description: 'Convierte tu propiedad en Roatan en una fuente de ingresos. Gestionamos marketing, reservas, check-in/out, limpieza y mantenimiento para maximizar tu ocupacion e ingresos.',
-    ctaText: 'Hablemos de gestion de alquileres. Contactanos hoy.'
+    ctaText: 'Hablemos de gestion de alquileres. Contáctanos hoy.'
   },
   'commercial-real-estate': {
     title: 'Bienes raices comerciales',
     description: 'Para negocios que buscan establecerse o expandirse en Roatan, ofrecemos servicios comerciales especializados: oficinas, locales, almacenes, hoteles y restaurantes.',
-    ctaText: 'Hablemos de bienes raices comerciales. Contactanos hoy.'
+    ctaText: 'Hablemos de bienes raices comerciales. Contáctanos hoy.'
   },
   header: {
     logo: {
@@ -450,7 +450,7 @@ const defaultContentEs = {
       hours: 'Lun-Vie 9AM-6PM'
     },
     cta: {
-      ctaText: 'Contactanos',
+      ctaText: 'Contáctanos',
       searchPlaceholder: 'Buscar en todo el sitio...'
     }
   },

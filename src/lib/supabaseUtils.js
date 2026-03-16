@@ -31,6 +31,21 @@ export const getProperties = async () => {
   }
 };
 
+export const incrementPropertyViews = async (propertyId) => {
+  try {
+    if (!supabaseUrl || !supabaseAnonKey) return null;
+    const { data, error } = await supabase.rpc('increment_property_views', { p_property_id: Number(propertyId) });
+    if (error) {
+      console.warn('Could not increment property views:', error);
+      return null;
+    }
+    return data;
+  } catch (err) {
+    console.warn('incrementPropertyViews:', err);
+    return null;
+  }
+};
+
 export const getPropertyById = async (id) => {
   try {
     // Check if Supabase is properly configured

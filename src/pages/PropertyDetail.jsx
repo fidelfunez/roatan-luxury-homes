@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChevronLeft, ChevronRight, MapPin, DollarSign, BedDouble, Bath, CarFront, Maximize, CalendarDays, Clock, Home, CheckCircle, Info, Mail, Heart, Phone, Share2, Download, Eye, Star, TrendingUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, DollarSign, BedDouble, Bath, CarFront, Maximize, CalendarDays, Clock, Home, CheckCircle, Mail, Heart, Phone, Share2, Download, MessageSquare } from 'lucide-react';
 import SEO from '@/components/SEO';
-import { getPropertyById } from '@/lib/supabaseUtils';
+import { useTranslation } from 'react-i18next';
+import { getPropertyById, incrementPropertyViews } from '@/lib/supabaseUtils';
 import { formatPropertyPrice } from '@/lib/propertyUtils';
 import { useLocalizedProperty } from '@/lib/useLocalizedProperty';
 
 const PropertyDetail = () => {
   const { propertyId } = useParams();
+  const { t } = useTranslation();
   const { getTitle, getDescription, getLocation } = useLocalizedProperty();
   const [property, setProperty] = useState(null);
+  const [viewCount, setViewCount] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -24,7 +27,9 @@ const PropertyDetail = () => {
         setError(null);
         const fetchedProperty = await getPropertyById(propertyId);
     setProperty(fetchedProperty);
-    setCurrentImageIndex(0); 
+    setCurrentImageIndex(0);
+        const newCount = await incrementPropertyViews(propertyId);
+    setViewCount(newCount ?? fetchedProperty?.view_count ?? 0); 
       } catch (err) {
         console.error('Error fetching property:', err);
         setError('Failed to load property details. Please try again later.');
@@ -81,7 +86,9 @@ const PropertyDetail = () => {
     );
   }
   
-  const propertyImages = property.images && property.images.length > 0 ? property.images : (property.image ? [property.image] : ['https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60']);
+  // Use gallery images only if we have 2+ (main + gallery); otherwise just main to avoid empty gallery space
+  const hasGallery = property.images && property.images.length > 1;
+  const propertyImages = hasGallery ? property.images : (property.image ? [property.image] : ['https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60']);
   const displayTitle = getTitle(property);
   const displayDescription = getDescription(property);
   const displayLocation = getLocation(property);
@@ -269,34 +276,6 @@ const PropertyDetail = () => {
               </Card>
             )}
 
-          {/* Desktop: Additional Information */}
-          <div className="hidden lg:block">
-            <Card className="bg-gradient-to-r from-primary/5 to-turquoise-light/5 p-6 rounded-xl shadow-md border border-border/50">
-              <CardHeader className="p-0 mb-4">
-                <CardTitle className="text-xl font-semibold text-primary">Location Highlights</CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Star className="w-4 h-4 text-yellow-500" />
-                    <span>Beachfront Access</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-green-500" />
-                    <span>Investment Potential</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Eye className="w-4 h-4 text-blue-500" />
-                    <span>Ocean Views</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-primary" />
-                    <span>Ready to Move In</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
 
         {/* Desktop: Enhanced Sidebar - 1/3 Width */}
@@ -373,24 +352,44 @@ const PropertyDetail = () => {
             <CardContent className="p-0 space-y-4">
               <div className="flex items-center p-3 bg-white/30 rounded-lg">
                 <Mail className="w-5 h-5 mr-3 text-turquoise-dark" />
-                <span className="text-sm lg:text-base">info@caribbeanluxrealty.com</span>
+                <span className="text-sm lg:text-base">carol@roatan-luxury-homes.com</span>
               </div>
               <div className="flex items-center p-3 bg-white/30 rounded-lg">
                 <Phone className="w-5 h-5 mr-3 text-turquoise-dark" />
-                <span className="text-sm lg:text-base">+504 3341-9532</span>
+                <div>
+                  <span className="text-sm lg:text-base block">+1 (346) 612-5122</span>
+                  <span className="text-xs text-muted-foreground">{t('contact.phoneHint')}</span>
+                </div>
+                </div>
+              <div className="flex items-center p-3 bg-white/30 rounded-lg">
+                <MessageSquare className="w-5 h-5 mr-3 text-green-600" />
+                <div>
+                  <span className="text-sm lg:text-base block">+504 3341-9532</span>
+                  <span className="text-xs text-muted-foreground">{t('contact.whatsappHint')}</span>
+                </div>
                 </div>
               <div className="flex items-center p-3 bg-white/30 rounded-lg">
                 <Clock className="w-5 h-5 mr-3 text-turquoise-dark" />
                 <span className="text-sm lg:text-base">Available 24/7</span>
                 </div>
               <div className="space-y-3 pt-2">
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-base py-3">
-                  <Mail className="w-5 h-5 mr-2" />
-                  Contact Agent
+                <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-base py-3">
+                  <a href={`mailto:carol@roatan-luxury-homes.com?subject=${encodeURIComponent('Inquiry about: ' + displayTitle)}`}>
+                    <Mail className="w-5 h-5 mr-2" />
+                    Contact Agent
+                  </a>
                 </Button>
-                <Button variant="outline" className="w-full text-base py-3">
-                  <Phone className="w-5 h-5 mr-2" />
-                  Call Now
+                <Button asChild variant="outline" className="w-full text-base py-3">
+                  <a href={`https://wa.me/50433419532?text=${encodeURIComponent(t('contact.whatsappMessage'))}`} target="_blank" rel="noopener noreferrer">
+                    <MessageSquare className="w-5 h-5 mr-2" />
+                    WhatsApp
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="w-full text-base py-3">
+                  <a href="tel:+13466125122">
+                    <Phone className="w-5 h-5 mr-2" />
+                    Call Now
+                  </a>
                 </Button>
               </div>
               </CardContent>
@@ -417,7 +416,7 @@ const PropertyDetail = () => {
               </div>
               <div className="flex items-center justify-between p-3 bg-white/30 rounded-lg">
                 <span className="font-medium">Views:</span>
-                <span className="text-sm lg:text-base">1,247</span>
+                <span className="text-sm lg:text-base">{viewCount != null ? viewCount.toLocaleString() : (property?.view_count ?? 0).toLocaleString()}</span>
                 </div>
               </CardContent>
             </Card>

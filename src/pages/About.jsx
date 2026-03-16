@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Users, Target, Award, ShieldCheck, HeartHandshake as Handshake, ArrowRight, Star, CheckCircle, MessageSquare, Phone, Mail, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -6,6 +7,7 @@ import SEO from '@/components/SEO';
 import { useContent } from '@/lib/useContent';
 
 const About = () => {
+  const { t } = useTranslation();
   const { getContent } = useContent();
 
   // Team members with static data - content will be loaded dynamically
@@ -39,7 +41,7 @@ const About = () => {
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm font-medium mb-4 drop-shadow-md">
               <Star className="w-4 h-4" />
-              <span>Your Trusted Real Estate Partner</span>
+              <span>{t('about.trustedPartner')}</span>
             </div>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">{getContent('about', 'company', 'title')}</h1>
@@ -50,10 +52,10 @@ const About = () => {
           {/* Company Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { number: "15+", label: "Years Experience", icon: <Award className="w-6 h-6 text-white" /> },
-              { number: "500+", label: "Properties Sold", icon: <CheckCircle className="w-6 h-6 text-white" /> },
-              { number: "98%", label: "Client Satisfaction", icon: <Star className="w-6 h-6 text-white" /> },
-              { number: "24/7", label: "Support Available", icon: <MessageSquare className="w-6 h-6 text-white" /> }
+              { number: "15+", label: t('about.yearsExperience'), icon: <Award className="w-6 h-6 text-white" /> },
+              { number: "500+", label: t('about.propertiesSold'), icon: <CheckCircle className="w-6 h-6 text-white" /> },
+              { number: "98%", label: t('about.clientSatisfaction'), icon: <Star className="w-6 h-6 text-white" /> },
+              { number: "24/7", label: t('about.supportAvailable'), icon: <MessageSquare className="w-6 h-6 text-white" /> }
             ].map((stat, index) => (
               <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20 hover:bg-white/15 transition-all duration-300">
                 <div className="flex justify-center mb-2">{stat.icon}</div>
@@ -72,7 +74,7 @@ const About = () => {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
                 <Target className="w-4 h-4" />
-                Our Mission
+                {t('about.ourMission')}
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
                 {getContent('about', 'company', 'missionTitle')}
@@ -91,13 +93,13 @@ const About = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button asChild size="lg" className="group">
                 <Link to="/properties">
-                  View Properties
+                  {t('common.viewProperties')}
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link to="/contact">
-                  Get in Touch
+                  {t('common.getInTouch')}
                 </Link>
               </Button>
             </div>
@@ -119,11 +121,11 @@ const About = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
               <Star className="w-4 h-4" />
-              Why Choose Us
+              {t('about.whyChooseUs')}
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{getContent('about', 'whyChooseUs', 'title')}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover what makes Roatán Luxury Homes the premier choice for your real estate needs in Roatán.
+              {t('about.whyChooseUsDesc')}
             </p>
           </div>
           
@@ -176,11 +178,11 @@ const About = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
             <Users className="w-4 h-4" />
-            Meet Our Team
+            {t('about.meetOurTeam')}
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{getContent('about', 'team', 'title')}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Our experienced team is dedicated to providing exceptional service and making your real estate dreams a reality.
+            {t('about.meetTeamDesc')}
           </p>
         </div>
         
@@ -238,20 +240,20 @@ const About = () => {
       {/* Call to Action Section */}
       <section className="bg-gradient-to-r from-primary to-turquoise-dark rounded-2xl p-8 md:p-12 text-center text-white">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('about.readyToStart')}</h2>
           <p className="text-lg md:text-xl text-white/90 mb-8">
-            Let us help you find your perfect property in paradise. Contact us today for a personalized consultation.
+            {t('about.ctaDesc')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary shadow-lg text-lg px-8 py-4 bg-white/20 backdrop-blur-sm font-semibold group">
               <Link to="/properties">
-                Browse Properties
+                {t('common.browseProperties')}
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary shadow-lg text-lg px-8 py-4 bg-white/20 backdrop-blur-sm font-semibold">
               <Link to="/contact">
-                Schedule Consultation
+                {t('about.scheduleConsultation')}
               </Link>
             </Button>
           </div>

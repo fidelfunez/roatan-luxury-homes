@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Briefcase, Gavel, Home, TrendingUp, Anchor, Users, ArrowRight, Star, CheckCircle, Clock, Phone, Mail, Shield, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { useContent } from '@/lib/useContent';
 
 const SERVICES_SECTIONS = ['hero', 'whyChooseUs', 'cta'];
 const Services = () => {
+  const { t } = useTranslation();
   const { getContent: getContentBase } = useContent();
   const getContent = (sectionOrPage, field, fallback = '') =>
     SERVICES_SECTIONS.includes(sectionOrPage)
@@ -104,7 +106,7 @@ const Services = () => {
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm font-medium mb-4 drop-shadow-md">
               <Award className="w-4 h-4" />
-              <span>Comprehensive Real Estate Solutions</span>
+              <span>{t('about.comprehensiveSolutions')}</span>
             </div>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">
@@ -251,10 +253,10 @@ const Services = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 transition-transform duration-300 bg-white/80 backdrop-blur-sm font-semibold shadow-lg">
-              <Link to="/contact">Contact Us Today</Link>
+              <Link to="/contact">{t('services.contactUsToday')}</Link>
             </Button>
             <Button size="lg" asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 transition-transform duration-300 bg-white/80 backdrop-blur-sm font-semibold shadow-lg">
-              <Link to="/properties">View Properties</Link>
+              <Link to="/properties">{t('services.viewProperties')}</Link>
             </Button>
           </div>
         </div>

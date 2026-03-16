@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,6 +14,7 @@ import { useContent } from '@/lib/useContent';
 const Contact = () => {
   const { toast } = useToast();
   const { getContent } = useContent();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -37,8 +39,8 @@ const Contact = () => {
     setIsSubmitting(false);
   };
   
-  const phoneNumber = "+50412345678"; // Replace with actual number
-  const whatsappMessage = "Hello! I'm interested in properties in Roatán and would like to chat.";
+  const phoneNumber = "+50433419532"; // Carolina
+  const whatsappMessage = t('contact.whatsappMessage');
   const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\D/g, '')}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
@@ -65,7 +67,7 @@ const Contact = () => {
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white text-sm font-medium mb-4 drop-shadow-md">
               <MessageSquare className="w-4 h-4" />
-              <span>We're Here to Help</span>
+              <span>{t('contact.weAreHere')}</span>
             </div>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg mb-4">{getContent('contact', 'hero', 'title')}</h1>
@@ -103,7 +105,7 @@ const Contact = () => {
           {/* Desktop: Contact Info - 1/3 Width (LEFT) */}
           <div className="lg:col-span-1">
             <div className="bg-gradient-to-br from-sandy-light to-turquoise-light p-6 lg:p-8 rounded-xl shadow-2xl border border-border/50 h-full">
-              <h3 className="text-2xl font-bold text-primary mb-6">Contact Information</h3>
+              <h3 className="text-2xl font-bold text-primary mb-6">{t('contact.contactInformation')}</h3>
               
               <div className="space-y-4">
                 <div className="flex items-start gap-4 p-4 bg-white/50 rounded-lg">
@@ -111,9 +113,19 @@ const Contact = () => {
                     <Phone className="w-5 h-5 text-primary" />
               </div>
               <div>
-                    <h4 className="font-semibold text-foreground mb-1">Phone</h4>
-                    <p className="text-muted-foreground">{getContent('contact', 'contactInfo', 'phone')}</p>
-                    <p className="text-xs text-muted-foreground mt-1">Call us anytime</p>
+                    <h4 className="font-semibold text-foreground mb-1">{t('contact.phone')}</h4>
+                    <p className="text-muted-foreground">+1 (346) 612-5122</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t('contact.phoneHint')}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-4 bg-white/50 rounded-lg">
+                  <div className="p-2 bg-green-500/20 rounded-lg">
+                    <MessageSquare className="w-5 h-5 text-green-600" />
+              </div>
+              <div>
+                    <h4 className="font-semibold text-foreground mb-1">WhatsApp</h4>
+                    <p className="text-muted-foreground">+504 3341-9532</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t('contact.whatsappHint')}</p>
                   </div>
                 </div>
 
@@ -122,9 +134,9 @@ const Contact = () => {
                     <Mail className="w-5 h-5 text-primary" />
               </div>
               <div>
-                    <h4 className="font-semibold text-foreground mb-1">Email</h4>
+                    <h4 className="font-semibold text-foreground mb-1">{t('contact.email')}</h4>
                     <p className="text-muted-foreground">{getContent('contact', 'contactInfo', 'email')}</p>
-                    <p className="text-xs text-muted-foreground mt-1">We respond within 24 hours</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t('contact.respond24h')}</p>
                   </div>
                 </div>
 
@@ -133,9 +145,9 @@ const Contact = () => {
                     <MapPin className="w-5 h-5 text-primary" />
               </div>
               <div>
-                    <h4 className="font-semibold text-foreground mb-1">Office</h4>
+                    <h4 className="font-semibold text-foreground mb-1">{t('contact.office')}</h4>
                     <p className="text-muted-foreground">{getContent('contact', 'contactInfo', 'address')}</p>
-                    <p className="text-xs text-muted-foreground mt-1">Visit us by appointment</p>
+                    <p className="text-xs text-muted-foreground mt-1">{t('contact.visitByAppointment')}</p>
                   </div>
                 </div>
 
@@ -144,7 +156,7 @@ const Contact = () => {
                     <Clock className="w-5 h-5 text-primary" />
               </div>
               <div>
-                    <h4 className="font-semibold text-foreground mb-1">Office Hours</h4>
+                    <h4 className="font-semibold text-foreground mb-1">{t('contact.officeHours')}</h4>
                     <p className="text-muted-foreground text-sm">{getContent('contact', 'contactInfo', 'officeHours')}</p>
                     <p className="text-xs text-muted-foreground mt-1">{getContent('contact', 'contactInfo', 'emergencyContact')}</p>
                   </div>
@@ -157,14 +169,14 @@ const Contact = () => {
           <div className="lg:col-span-2">
             <div className="bg-card p-8 lg:p-12 rounded-xl shadow-2xl border border-border/50 h-full">
               <div className="mb-8">
-                <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">Send Us a Message</h2>
-                <p className="text-lg text-muted-foreground">Fill out the form below and we'll get back to you within 24 hours.</p>
+                <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">{t('contact.sendMessage')}</h2>
+                <p className="text-lg text-muted-foreground">{t('contact.sendMessageDesc')}</p>
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <Label htmlFor="name" className="text-foreground text-sm font-medium">Full Name</Label>
+                    <Label htmlFor="name" className="text-foreground text-sm font-medium">{t('contact.fullName')}</Label>
                     <Input 
                       type="text" 
                       id="name" 
@@ -177,7 +189,7 @@ const Contact = () => {
                     />
                 </div>
                 <div>
-                    <Label htmlFor="email" className="text-foreground text-sm font-medium">Email Address</Label>
+                    <Label htmlFor="email" className="text-foreground text-sm font-medium">{t('contact.emailAddress')}</Label>
                     <Input 
                       type="email" 
                       id="email" 
@@ -192,7 +204,7 @@ const Contact = () => {
               </div>
 
                 <div>
-                  <Label htmlFor="subject" className="text-foreground text-sm font-medium">Subject</Label>
+                  <Label htmlFor="subject" className="text-foreground text-sm font-medium">{t('contact.subject')}</Label>
                   <Input 
                     type="text" 
                     id="subject" 
@@ -206,7 +218,7 @@ const Contact = () => {
               </div>
 
                 <div>
-                  <Label htmlFor="message" className="text-foreground text-sm font-medium">Message</Label>
+                  <Label htmlFor="message" className="text-foreground text-sm font-medium">{t('contact.message')}</Label>
                   <Textarea 
                     id="message" 
                     name="message" 
@@ -232,7 +244,7 @@ const Contact = () => {
                     ) : (
                       <Send className="w-6 h-6 mr-3" />
                     )}
-                    {isSubmitting ? 'Sending Message...' : 'Send Message'}
+                    {isSubmitting ? t('contact.sending') : t('contact.sendButton')}
                   </Button>
                 </div>
               </form>
@@ -247,27 +259,27 @@ const Contact = () => {
             <div className="relative z-10 text-center">
               <div className="flex items-center justify-center gap-3 mb-4">
                   <MessageSquare className="w-8 h-8" />
-                <h3 className="text-xl lg:text-2xl font-semibold">WhatsApp Chat</h3>
+                <h3 className="text-xl lg:text-2xl font-semibold">{t('contact.whatsappChat')}</h3>
                 </div>
-              <p className="mb-6 opacity-90 text-base">Get instant responses to your questions via WhatsApp.</p>
+              <p className="mb-6 opacity-90 text-base">{t('contact.whatsappDesc')}</p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm opacity-75">
                 <div className="flex items-center justify-center gap-2">
                     <CheckCircle className="w-4 h-4" />
-                    <span>Instant responses</span>
+                    <span>{t('contact.instantResponses')}</span>
                   </div>
                 <div className="flex items-center justify-center gap-2">
                     <CheckCircle className="w-4 h-4" />
-                    <span>Photo sharing</span>
+                    <span>{t('contact.photoSharing')}</span>
                   </div>
                 <div className="flex items-center justify-center gap-2">
                     <CheckCircle className="w-4 h-4" />
-                    <span>Voice messages</span>
+                    <span>{t('contact.voiceMessages')}</span>
                   </div>
                 </div>
               <Button asChild variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 shadow-md text-base py-3 px-8 bg-white/20 backdrop-blur-sm font-semibold">
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                   <MessageSquare className="w-5 h-5 mr-2" />
-                    Chat on WhatsApp
+                    {t('contact.chatOnWhatsApp')}
                   </a>
                 </Button>
             </div>

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
-import { CalendarDays, UserCircle, ArrowRight, Search, Filter, BookOpen, TrendingUp, Star, MessageSquare, Clock, Eye, Heart, Share2, Tag, PenTool, Home as HomeIconLucide } from 'lucide-react';
+import { CalendarDays, UserCircle, ArrowRight, Search, BookOpen, TrendingUp, Star, MessageSquare, Eye, Tag, PenTool, Home as HomeIconLucide } from 'lucide-react';
 import { getBlogPosts } from '@/lib/supabaseUtils';
 import OptimizedImage from '@/components/OptimizedImage';
 import SEO from '@/components/SEO';
 import { useContent } from '@/lib/useContent';
 
 const Blog = () => {
+  const { t } = useTranslation();
   const { getContent } = useContent();
   const [blogPosts, setBlogPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -110,13 +112,13 @@ const Blog = () => {
               {getContent('blog', 'hero', 'subtitle')}
             </p>
             
-            {/* Blog Stats */}
+            {/* Blog Stats - real numbers */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               {[
-                { number: "50+", label: "Articles Published", icon: <PenTool className="w-6 h-6 text-white" /> },
-                { number: "10K+", label: "Monthly Readers", icon: <Eye className="w-6 h-6 text-white" /> },
-                { number: "15+", label: "Expert Authors", icon: <UserCircle className="w-6 h-6 text-white" /> },
-                { number: "8", label: "Categories", icon: <Tag className="w-6 h-6 text-white" /> }
+                { number: blogPosts.length.toString(), label: t('blog.articlesPublished'), icon: <PenTool className="w-6 h-6 text-white" /> },
+                { number: "0", label: t('blog.monthlyReaders'), icon: <Eye className="w-6 h-6 text-white" /> },
+                { number: [...new Set(blogPosts.map(p => p.author).filter(Boolean))].length.toString(), label: t('blog.expertAuthors'), icon: <UserCircle className="w-6 h-6 text-white" /> },
+                { number: [...new Set(blogPosts.map(p => p.category).filter(Boolean))].length.toString(), label: t('blog.categories'), icon: <Tag className="w-6 h-6 text-white" /> }
               ].map((stat, index) => (
                 <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20">
                   <div className="flex justify-center mb-2">{stat.icon}</div>
@@ -181,14 +183,14 @@ const Blog = () => {
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
               <div className="text-6xl mb-6">⚠️</div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Error Loading Blog Posts</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{t('blog.errorLoading')}</h3>
               <p className="text-muted-foreground mb-4">{error}</p>
               <Button 
                 onClick={() => window.location.reload()} 
                 variant="outline"
                 className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
               >
-                Try Again
+                {t('properties.tryAgain')}
               </Button>
             </div>
           </div>
@@ -229,13 +231,13 @@ return (
             {getContent('blog', 'hero', 'subtitle')}
           </p>
           
-          {/* Blog Stats */}
+          {/* Blog Stats - real numbers */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { number: "50+", label: "Articles Published", icon: <PenTool className="w-6 h-6 text-white" /> },
-              { number: "10K+", label: "Monthly Readers", icon: <Eye className="w-6 h-6 text-white" /> },
-              { number: "15+", label: "Expert Authors", icon: <UserCircle className="w-6 h-6 text-white" /> },
-              { number: "8", label: "Categories", icon: <Tag className="w-6 h-6 text-white" /> }
+              { number: blogPosts.length.toString(), label: t('blog.articlesPublished'), icon: <PenTool className="w-6 h-6 text-white" /> },
+              { number: "0", label: t('blog.monthlyReaders'), icon: <Eye className="w-6 h-6 text-white" /> },
+              { number: [...new Set(blogPosts.map(p => p.author).filter(Boolean))].length.toString(), label: t('blog.expertAuthors'), icon: <UserCircle className="w-6 h-6 text-white" /> },
+              { number: [...new Set(blogPosts.map(p => p.category).filter(Boolean))].length.toString(), label: t('blog.categories'), icon: <Tag className="w-6 h-6 text-white" /> }
             ].map((stat, index) => (
               <div key={index} className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20 hover:bg-white/15 transition-all duration-300">
                 <div className="flex justify-center mb-2">{stat.icon}</div>
@@ -255,7 +257,7 @@ return (
               <div className="flex-1">
                 <div className="relative">
                   <Input 
-                    placeholder="Search blog posts..."
+                    placeholder={t('blog.searchPlaceholder')}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 bg-background/70 focus:bg-background"
@@ -270,7 +272,7 @@ return (
                   onChange={(e) => setCategoryFilter(e.target.value)}
                   className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 >
-                  <option value="all">All Categories</option>
+                  <option value="all">{t('blog.allCategories')}</option>
                   {categories.map(category => (
                     <option key={category} value={category}>{category}</option>
                   ))}
@@ -285,11 +287,11 @@ return (
           <div className="text-center py-16">
             <div className="max-w-2xl mx-auto">
               <div className="text-8xl mb-6">📝</div>
-              <h3 className="text-2xl font-bold text-foreground mb-4">No Blog Posts Found</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-4">{t('blog.noPostsFound')}</h3>
               <p className="text-lg text-muted-foreground mb-8">
                 {searchTerm || categoryFilter !== 'all'
-                  ? 'Try adjusting your search or filter criteria.'
-                  : 'Our team is working on creating valuable content for you. Check back soon for expert insights on Roatán real estate!'
+                  ? t('blog.adjustSearch')
+                  : t('blog.noPostsDesc')
                 }
               </p>
               
@@ -297,21 +299,21 @@ return (
               <div className="grid md:grid-cols-3 gap-6 mt-12">
                 {[
                   {
-                    title: "Complete Guide to Buying Property in Roatán",
-                    category: "Buying Process",
-                    excerpt: "Everything you need to know about purchasing real estate in paradise, from legal requirements to closing costs.",
+                    title: t('blog.previewBuyingTitle'),
+                    category: t('blog.previewBuyingCategory'),
+                    excerpt: t('blog.previewBuyingExcerpt'),
                     icon: <HomeIconLucide className="w-8 h-8 text-primary" />
                   },
                   {
-                    title: "Investment Opportunities in Caribbean Real Estate",
-                    category: "Investment Guide",
-                    excerpt: "Discover the best investment strategies for maximizing returns on your Roatán property investment.",
+                    title: t('blog.previewInvestmentTitle'),
+                    category: t('blog.previewInvestmentCategory'),
+                    excerpt: t('blog.previewInvestmentExcerpt'),
                     icon: <TrendingUp className="w-8 h-8 text-primary" />
                   },
                   {
-                    title: "Living the Island Life: A Day in Roatán",
-                    category: "Lifestyle",
-                    excerpt: "Experience the daily rhythm of island living and what makes Roatán the perfect place to call home.",
+                    title: t('blog.previewLifestyleTitle'),
+                    category: t('blog.previewLifestyleCategory'),
+                    excerpt: t('blog.previewLifestyleExcerpt'),
                     icon: <Star className="w-8 h-8 text-primary" />
                   }
                 ].map((preview, index) => (
@@ -334,7 +336,7 @@ return (
                 <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   <Link to="/contact">
                     <MessageSquare className="w-4 h-4 mr-2" />
-                    Get Notified When We Publish
+                    {t('blog.getNotified')}
                   </Link>
                 </Button>
               </div>
@@ -364,7 +366,7 @@ return (
                         )}
                         {index === 0 && (
                           <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-                            Featured
+                            {t('blog.featured')}
                           </div>
                         )}
                       </div>
@@ -391,21 +393,6 @@ return (
                       {post.excerpt}
                     </CardDescription>
                     
-                    {/* Post Stats */}
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <Eye className="w-3 h-3" />
-                        <span>1.2K views</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Heart className="w-3 h-3" />
-                        <span>24 likes</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <MessageSquare className="w-3 h-3" />
-                        <span>8 comments</span>
-                      </div>
-                    </div>
                   </CardContent>
                   <CardFooter className="p-6 bg-slate-50 dark:bg-slate-800/50 mt-auto">
                     <Button asChild variant="link" className="text-primary p-0 group-hover:underline font-semibold text-sm sm:text-base">

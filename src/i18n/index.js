@@ -8,7 +8,10 @@ const STORAGE_KEY = 'roatan_lang';
 i18n
   .use(initReactI18next)
   .init({
-    resources: { en, es },
+    resources: {
+      en: { translation: en },
+      es: { translation: es },
+    },
     lng: localStorage.getItem(STORAGE_KEY) || 'en',
     fallbackLng: 'en',
     interpolation: { escapeValue: false },
