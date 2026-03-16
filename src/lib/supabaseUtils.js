@@ -70,12 +70,6 @@ export const addProperty = async (newPropertyData) => {
     const dbData = frontendToDb(validatedData, 'properties');
 
     // Only send columns that exist in the schema (avoids 400 from unknown columns)
-    const PROPERTIES_COLUMNS = [
-      'title', 'title_es', 'description', 'description_es', 'location', 'location_es',
-      'price', 'type', 'beds', 'baths', 'parking', 'area', 'image', 'images', 'features',
-      'ownership_years', 'time_to_attractions', 'status', 'listing_type', 'price_period',
-      'created_at', 'updated_at'
-    ];
     const filteredData = Object.fromEntries(
       Object.entries(dbData).filter(([key]) => PROPERTIES_COLUMNS.includes(key))
     );
@@ -102,6 +96,13 @@ export const addProperty = async (newPropertyData) => {
   }
 };
 
+const PROPERTIES_COLUMNS = [
+  'title', 'title_es', 'description', 'description_es', 'location', 'location_es',
+  'price', 'type', 'beds', 'baths', 'parking', 'area', 'image', 'images', 'features',
+  'ownership_years', 'time_to_attractions', 'status', 'listing_type', 'price_period',
+  'created_at', 'updated_at'
+];
+
 export const updateProperty = async (propertyId, updatedData) => {
   try {
     // Check if Supabase is properly configured
@@ -112,10 +113,16 @@ export const updateProperty = async (propertyId, updatedData) => {
     // Validate and convert data types, then convert to database format
     const validatedData = validateAndConvertTypes(updatedData, 'properties');
     const dbData = frontendToDb(validatedData, 'properties');
+    const filteredData = Object.fromEntries(
+      Object.entries(dbData).filter(([key]) => PROPERTIES_COLUMNS.includes(key))
+    );
+    if (filteredData.listing_type === 'sale') {
+      filteredData.price_period = null;
+    }
 
     const { data, error } = await supabase
       .from('properties')
-      .update(dbData)
+      .update(filteredData)
       .eq('id', propertyId)
       .select()
       .single();

@@ -228,13 +228,13 @@ export const frontendToDb = (frontendObject, tableType = 'properties') => {
   
   // Convert table-specific fields
   if (tableType === 'properties') {
-    if (dbObject.ownershipYears) {
-      dbObject.ownership_years = dbObject.ownershipYears;
+    if (dbObject.ownershipYears !== undefined) {
+      dbObject.ownership_years = dbObject.ownershipYears || null;
       delete dbObject.ownershipYears;
     }
     
-    if (dbObject.timeToAttractions) {
-      dbObject.time_to_attractions = dbObject.timeToAttractions;
+    if (dbObject.timeToAttractions !== undefined) {
+      dbObject.time_to_attractions = dbObject.timeToAttractions || null;
       delete dbObject.timeToAttractions;
     }
     
